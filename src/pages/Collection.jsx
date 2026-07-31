@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../supabase/client";
 
 
 
@@ -219,13 +220,87 @@ function Collection(){
   const navigate = useNavigate();
 
 
-  const [films,setFilms] = useState(
-    JSON.parse(localStorage.getItem("films")) || []
-  );
+  const [films,setFilms] = useState([]);
   const [vueCompacte,setVueCompacte] = useState(false);
+  const [user,setUser] = useState(null);
+  useEffect(()=>{
+
+  verifierConnexion();
+
+},[]);
+
+async function verifierConnexion(){
+
+  const {data:{user}} = await supabase.auth.getUser();
 
 
-  function supprimer(id){
+  setUser(user);
+
+
+  if(user){
+
+    chargerFilms();
+
+  }
+
+}
+
+async function chargerFilms(){
+
+  const {data:{user}} = await supabase.auth.getUser();
+
+
+  if(!user){
+  setFilms([]);
+  return;
+}
+
+
+  const {data,error} = await supabase
+    .from("films")
+    .select("*")
+    .eq("user_id",user.id);
+
+
+  if(error){
+
+    console.error(error);
+    return;
+
+  }
+
+
+  setFilms(data);
+
+}
+
+async function deconnexion(){
+
+  const confirmation = window.confirm(
+    "⚠️ Es-tu sûr de vouloir te déconnecter ?"
+  );
+
+
+  if(!confirmation){
+    return;
+  }
+
+
+  await supabase.auth.signOut();
+
+
+  setUser(null);
+
+
+  setFilms([]);
+
+
+  
+
+}
+
+
+  async function supprimer(id){
 
   const confirmation = window.confirm(
     "⚠️ Es-tu sûr de vouloir supprimer ce film ?"
@@ -237,17 +312,25 @@ function Collection(){
   }
 
 
-  const nouveau = films.filter(
-    (film)=>film.id !== id
-  );
+  const {error} = await supabase
+    .from("films")
+    .delete()
+    .eq("id", id);
 
 
-  setFilms(nouveau);
+  if(error){
+
+    console.error(error);
+    alert("Erreur suppression");
+    return;
+
+  }
 
 
-  localStorage.setItem(
-    "films",
-    JSON.stringify(nouveau)
+  setFilms(
+    films.filter(
+      (film)=>film.id !== id
+    )
   );
 
 }
@@ -270,6 +353,25 @@ function Collection(){
 
     <div className="container">
 
+      <div className="compteBouton">
+
+{
+user ?
+
+<button onClick={deconnexion}>
+🚪 Déconnexion
+</button>
+
+:
+
+<button onClick={()=>navigate("/connexion")}>
+🔐 Se connecter
+</button>
+
+}
+
+</div>
+
 
       <h1 className="title">
         🎬 CineRank
@@ -282,6 +384,8 @@ function Collection(){
 <button onClick={()=>navigate("/ajouter")}>
   ➕ Ajouter un film
 </button>
+
+<div className="container"></div>
 
 <button onClick={()=>navigate("/classement")}>
   📊 Classement

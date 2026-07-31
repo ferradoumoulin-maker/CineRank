@@ -5,6 +5,7 @@ import AjouterFilm from "./pages/AjouterFilm";
 import FicheFilm from "./pages/FicheFilm";
 import ModifierFilm from "./pages/ModifierFilm";
 import Classement from "./pages/Classement";
+import Connexion from "./pages/Connexion";
 
 import "./index.css";
 
@@ -45,6 +46,10 @@ element={<ModifierFilm/>}
   element={<Classement/>}
 />
 
+<Route
+  path="/connexion"
+  element={<Connexion/>}
+/>
 
 </Routes>
 

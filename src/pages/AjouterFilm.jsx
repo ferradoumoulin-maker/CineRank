@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { chercherFilm } from "../api/tmdb";
+import { supabase } from "../supabase/client";
 
 function AjouterFilm() {
 
@@ -113,32 +114,50 @@ async function rechercherTitre(titre){
 
 
 
-  function enregistrer(){
+  async function enregistrer(){
+
+  const { data: { user } } = await supabase.auth.getUser();
 
 
-    const nouveauFilm = {
-      ...film,
-      note: calculerNote(),
-      id: Date.now()
-    };
-
-
-    const anciens =
-      JSON.parse(localStorage.getItem("films")) || [];
-
-
-    localStorage.setItem(
-      "films",
-      JSON.stringify([
-        ...anciens,
-        nouveauFilm
-      ])
-    );
-
-
-    navigate("/film/" + nouveauFilm.id);
-
+  if(!user){
+    alert("Tu dois être connecté !");
+    navigate("/connexion");
+    return;
   }
+
+
+  const nouveauFilm = {
+
+    ...film,
+
+    note: calculerNote(),
+
+    user_id: user.id
+
+  };
+
+
+  const { data, error } = await supabase
+    .from("films")
+    .insert([nouveauFilm])
+    .select()
+    .single();
+
+
+
+  if(error){
+
+    console.error("ERREUR SUPABASE :", error);
+    alert(error.message);
+
+    return;
+
+}
+
+
+  navigate("/film/" + data.id);
+
+}
 
 
 

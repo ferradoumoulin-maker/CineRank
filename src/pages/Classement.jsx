@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../supabase/client";
 
 
 function couleurNote(note){
@@ -61,9 +62,48 @@ function Classement(){
   const navigate = useNavigate();
 
 
-  const [films, setFilms] = useState(
-  JSON.parse(localStorage.getItem("films")) || []
-);
+  const [films,setFilms] = useState([]);
+
+
+useEffect(()=>{
+
+  chargerFilms();
+
+},[]);
+
+
+
+async function chargerFilms(){
+
+  const {data:{user}} = await supabase.auth.getUser();
+
+
+  if(!user){
+
+    navigate("/connexion");
+    return;
+
+  }
+
+
+  const {data,error} = await supabase
+    .from("films")
+    .select("*")
+    .eq("user_id",user.id);
+
+
+
+  if(error){
+
+    console.error(error);
+    return;
+
+  }
+
+
+  setFilms(data);
+
+}
 
 
 const [tri, setTri] = useState(null);

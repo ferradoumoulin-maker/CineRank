@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { supabase } from "../supabase/client";
 
 
 function ModifierFilm(){
@@ -8,17 +9,37 @@ function ModifierFilm(){
   const navigate = useNavigate();
 
 
-  const films =
-    JSON.parse(localStorage.getItem("films")) || [];
+  const [film,setFilm] = useState(null);
 
 
-  const ancienFilm =
-    films.find(
-      (f)=>f.id === Number(id)
-    );
+useEffect(()=>{
+
+  chargerFilm();
+
+},[]);
 
 
-  const [film,setFilm] = useState(ancienFilm);
+
+async function chargerFilm(){
+
+  const {data,error} = await supabase
+    .from("films")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+
+  if(error){
+
+    console.error(error);
+    return;
+
+  }
+
+
+  setFilm(data);
+
+}
 
 
 
@@ -92,35 +113,48 @@ function ModifierFilm(){
 
 
 
-  function sauvegarder(){
+  async function sauvegarder(){
+
+  const {error} = await supabase
+    .from("films")
+    .update({
+      ...film,
+      note: calculerNote()
+    })
+    .eq("id", film.id);
 
 
-    const nouveauxFilms =
-      films.map(f=>
 
-        f.id===film.id
+  if(error){
 
-        ? {
-            ...film,
-            note:calculerNote()
-          }
+    console.error(error);
+    alert("Erreur sauvegarde");
 
-        : f
-
-      );
-
-
-    localStorage.setItem(
-      "films",
-      JSON.stringify(nouveauxFilms)
-    );
-
-
-    navigate("/film/"+film.id);
+    return;
 
   }
 
 
+  navigate("/film/"+film.id);
+
+}
+
+
+if(!film){
+
+  return (
+
+    <div className="container">
+
+      <h1>
+        Chargement...
+      </h1>
+
+    </div>
+
+  )
+
+}
 
   return (
 

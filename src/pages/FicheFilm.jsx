@@ -1,4 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "../supabase/client";
 
 function couleurNote(note){
 
@@ -192,15 +194,39 @@ function FicheFilm(){
   const {id} = useParams();
   const navigate = useNavigate();
 
-
-  const films =
-    JSON.parse(localStorage.getItem("films")) || [];
+  const [film,setFilm] = useState(null);
 
 
-  const film =
-    films.find((f)=>f.id === Number(id));
+  useEffect(()=>{
 
-    function supprimer(){
+    chargerFilm();
+
+  },[]);
+
+
+
+  async function chargerFilm(){
+
+    const {data,error} = await supabase
+      .from("films")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+
+    if(error){
+
+      console.error(error);
+      return;
+
+    }
+
+
+    setFilm(data);
+
+  }
+
+    async function supprimer(){
 
   const confirmation = window.confirm(
     "⚠️ Es-tu sûr de vouloir supprimer ce film ?"
@@ -212,15 +238,20 @@ function FicheFilm(){
   }
 
 
-  const nouveauxFilms = films.filter(
-    (f)=>f.id !== film.id
-  );
+  const {error} = await supabase
+    .from("films")
+    .delete()
+    .eq("id", film.id);
 
 
-  localStorage.setItem(
-    "films",
-    JSON.stringify(nouveauxFilms)
-  );
+  if(error){
+
+    console.error(error);
+    alert("Erreur suppression");
+
+    return;
+
+  }
 
 
   navigate("/");

@@ -1455,3 +1455,13 @@ th{
 .filmCard.compacte .noteSpectateurs{
   display:none;
 }
+
+.container{
+  position:relative;
+}
+
+.compteBouton{
+  position:absolute;
+  top:20px;
+  right:30px;
+}
