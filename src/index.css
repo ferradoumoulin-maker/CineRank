@@ -1,0 +1,1457 @@
+body {
+  margin: 0;
+  background: #0d0d0d;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container{
+  width:95%;
+  max-width:none;
+  margin:auto;
+}
+
+.title {
+  text-align: center;
+  font-size: 45px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #aaa;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: #1a1a1a;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  overflow:hidden;
+}
+
+
+button {
+  background: #e50914;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin:5px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+input {
+  width:100%;
+  padding:12px;
+  margin:8px 0 15px;
+  background:#222;
+  border:none;
+  border-radius:8px;
+  color:white;
+  font-size:16px;
+}
+
+label {
+  display:block;
+  margin-top:10px;
+  color:#ddd;
+}
+
+.noteBloc {
+  margin-bottom:20px;
+}
+
+
+.noteTitre {
+
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+
+}
+
+
+.barreFond {
+
+  height:12px;
+  background:#333;
+  border-radius:10px;
+  overflow:hidden;
+
+}
+
+
+.barreValeur {
+
+  height:100%;
+  border-radius:10px;
+
+}
+
+
+.jaugeFond {
+
+  width:100%;
+  height:12px;
+  background:#333;
+  border-radius:20px;
+  overflow:hidden;
+  margin:12px 0;
+
+}
+
+
+.jaugeValeur {
+
+  height:100%;
+  border-radius:20px;
+  transition:0.5s;
+
+}
+
+
+.filmCard {
+
+  background:#222;
+
+  border-radius:20px;
+
+  padding:25px;
+
+  margin-bottom:20px;
+
+  position:relative;
+
+  min-height:220px;
+
+  overflow:hidden;
+
+  box-shadow:0 5px 15px rgba(0,0,0,0.35);
+
+  transition:0.2s;
+
+}
+
+
+
+.filmTitre h3 {
+
+  margin:0;
+
+  font-size:35px;
+
+  line-height:1.1;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+  text-align:left;
+
+  font-weight:900;
+
+}
+
+
+
+
+
+
+
+.filmInfo h3 {
+
+  font-size:30px;
+
+  margin:0 0 35px 0;
+
+}
+
+
+.ficheButton {
+
+  background:#333;
+
+  color:white;
+
+  padding:10px 15px;
+
+  border-radius:8px;
+
+  font-size:14px;
+
+  font-weight:bold;
+
+}
+
+
+.ficheButton:hover {
+
+  color:white;
+
+}
+
+
+
+.scoreBadge {
+
+  width:110px;
+  height:110px;
+
+  border-radius:22px;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  color:white;
+
+  font-weight:900;
+
+  box-shadow:0 8px 20px rgba(0,0,0,.4);
+
+}
+
+
+
+.scoreEntier {
+
+  font-size:58px;
+
+}
+
+
+.scoreDecimal {
+
+  font-size:30px;
+
+  margin-top:18px;
+
+}
+
+
+
+.actions {
+
+  display:flex;
+
+  gap:8px;
+
+  justify-content:flex-end;
+
+  margin-top:20px;
+
+}
+
+
+
+.modifierButton,
+.supprimerButton {
+
+  width:45px;
+  height:45px;
+
+  padding:0;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:22px;
+
+
+}
+
+
+
+.modifierButton {
+
+  background:#facc15;
+
+}
+
+
+
+.supprimerButton {
+
+  background:#dc2626;
+
+}
+
+
+.menuBoutons {
+  display:flex;
+  gap:15px;
+}
+
+.ficheScore {
+
+  margin: 20px auto;
+
+  width:160px;
+  height:160px;
+
+}
+
+
+.ficheScore .scoreEntier {
+
+  font-size:85px;
+
+}
+
+
+.ficheScore .scoreDecimal {
+
+  font-size:40px;
+
+  margin-top:25px;
+
+}
+
+
+
+
+
+.miniNote {
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:4px;
+
+}
+
+
+.miniNote span {
+
+  font-size:11px;
+
+  font-weight:bold;
+
+  color:#aaa;
+
+}
+
+
+
+.miniBarreFond {
+
+  height:6px;
+
+  background:#333;
+
+  border-radius:10px;
+
+  overflow:hidden;
+
+}
+
+
+
+.miniBarreValeur {
+
+  height:100%;
+
+  border-radius:10px;
+
+}
+
+
+.filmInfo {
+  width:100%;
+}
+
+
+
+
+
+
+.miniNote span {
+
+  font-size:13px;
+
+  color:#bbb;
+
+  display:block;
+
+  margin-bottom:5px;
+
+}
+
+
+
+.miniBarreFond {
+
+  height:7px;
+
+  background:#333;
+
+  border-radius:10px;
+
+  overflow:hidden;
+
+}
+
+
+
+.miniBarreValeur {
+
+  height:100%;
+
+  border-radius:10px;
+
+}
+
+.filmTitre {
+  overflow:hidden;
+}
+
+
+
+
+.filmTitre {
+
+  flex:1;
+
+  min-width:0;
+
+}
+
+
+.filmTitre {
+
+  flex:1;
+  min-width:0;
+  max-width:calc(100% - 130px);
+
+}
+
+
+
+
+.filmHaut {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+}
+
+.resultatFilm {
+
+  display:flex;
+
+  gap:20px;
+
+  background:#222;
+
+  padding:15px;
+
+  border-radius:15px;
+
+  margin-top:10px;
+
+  cursor:pointer;
+
+  transition:0.2s;
+
+}
+
+
+.resultatFilm:hover {
+
+  background:#333;
+
+  transform:scale(1.02);
+
+}
+
+
+
+.resultatFilm img {
+
+  width:100px;
+
+  height:150px;
+
+  object-fit:cover;
+
+  border-radius:10px;
+
+}
+
+
+
+.resultatInfos {
+
+  flex:1;
+
+}
+
+
+.resultatInfos h2 {
+
+  margin:0 0 10px 0;
+
+  font-size:24px;
+
+}
+
+
+.resultatInfos p {
+
+  color:#ccc;
+
+  margin:8px 0;
+
+  font-size:15px;
+
+}
+
+
+
+
+
+
+.filmBas {
+
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:15px;
+
+}
+
+
+
+.filmPresentation {
+
+  display:flex;
+
+  gap:15px;
+
+  width:260px;
+
+  flex-shrink:0;
+
+  align-items:flex-start;
+
+}
+
+
+
+.filmPoster {
+
+  width:170px;
+
+  height:250px;
+
+  object-fit:cover;
+
+  border-radius:12px;
+
+}
+
+
+
+.filmInfos {
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:flex-start;
+
+  padding-top:5px;
+
+  width:170px;
+
+}
+
+
+
+.filmInfos p {
+
+  margin:5px 0;
+
+  color:#bbb;
+
+  font-size:14px;
+
+}
+
+
+
+.miniNotes {
+
+  flex:1;
+
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:10px;
+
+  margin-top:65px;
+
+}
+
+
+
+.miniNote {
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:4px;
+
+}
+
+
+
+.miniBarreFond {
+
+  height:7px;
+
+  background:#333;
+
+  border-radius:10px;
+
+  overflow:hidden;
+
+}
+
+
+
+.miniBarreValeur {
+
+  height:100%;
+
+  border-radius:10px;
+
+}
+
+.filmBas {
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+}
+
+
+.filmPresentation {
+  width:300px;
+  flex-shrink:0;
+  display:flex;
+  gap:15px;
+  align-items:flex-start;
+}
+
+
+.filmPoster {
+  width:190px;
+  height:290px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+
+.droiteFilm {
+  flex:1;
+}
+
+
+.filmInfos {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  width:120px;
+  margin-top:5px;
+}
+
+
+.filmInfos p {
+  margin:0;
+  color:#ddd;
+  font-size:18px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+
+.miniNotes {
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:55px;
+}
+
+
+.filmBas {
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+}
+
+
+.filmPresentation {
+  width:210px;
+  flex-shrink:0;
+}
+
+
+.filmPoster {
+  width:190px;
+  height:290px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+
+.droiteFilm {
+  flex:1;
+  min-width:0;
+}
+
+
+.filmInfos {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+
+.filmInfos p {
+  margin:0;
+  color:#ddd;
+  font-size:18px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+
+.miniNotes {
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:80px;
+}
+
+.filmTitre h3 {
+
+  line-height:1.05;
+  margin:0;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+
+  font-weight:900;
+
+}
+
+
+.filmTitre {
+
+  flex:1;
+  min-width:0;
+  padding-right:25px;
+
+}
+
+.fichePresentation {
+
+  display:flex;
+
+  gap:25px;
+
+  align-items:flex-start;
+
+  margin-bottom:30px;
+
+}
+
+
+.fichePoster {
+
+  width:230px;
+
+  height:340px;
+
+  object-fit:cover;
+
+  border-radius:15px;
+
+}
+
+
+.ficheInfos {
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:15px;
+
+}
+
+
+.ficheInfos p {
+
+  font-size:20px;
+
+  font-weight:bold;
+
+  margin:0;
+
+}
+
+
+.imdbScore {
+
+  width:120px;
+
+  height:120px;
+
+  border-radius:20px;
+
+}
+
+
+.imdbScore .scoreEntier {
+
+  font-size:45px;
+
+}
+
+
+.imdbScore .scoreDecimal {
+
+  font-size:22px;
+
+}
+
+
+.synopsisCard p {
+
+  font-size:18px;
+
+  line-height:1.6;
+
+  color:#ddd;
+
+}
+
+
+
+.imdbScore {
+  flex-direction:column;
+  width:130px;
+  height:130px;
+}
+
+
+.scoreLabel {
+
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:5px;
+  text-align:center;
+
+}
+
+.imdbBloc {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-top:15px;
+}
+
+
+.imdbTitre {
+  font-size:14px;
+  font-weight:900;
+  margin-bottom:8px;
+  color:white;
+  text-align:center;
+}
+
+.imdbBloc {
+  text-align:center;
+  margin-top:20px;
+}
+
+
+.imdbTitre {
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+
+.imdbScore {
+
+  width:160px;
+  height:160px;
+
+}
+
+
+.imdbScore .scoreEntier {
+
+  font-size:85px;
+
+}
+
+
+.imdbScore .scoreDecimal {
+
+  display:none;
+
+}
+
+table{
+
+  width:100%;
+
+  table-layout:fixed;
+
+  border-collapse:separate;
+
+  border-spacing:6px;
+
+}
+
+
+th{
+  font-size:14px;
+  text-align:center;
+  white-space:nowrap;
+}
+
+
+td{
+  text-align:center;
+    overflow-x:auto;
+
+}
+
+
+th:first-child,
+td:first-child{
+  width:180px;
+  text-align:left;
+}
+
+
+th:not(:first-child),
+td:not(:first-child){
+
+  width:auto;
+
+}
+
+
+th{
+  padding:15px;
+  font-size:18px;
+}
+
+
+td{
+  text-align:center;
+}
+
+
+.filmClassement{
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  width:250px;
+
+}
+
+
+.miniPoster{
+
+  width:45px;
+  height:65px;
+  object-fit:cover;
+  border-radius:6px;
+
+}
+
+
+.filmClassement span{
+
+  text-align:left;
+
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+
+  overflow:hidden;
+
+}
+
+
+.petiteNote{
+
+  width:45px;
+  height:45px;
+
+  border-radius:10px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin:auto;
+
+  font-weight:bold;
+  font-size:18px;
+
+  color:white;
+
+}
+
+th{
+  cursor:pointer;
+  user-select:none;
+}
+
+th{
+
+  font-size:13px;
+
+  padding:8px 3px;
+
+  white-space:normal;
+
+  line-height:1.1;
+
+  text-align:center;
+
+}
+
+.classementCard{
+
+  width:100%;
+
+  padding:20px;
+
+  overflow:hidden;
+
+}
+
+
+.classementCard table{
+
+  width:100%;
+
+  table-layout:fixed;
+
+  border-collapse:separate;
+
+  border-spacing:8px 15px;
+
+}
+
+
+.classementCard th{
+
+  padding:15px 5px;
+
+  font-size:16px;
+
+  white-space:normal;
+
+  text-align:center;
+
+}
+
+
+.classementCard td{
+
+  padding:8px 3px;
+
+  text-align:center;
+
+}
+
+
+
+.classementCard th:first-child,
+.classementCard td:first-child{
+
+  width:25%;
+
+}
+
+
+
+.classementCard th:not(:first-child),
+.classementCard td:not(:first-child){
+
+  width:8.3%;
+
+}
+
+
+
+.petiteNote{
+
+  width:55px;
+
+  height:55px;
+
+  margin:auto;
+
+  border-radius:14px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:20px;
+
+  font-weight:900;
+
+  color:white;
+
+}
+
+/* VUE COMPACTE */
+
+.card:has(.compacte){
+
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+
+}
+
+
+.filmCard.compacte{
+
+  padding:15px;
+  min-height:520px;
+
+}
+
+
+/* titre */
+
+.filmCard.compacte .filmTitre h3{
+
+  font-size:25px;
+
+  white-space:normal;
+
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+
+}
+
+
+/* note */
+
+.filmCard.compacte .scoreBadge{
+
+  width:110px;
+  height:110px;
+
+}
+
+
+/* partie poster + infos */
+
+.filmCard.compacte .filmBas{
+
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+
+}
+
+
+.filmCard.compacte .filmPresentation{
+
+  width:100%;
+  display:flex;
+  align-items:flex-start;
+  gap:15px;
+
+}
+
+
+.filmCard.compacte .filmPoster{
+
+  width:150px;
+  height:225px;
+
+}
+
+
+/* infos à droite du poster */
+
+.filmCard.compacte .filmPresentation{
+
+  position:relative;
+
+}
+
+
+.filmCard.compacte .filmPresentation{
+
+  display:flex;
+  align-items:flex-start;
+  gap:15px;
+
+}
+
+
+.filmCard.compacte .filmInfos{
+
+  position:static;
+
+  width:auto;
+
+  flex:1;
+
+}
+
+
+.filmCard.compacte .filmInfos p{
+
+  font-size:14px;
+  white-space:normal;
+
+}
+
+
+/* jauges */
+
+.filmCard.compacte .miniNotes{
+
+  width:100%;
+
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:10px;
+
+  margin-top:20px;
+
+}
+
+
+.filmCard.compacte .miniNote span{
+
+  font-size:10px;
+
+}
+
+
+.filmCard.compacte .miniBarreFond{
+
+  width:100%;
+
+  height:5px;
+
+}
+
+
+/* boutons */
+
+.filmCard.compacte .actions{
+
+  margin-top:15px;
+
+}
+
+.filmCard.compacte .droiteFilm{
+
+  width:100%;
+
+}
+
+
+.filmCard.compacte .miniNotes{
+
+  width:100%;
+
+}
+
+.titreFilms{
+  margin:20px 0 15px 0;
+  font-size:30px;
+}
+
+/* uniquement vue compacte */
+.filmCard.compacte .filmPresentation{
+  flex-direction:row;
+}
+
+
+/* vue normale */
+.filmCard:not(.compacte) .filmPresentation{
+  flex-direction:column;
+}
+
+
+.filmCard:not(.compacte) .filmInfos{
+  margin-top:10px;
+}
+
+/* correction placement infos vue normale */
+
+.filmCard:not(.compacte) .filmBas{
+  display:flex;
+  align-items:flex-start;
+}
+
+
+.filmCard:not(.compacte) .filmPresentation{
+  display:flex;
+  gap:15px;
+  width:320px;
+}
+
+
+.filmCard:not(.compacte) .filmInfos{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+
+.filmCard:not(.compacte) .droiteFilm{
+  flex:1;
+}
+
+
+.filmCard:not(.compacte) .miniNotes{
+  margin-top:70px;
+}
+/* correction finale vue normale */
+
+.filmCard:not(.compacte) .filmPresentation {
+
+  display:flex;
+  flex-direction:row;
+  align-items:flex-start;
+  width:380px;
+  gap:15px;
+
+}
+
+
+.filmCard:not(.compacte) .filmPoster {
+
+  flex-shrink:0;
+
+}
+
+
+.filmCard:not(.compacte) .filmInfos {
+
+  width:150px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  margin-top:10px;
+
+}
+
+
+
+.filmCard:not(.compacte) .miniNotes {
+
+  margin-top:120px;
+
+}
+
+/* note spectateurs */
+
+.noteSpectateurs{
+
+  margin-top:15px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+}
+
+
+.noteSpectateursTitre{
+
+  font-size:14px;
+
+  font-weight:bold;
+
+  margin-bottom:8px;
+
+  color:#ddd;
+
+}
+
+
+.noteSpectateursCarre{
+
+  width:100px;
+
+  height:100px;
+
+  border-radius:20px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:45px;
+
+  font-weight:900;
+
+  color:white;
+
+  box-shadow:0 8px 20px rgba(0,0,0,.5);
+
+}
+
+/* cacher la note spectateurs uniquement en vue compacte */
+
+.filmCard.compacte .noteSpectateurs{
+  display:none;
+}
