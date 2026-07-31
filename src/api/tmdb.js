@@ -34,6 +34,8 @@ export async function chercherFilm(titre) {
 
 
       let noteImdb = 0;
+let vraiBoxOffice = infos.revenue || 0;
+      
 
 
 
@@ -47,6 +49,8 @@ export async function chercherFilm(titre) {
 
         );
 
+        
+
 
         const donneesImdb = await omdb.json();
 
@@ -58,6 +62,18 @@ export async function chercherFilm(titre) {
 
         }
 
+        if(
+  !vraiBoxOffice &&
+  donneesImdb.BoxOffice &&
+  donneesImdb.BoxOffice !== "N/A"
+){
+
+  vraiBoxOffice = Number(
+    donneesImdb.BoxOffice.replace(/[^0-9]/g,"")
+  );
+
+}
+
 
       }
 
@@ -68,21 +84,39 @@ export async function chercherFilm(titre) {
         ...infos,
 
 
+        genres:
+infos.genres
+?
+infos.genres.map((genre)=>genre.name)
+:
+[],
+
+budget:
+infos.budget
+?
+infos.budget.toLocaleString("fr-FR") + " $"
+:
+"Budget inconnu",
         boxOffice:
-          infos.revenue
-          ?
-          infos.revenue.toLocaleString("fr-FR") + " $"
-          :
-          "Inconnu",
+  vraiBoxOffice
+  ?
+  vraiBoxOffice.toLocaleString("fr-FR") + " $"
+  :
+  "Inconnu",
 
 
 
-        imdbId:
+       boxOfficeNombre: vraiBoxOffice, 
+  
+  imdbId:
           infos.external_ids?.imdb_id || null,
 
 
         imdb:
           noteImdb
+          
+
+          
 
 
       };

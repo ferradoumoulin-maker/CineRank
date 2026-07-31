@@ -43,6 +43,7 @@ function AjouterFilm() {
     imdb: 0,
     duree: null,
     genres: [],
+    budget: 0,
 
     scenario: 0,
     personnages: 0,
@@ -134,6 +135,39 @@ async function rechercherTitre(titre){
 
   }
 
+  function calculerInflation(boxOffice, dateSortie){
+
+  if(!boxOffice || !dateSortie){
+    return "";
+  }
+
+
+  const annee = new Date(dateSortie).getFullYear();
+
+
+  const cpiFilm = cpiUS[annee];
+  const cpiActuel = cpiUS[2025];
+
+
+  if(!cpiFilm){
+    return "";
+  }
+
+
+  const montant = Number(
+    boxOffice
+    .replace(/[^0-9]/g,"")
+  );
+
+
+  const corrige = montant * (cpiActuel / cpiFilm);
+
+
+  return Math.round(corrige)
+    .toLocaleString("fr-FR") + " $";
+
+}
+
 
 
   async function enregistrer(){
@@ -150,13 +184,18 @@ async function rechercherTitre(titre){
 
   const nouveauFilm = {
 
-    ...film,
+  ...film,
 
-    note: calculerNote(),
+  note: calculerNote(),
 
-    user_id: user.id
+  boxOfficeInflation: calculerInflation(
+    film.boxOffice,
+    film.dateSortie
+  ),
 
-  };
+  user_id: user.id
+
+};
 
 
   const { data, error } = await supabase
@@ -239,17 +278,13 @@ resultat.overview || "Pas de synopsis disponible",
 
 
 boxOffice:
-resultat.revenue
-?
-resultat.revenue.toLocaleString("fr-FR") + " $"
-:
 resultat.boxOffice,
 
 boxOfficeInflation:
-resultat.revenue
+resultat.boxOfficeNombre
 ?
 calculInflation(
-  resultat.revenue,
+  resultat.boxOfficeNombre,
   Number(resultat.release_date?.slice(0,4))
 )
 :
@@ -264,7 +299,14 @@ duree:
 resultat.runtime || null,
 
     genres:
-    resultat.genres || []
+resultat.genres || [],
+
+budget:
+resultat.budget
+?
+resultat.budget.toLocaleString("fr-FR") + " $"
+:
+"Budget inconnu",
 
   });
 

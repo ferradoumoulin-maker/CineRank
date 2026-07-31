@@ -312,7 +312,10 @@ function FicheFilm(){
   />
 
 
-  <div className="ficheInfos">
+  <div className="infosInfos">
+
+
+<div className="infosGauche">
 
 
     <p>
@@ -338,12 +341,59 @@ function FicheFilm(){
 
 
     <p>
-  📈 {film.boxOfficeInflation || "Box-office (inflation) inconnu"}
-</p>
-    
-    <p>
-      💰 {film.boxOffice || "Box-office inconnu"}
+      🎭 {
+        film.genres?.length
+        ?
+        film.genres.join(", ")
+        :
+        "Genre inconnu"
+      }
     </p>
+
+
+  </div>
+
+
+
+  <div className="infosArgent">
+
+
+    <div className="argentBloc">
+
+      <strong>
+        BUDGET :
+      </strong>
+
+      <p>
+        {film.budget || "Budget inconnu"}
+      </p>
+
+    </div>
+
+
+
+    <div className="argentBloc">
+
+      <strong>
+        BOX OFFICE :
+      </strong>
+
+      <p>
+        {film.boxOffice || "Box-office inconnu"}
+      </p>
+
+
+      <small>
+        Inflation :
+        <br/>
+        {film.boxOfficeInflation || "Inconnue"}
+      </small>
+
+
+    </div>
+
+
+  </div>
 
 
 
