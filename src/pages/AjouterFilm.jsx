@@ -2,6 +2,28 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { chercherFilm } from "../api/tmdb";
 import { supabase } from "../supabase/client";
+import { cpiUS } from "../data/cpiUS";
+
+
+
+function calculInflation(montant, anneeFilm){
+
+  const cpiFilm = cpiUS[anneeFilm];
+
+  const cpiActuel = cpiUS[2026];
+
+
+  if(!cpiFilm){
+    return "";
+  }
+
+
+  const resultat = montant * (cpiActuel / cpiFilm);
+
+
+  return Math.round(resultat)
+    .toLocaleString("fr-FR") + " $";
+}
 
 function AjouterFilm() {
 
@@ -222,6 +244,16 @@ resultat.revenue
 resultat.revenue.toLocaleString("fr-FR") + " $"
 :
 resultat.boxOffice,
+
+boxOfficeInflation:
+resultat.revenue
+?
+calculInflation(
+  resultat.revenue,
+  Number(resultat.release_date?.slice(0,4))
+)
+:
+"",
 
 
 imdb:

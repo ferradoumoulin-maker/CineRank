@@ -338,6 +338,10 @@ function FicheFilm(){
 
 
     <p>
+  📈 {film.boxOfficeInflation || "Box-office (inflation) inconnu"}
+</p>
+    
+    <p>
       💰 {film.boxOffice || "Box-office inconnu"}
     </p>
 
