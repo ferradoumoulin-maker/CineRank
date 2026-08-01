@@ -42,7 +42,7 @@ function Amis() {
   const { data, error } = await supabase
     .from("amis")
     .select("*")
-    .eq("userid", userId);
+    .eq("user_id", userId);
 
   if (error) {
     console.error("ERREUR AMIS :", error);
@@ -192,9 +192,9 @@ function Amis() {
       const { error: erreur1 } = await supabase
         .from("amis")
         .insert({
-          userid: user.id,
-          ami_id: demande.expediteur_id,
-        });
+  user_id: user.id,
+  ami_id: demande.expediteur_id,
+});
 
       if (erreur1) {
         /*
@@ -219,9 +219,9 @@ function Amis() {
       const { error: erreur2 } = await supabase
         .from("amis")
         .insert({
-          userid: demande.expediteur_id,
-          ami_id: user.id,
-        });
+  userid: demande.expediteur_id,
+  ami_id: user.id,
+});
 
       if (erreur2) {
         if (
