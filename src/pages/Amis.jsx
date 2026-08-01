@@ -38,11 +38,11 @@ function Amis() {
      CHARGER LES AMIS
      ========================================================= */
 
-  async function chargerAmis(userId) {
+  async function chargerAmis(user_Id) {
   const { data, error } = await supabase
     .from("amis")
     .select("*")
-    .eq("user_id", userId);
+    .eq("user_id", user_Id);
 
   if (error) {
     console.error("ERREUR AMIS :", error);
@@ -95,7 +95,7 @@ function Amis() {
      CHARGER LES DEMANDES REÇUES
      ========================================================= */
 
-  async function chargerDemandes(userId) {
+  async function chargerDemandes(user_Id) {
     const {
       data,
       error,
@@ -104,7 +104,7 @@ function Amis() {
       .select(
         "id, expediteur_id, destinataire_id, statut, created_at"
       )
-      .eq("destinataire_id", userId)
+      .eq("destinataire_id", user_Id)
       .eq("statut", "en_attente")
       .order("created_at", {
         ascending: false,
@@ -219,7 +219,7 @@ function Amis() {
       const { error: erreur2 } = await supabase
         .from("amis")
         .insert({
-  userid: demande.expediteur_id,
+  user_id: demande.expediteur_id,
   ami_id: user.id,
 });
 

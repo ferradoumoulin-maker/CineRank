@@ -377,7 +377,7 @@ function Ami() {
 
         .select("id")
 
-        .eq("userid", user.id)
+        .eq("user_id", user.id)
 
         .eq("ami_id", id)
 
