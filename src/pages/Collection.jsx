@@ -223,6 +223,7 @@ function Collection(){
   const [films,setFilms] = useState([]);
   const [vueCompacte,setVueCompacte] = useState(false);
   const [user,setUser] = useState(null);
+  const [amis, setAmis] = useState([]);
   useEffect(()=>{
 
   verifierConnexion();
@@ -355,17 +356,39 @@ async function deconnexion(){
 
       <div className="compteBouton">
 
-{
-user ?
+{user ?
 
-<button onClick={deconnexion}>
-🚪 Déconnexion
-</button>
+<div style={{
+  display: "flex",
+  gap: "10px"
+}}>
+
+  <button
+    onClick={() => navigate("/amis")}
+  >
+    👥 Mes amis
+  </button>
+
+  <button
+    onClick={() => navigate("/profil")}
+  >
+    👤 Profil
+  </button>
+
+  <button
+    onClick={deconnexion}
+  >
+    🚪 Déconnexion
+  </button>
+
+</div>
 
 :
 
-<button onClick={()=>navigate("/connexion")}>
-🔐 Se connecter
+<button
+  onClick={() => navigate("/connexion")}
+>
+  🔐 Se connecter
 </button>
 
 }
@@ -378,18 +401,23 @@ user ?
       </h1>
 
 
-      <div className="card menuBoutons">
+      <div className="card menuPrincipal">
 
 
 <button onClick={()=>navigate("/ajouter")}>
   ➕ Ajouter un film
 </button>
 
-<div className="container"></div>
 
 <button onClick={()=>navigate("/classement")}>
   📊 Classement
 </button>
+
+<button onClick={()=>navigate("/classement-global")}>
+  🌍 Classement global
+</button>
+
+
 
 
 <button onClick={trier}>
@@ -412,9 +440,19 @@ vueCompacte
 
 
 
-      <h2 className="titreFilms">
-  Mes films ({films.length})
-</h2>
+
+
+      <div className="filmsHeader">
+  <div>
+    <h2 className="titreFilms">
+      Mes films
+    </h2>
+
+    <span className="filmsCompteur">
+      {films.length} film{films.length > 1 ? "s" : ""}
+    </span>
+  </div>
+</div>
 
 
 <div className="card filmsContainer">

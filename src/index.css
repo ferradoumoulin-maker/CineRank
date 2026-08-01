@@ -1016,25 +1016,7 @@ td{
 }
 
 
-.petiteNote{
 
-  width:45px;
-  height:45px;
-
-  border-radius:10px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  margin:auto;
-
-  font-weight:bold;
-  font-size:18px;
-
-  color:white;
-
-}
 
 th{
   cursor:pointer;
@@ -1055,68 +1037,339 @@ th{
 
 }
 
-.classementCard{
 
-  width:100%;
 
-  padding:20px;
 
-  overflow:hidden;
+
+
+
+
+
+
+/* =========================================================
+   CLASSEMENT — VERSION PREMIUM
+   ========================================================= */
+
+.classementCard {
+  width: 100%;
+  padding: 26px;
+  background:
+    linear-gradient(145deg, #1b1b1b, #121212);
+  border: 1px solid #303030;
+  border-radius: 18px;
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.28);
+  overflow: hidden;
+}
+
+
+/* ---------- TABLE ---------- */
+
+.classementCard table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 9px;
+}
+
+
+/* ---------- EN-TÊTES ---------- */
+
+.classementCard th {
+  padding: 12px 8px;
+  color: #777;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.classementCard th:first-child {
+  width: 30%;
+  text-align: left;
+}
+
+.classementCard th:not(:first-child) {
+  width: 10%;
+}
+
+
+/* ---------- LIGNES ---------- */
+
+.classementCard tbody tr {
+  background: #202020;
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+.classementCard tbody tr:hover {
+  background: #292929;
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.35);
+}
+
+
+/* ---------- CELLULES ---------- */
+
+.classementCard td {
+  padding: 12px 8px;
+  text-align: center;
+  color: #ddd;
+  font-size: 14px;
+  font-weight: 700;
+  border-top: 1px solid #292929;
+  border-bottom: 1px solid #292929;
+}
+
+.classementCard td:first-child {
+  text-align: left;
+  border-left: 1px solid #292929;
+  border-radius: 12px 0 0 12px;
+}
+
+.classementCard td:last-child {
+  border-right: 1px solid #292929;
+  border-radius: 0 12px 12px 0;
+}
+
+
+/* =========================================================
+   FILM DANS LE CLASSEMENT
+   ========================================================= */
+
+.filmClassement {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* ---------- RANG ---------- */
+
+.filmClassement::before {
+  content: attr(data-rang);
+  min-width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #2b2b2b;
+  color: #aaa;
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+
+/* ---------- POSTER ---------- */
+
+.miniPoster {
+  width: 48px;
+  height: 68px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 5px 12px rgba(0,0,0,.45);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.classementCard tr:hover .miniPoster {
+  transform: scale(1.06);
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.6);
+}
+
+
+/* ---------- TITRE ---------- */
+
+.filmClassement span {
+  display: -webkit-box;
+
+  max-width: 100%;
+
+  overflow: hidden;
+
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  text-align: left;
+
+  color: #eee;
+
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+
+/* =========================================================
+   NOTES
+   ========================================================= */
+
+.petiteNote {
+  width: 52px;
+  height: 52px;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  color: white;
+
+  font-size: 19px;
+  font-weight: 950;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.35);
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.classementCard tr:hover .petiteNote {
+  transform: scale(1.08);
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.5);
+}
+
+
+/* =========================================================
+   PREMIÈRE PLACE
+   ========================================================= */
+
+.classementCard tbody tr:first-child {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(234,179,8,.12),
+      #222 35%,
+      #202020
+    );
+
+  border-color: rgba(234,179,8,.25);
+}
+
+.classementCard tbody tr:first-child .filmClassement::before {
+  content: "🥇";
+
+  background: rgba(234,179,8,.15);
+  color: #facc15;
+
+  font-size: 15px;
+}
+
+.classementCard tbody tr:first-child .petiteNote {
+  box-shadow:
+    0 0 0 1px rgba(250,204,21,.2),
+    0 8px 25px rgba(250,204,21,.15);
+}
+
+
+/* =========================================================
+   DEUXIÈME PLACE
+   ========================================================= */
+
+.classementCard tbody tr:nth-child(2) {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(148,163,184,.08),
+      #202020 35%
+    );
+}
+
+.classementCard tbody tr:nth-child(2) .filmClassement::before {
+  content: "🥈";
+
+  background: rgba(148,163,184,.12);
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   TROISIÈME PLACE
+   ========================================================= */
+
+.classementCard tbody tr:nth-child(3) {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(180,83,9,.08),
+      #202020 35%
+    );
+}
+
+.classementCard tbody tr:nth-child(3) .filmClassement::before {
+  content: "🥉";
+
+  background: rgba(180,83,9,.12);
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   RESTE DU CLASSEMENT
+   ========================================================= */
+
+.classementCard tbody tr:nth-child(n+4) .filmClassement::before {
+  color: #666;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .classementCard {
+    padding: 15px 10px;
+    overflow-x: auto;
+  }
+
+  .classementCard table {
+    min-width: 700px;
+  }
 
 }
 
 
-.classementCard table{
-
-  width:100%;
-
-  table-layout:fixed;
-
-  border-collapse:separate;
-
-  border-spacing:8px 15px;
-
-}
-
-
-.classementCard th{
-
-  padding:15px 5px;
-
-  font-size:16px;
-
-  white-space:normal;
-
-  text-align:center;
-
-}
-
-
-.classementCard td{
-
-  padding:8px 3px;
-
-  text-align:center;
-
-}
 
 
 
-.classementCard th:first-child,
-.classementCard td:first-child{
-
-  width:25%;
-
-}
 
 
 
-.classementCard th:not(:first-child),
-.classementCard td:not(:first-child){
 
-  width:8.3%;
 
-}
 
 
 
@@ -1466,12 +1719,11 @@ th{
   right:30px;
 }
 
-.infosInfos{
-
-  display:flex;
-  gap:60px;
-  align-items:flex-start;
-
+.infosInfos {
+  display: flex;
+  gap: 35px;
+  align-items: flex-start;
+  flex: 1;
 }
 
 
@@ -1485,42 +1737,4444 @@ th{
 }
 
 
-.infosArgent{
-
-  display:flex;
-  flex-direction:column;
-  gap:25px;
-  width:260px;
-
+.infosArgent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 240px;
+  padding: 14px 18px;
+  background: #151515;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
 }
 
 
 .argentBloc {
-
-  margin-bottom: 30px;
-
+  margin: 0;
+  padding: 9px 0;
+  border-bottom: 1px solid #292929;
 }
 
+.argentBloc:last-child {
+  border-bottom: none;
+}
 
 .argentBloc strong {
-
-  font-size: 18px;
-
+  display: block;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #999;
+  margin-bottom: 3px;
 }
-
 
 .argentBloc p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: #fff;
+}
 
-  margin: 5px 0;
-  font-size: 22px;
+.argentBloc small {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.rentabiliteBloc {
+  margin-top: 0;
+  padding-top: 10px;
+}
+
+
+.rentabiliteBloc p {
+  font-size: 21px;
+  font-weight: 900;
+  color: #4ade80;
+}
+
+
+.rentabiliteBloc small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #888;
+}
+
+/* =========================================
+   FICHE FILM — BLOC FINANCES PREMIUM
+   ========================================= */
+
+.infosInfos {
+  display: flex;
+  gap: 35px;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.infosArgent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 240px;
+  padding: 14px 18px;
+  background: #151515;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+}
+
+.argentBloc {
+  margin: 0;
+  padding: 9px 0;
+  border-bottom: 1px solid #292929;
+}
+
+.argentBloc:last-child {
+  border-bottom: none;
+}
+
+.argentBloc strong {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #999;
+  margin-bottom: 3px;
+}
+
+.argentBloc p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.argentBloc small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #888;
+}
+
+.rentabiliteBloc {
+  margin-top: 0;
+  padding-top: 10px;
+}
+
+.rentabiliteBloc strong {
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+
+.rentabiliteBloc p {
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.rentabiliteBloc small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #888;
+}
+
+/* =========================================
+   COULEUR RENTABILITÉ
+   ========================================= */
+
+.rentabilitePositive strong,
+.rentabilitePositive p {
+  color: #4ade80;
+}
+
+.rentabiliteNegative strong,
+.rentabiliteNegative p {
+  color: #ef4444;
+}
+
+.rentabiliteInconnue strong,
+.rentabiliteInconnue p {
+  color: #888;
+}
+
+/* =========================================
+   NOTES DETAILLEES — VERSION PREMIUM
+   ========================================= */
+
+.notesDetaillees {
+  padding: 25px 28px;
+}
+
+
+.notesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+
+.notesHeader h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+
+.notesHeader span {
+  font-size: 12px;
+  color: #666;
   font-weight: bold;
+}
+
+
+/* GRILLE DES 9 NOTES */
+
+.notesGrille {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 35px;
+  row-gap: 22px;
+}
+
+
+/* UNE NOTE */
+
+.notesGrille .noteBloc {
+  margin: 0;
+}
+
+
+/* NOM + NOTE */
+
+.notesGrille .noteTitre {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+
+  color: #bbb;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+.notesGrille .noteTitre strong {
+  color: #eee;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+
+.notesGrille .noteTitre strong small {
+  color: #666;
+  font-size: 10px;
+  margin-left: 2px;
+}
+
+
+/* BARRE */
+
+.notesGrille .barreFond {
+  width: 100%;
+  height: 7px;
+
+  background: #292929;
+
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+
+.notesGrille .barreValeur {
+  height: 100%;
+
+  border-radius: 20px;
+
+  transition:
+    width 0.5s ease,
+    background 0.3s ease;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1000px) {
+
+  .notesGrille {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
 }
 
 
+@media (max-width: 650px) {
+
+  .notesGrille {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* =========================================================
+   FICHE FILM — DESIGN FINAL
+   ========================================================= */
+
+/* ---------- GLOBAL ---------- */
+
+body {
+  background:
+    radial-gradient(circle at 50% -10%, #242424 0%, #0d0d0d 45%);
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    Helvetica,
+    sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.container {
+  width: 94%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding-bottom: 50px;
+}
+
+
+/* ---------- TITRE ---------- */
+
+.title {
+  text-align: left;
+  font-size: 42px;
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  margin: 30px 0 25px;
+  padding-left: 5px;
+}
+
+
+/* ---------- PRESENTATION ---------- */
+
+.fichePresentation {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 30px;
+  align-items: start;
+  margin-bottom: 25px;
+}
+
+
+/* ---------- POSTER ---------- */
+
+.fichePoster {
+  width: 250px;
+  height: 370px;
+  object-fit: cover;
+  border-radius: 16px;
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, .55),
+    0 0 0 1px rgba(255,255,255,.06);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.fichePoster:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 55px rgba(0, 0, 0, .65),
+    0 0 0 1px rgba(255,255,255,.1);
+}
+
+
+/* ---------- COLONNE INFOS ---------- */
+
+.infosInfos {
+  display: grid;
+  grid-template-columns: 220px 260px 160px;
+  gap: 25px;
+  align-items: start;
+  min-width: 0;
+}
+
+
+/* ---------- INFOS FILM ---------- */
+
+.infosGauche {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: auto;
+  padding-top: 4px;
+}
+
+.infosGauche p {
+  margin: 0;
+  color: #d0d0d0;
+  font-size: 15px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+
+/* ---------- ARGENT ---------- */
+
+.infosArgent {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  padding: 12px 17px;
+
+  background: rgba(22,22,22,.9);
+  border: 1px solid #292929;
+  border-radius: 15px;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.25);
+}
+
+.argentBloc {
+  margin: 0;
+  padding: 9px 0;
+  border-bottom: 1px solid #292929;
+}
+
+.argentBloc:last-child {
+  border-bottom: none;
+}
+
+.argentBloc strong {
+  display: block;
+  margin-bottom: 3px;
+
+  color: #858585;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.argentBloc p {
+  margin: 0;
+  color: #f5f5f5;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
 .argentBloc small {
+  display: block;
+  margin-top: 4px;
+
+  color: #777;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+
+/* ---------- RENTABILITE ---------- */
+
+.rentabiliteBloc {
+  padding-top: 11px;
+}
+
+.rentabiliteBloc strong {
+  font-size: 11px;
+}
+
+.rentabiliteBloc p {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+
+/* couleurs dynamiques */
+
+.rentabilitePositive strong,
+.rentabilitePositive p {
+  color: #4ade80;
+}
+
+.rentabiliteNegative strong,
+.rentabiliteNegative p {
+  color: #ef4444;
+}
+
+.rentabiliteInconnue strong,
+.rentabiliteInconnue p {
+  color: #888;
+}
+
+
+/* ---------- NOTE SPECTATEUR ---------- */
+
+.imdbBloc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0;
+  padding: 0;
+}
+
+.imdbTitre {
+  margin-bottom: 8px;
+
+  color: #999;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.imdbScore {
+  width: 125px;
+  height: 125px;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.45);
+
+  transition: transform .2s ease;
+}
+
+.imdbScore:hover {
+  transform: scale(1.04);
+}
+
+.imdbScore .scoreEntier {
+  font-size: 58px;
+  line-height: 1;
+}
+
+
+/* ---------- SYNOPSIS ---------- */
+
+.synopsisCard {
+  background:
+    linear-gradient(
+      145deg,
+      #1b1b1b,
+      #161616
+    );
+
+  border: 1px solid #292929;
+  border-radius: 16px;
+
+  padding: 24px 28px;
+  margin-bottom: 25px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.2);
+}
+
+.synopsisCard h2 {
+  margin: 0 0 12px;
+
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -.3px;
+}
+
+.synopsisCard p {
+  margin: 0;
+
+  color: #c8c8c8;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+
+/* ---------- NOTE GLOBALE ---------- */
+
+.ficheScore {
+  width: 145px;
+  height: 145px;
+
+  margin: 28px auto 30px;
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 15px 35px rgba(0,0,0,.45);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.ficheScore:hover {
+  transform: scale(1.035);
+
+  box-shadow:
+    0 20px 45px rgba(0,0,0,.55);
+}
+
+.ficheScore .scoreEntier {
+  font-size: 76px;
+  line-height: 1;
+}
+
+.ficheScore .scoreDecimal {
+  font-size: 32px;
+  margin-top: 20px;
+}
+
+
+/* ---------- NOTES DETAILLEES ---------- */
+
+.card:has(.noteBloc) {
+  background:
+    linear-gradient(
+      145deg,
+      #1a1a1a,
+      #151515
+    );
+
+  border: 1px solid #292929;
+  border-radius: 16px;
+
+  padding: 25px 28px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.2);
+}
+
+.card:has(.noteBloc) h2 {
+  margin: 0 0 25px;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.noteBloc {
+  margin-bottom: 19px;
+}
+
+.noteBloc:last-child {
+  margin-bottom: 0;
+}
+
+.noteTitre {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 7px;
+
+  color: #d0d0d0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.noteTitre strong {
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.barreFond {
+  height: 9px;
+  background: #303030;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barreValeur {
+  height: 100%;
+  border-radius: 999px;
+
+  transition:
+    width .5s ease,
+    filter .2s ease;
+}
+
+
+/* ---------- BOUTONS ---------- */
+
+.menuBoutons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin-top: 28px;
+}
+
+.menuBoutons button {
+  margin: 0;
+
+  min-height: 44px;
+
+  border-radius: 10px;
 
   font-size: 14px;
-  opacity: 0.7;
+  font-weight: 700;
+
+  transition:
+    transform .15s ease,
+    filter .15s ease;
+}
+
+.menuBoutons button:hover {
+  opacity: 1;
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+}
+
+.menuBoutons button:last-child {
+  background: #292929;
+}
+
+
+/* modifier */
+
+.menuBoutons .modifierButton {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+}
+
+
+/* supprimer */
+
+.menuBoutons .supprimerButton {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+}
+
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 1100px) {
+
+  .fichePresentation {
+    grid-template-columns: 220px minmax(0,1fr);
+  }
+
+  .fichePoster {
+    width: 220px;
+    height: 330px;
+  }
+
+  .infosInfos {
+    grid-template-columns: 1fr 240px;
+  }
+
+  .imdbBloc {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .title {
+    font-size: 34px;
+    text-align: center;
+  }
+
+  .fichePresentation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fichePoster {
+    width: 210px;
+    height: 315px;
+  }
+
+  .infosInfos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .infosGauche {
+    width: 100%;
+    text-align: center;
+  }
+
+  .infosArgent {
+    width: min(100%, 300px);
+  }
+
+  .imdbBloc {
+    margin-top: 5px;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .container {
+    width: 92%;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .fichePoster {
+    width: 180px;
+    height: 270px;
+  }
+
+  .synopsisCard,
+  .card:has(.noteBloc) {
+    padding: 20px;
+  }
+
+  .ficheScore {
+    width: 125px;
+    height: 125px;
+  }
+
+}
+
+.notesAvecGlobale {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 35px;
+  align-items: stretch;
+}
+
+.notesAvecGlobale .ficheScore {
+  width: 190px;
+  height: 100%;
+  min-height: 190px;
+  margin: 0;
+  border-radius: 24px;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 15px 35px rgba(0,0,0,.45);
+}
+
+.notesAvecGlobale .ficheScore .scoreEntier {
+  font-size: 82px;
+  line-height: 1;
+}
+
+.notesAvecGlobale .ficheScore .scoreDecimal {
+  font-size: 34px;
+  margin-top: 25px;
+}
+
+.ficheScoreLabel {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+
+  text-align: center;
+
+  color: rgba(255,255,255,.65);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.notesAvecGlobale .ficheScore:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 800px) {
+
+  .notesAvecGlobale {
+    grid-template-columns: 1fr;
+  }
+
+  .notesAvecGlobale .ficheScore {
+    width: 100%;
+    height: 150px;
+    min-height: 150px;
+  }
+
+}
+
+/* =========================================================
+   JAUGES — PLUS EPAISSES ET PLUS LISIBLES
+   ========================================================= */
+
+.notesAvecGlobale .notesGrille {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  column-gap: 28px;
+  row-gap: 14px;
+}
+
+
+/* Chaque critère */
+
+.notesAvecGlobale .noteBloc {
+  margin: 0;
+}
+
+
+/* Nom + note */
+
+.notesAvecGlobale .noteTitre {
+  margin-bottom: 5px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: #d5d5d5;
+}
+
+
+/* Note à droite */
+
+.notesAvecGlobale .noteTitre strong {
+  font-size: 16px;
+  font-weight: 900;
+
+  color: white;
+}
+
+
+/* Le petit /20 */
+
+.notesAvecGlobale .noteTitre strong small {
+  font-size: 12px;
+  color: #777;
+  margin-left: 2px;
+}
+
+
+/* Jauge */
+
+.notesAvecGlobale .barreFond {
+  height: 13px;
+
+  background: #292929;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+  box-shadow:
+    inset 0 1px 3px rgba(0,0,0,.5);
+}
+
+
+/* Remplissage */
+
+.notesAvecGlobale .barreValeur {
+  height: 100%;
+
+  border-radius: 999px;
+
+  transition:
+    width .5s ease,
+    background .3s ease;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .notesAvecGlobale .notesGrille {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 20px;
+    row-gap: 14px;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .notesAvecGlobale .notesGrille {
+    grid-template-columns: 1fr;
+
+    row-gap: 15px;
+  }
+
+}
+
+/* =========================================================
+   CINE RANK — ORGANISATION DE LA PAGE
+   ========================================================= */
+
+/* ---------- HEADER ---------- */
+
+.container {
+  position: relative;
+}
+
+.title {
+  margin-top: 35px;
+  margin-bottom: 30px;
+  font-size: 46px;
+  font-weight: 950;
+  letter-spacing: -2px;
+}
+
+
+/* ---------- BOUTON COMPTE ---------- */
+
+.compteBouton {
+  position: absolute;
+  top: 28px;
+  right: 0;
+}
+
+.compteBouton button {
+  background: #1c1c1c;
+  border: 1px solid #333;
+  color: #ddd;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* ---------- BARRE PRINCIPALE ---------- */
+
+.menuPrincipal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 14px;
+
+  margin-bottom: 32px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1b1b1b,
+      #151515
+    );
+
+  border: 1px solid #292929;
+  border-radius: 15px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.22);
+}
+
+
+/* enlève le comportement bizarre du faux container */
+
+.menuPrincipal .container {
+  flex: 1;
+}
+
+
+/* boutons */
+
+.menuPrincipal button {
+  margin: 0;
+
+  min-height: 43px;
+
+  padding: 10px 17px;
+
+  border-radius: 9px;
+
+  background: #292929;
+
+  border: 1px solid #383838;
+
+  color: #eee;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  transition:
+    background .15s ease,
+    transform .15s ease,
+    border-color .15s ease;
+}
+
+
+.menuPrincipal button:hover {
+  background: #353535;
+  border-color: #4a4a4a;
+
+  transform: translateY(-1px);
+}
+
+
+/* premier bouton = action principale */
+
+.menuPrincipal button:first-child {
+  background: #e50914;
+  border-color: #e50914;
+  color: white;
+}
+
+
+.menuPrincipal button:first-child:hover {
+  background: #f21a25;
+}
+
+
+/* ---------- TITRE FILMS ---------- */
+
+.filmsHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin: 0 3px 15px;
+}
+
+
+.titreFilms {
+  margin: 0;
+
+  font-size: 28px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: -0.8px;
+}
+
+
+.filmsCompteur {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #777;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* ---------- CONTENEUR DES FILMS ---------- */
+
+.filmsContainer {
+  padding: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #181818,
+      #131313
+    );
+
+  border: 1px solid #282828;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.25);
+}
+
+
+/* ---------- ESPACEMENT ENTRE LES FILMS ---------- */
+
+.filmsContainer > .filmCard {
+  margin-bottom: 16px;
+}
+
+
+.filmsContainer > .filmCard:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ---------- CARTE FILM NORMALE ---------- */
+
+.filmCard:not(.compacte) {
+
+  background:
+    linear-gradient(
+      145deg,
+      #242424,
+      #1d1d1d
+    );
+
+  border: 1px solid #303030;
+
+  border-radius: 17px;
+
+  padding: 22px;
+
+  box-shadow:
+    0 7px 22px rgba(0,0,0,.22);
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+
+.filmCard:not(.compacte):hover {
+
+  transform: translateY(-2px);
+
+  border-color: #3d3d3d;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.32);
+}
+
+
+/* ---------- TITRE FILM ---------- */
+
+.filmCard:not(.compacte) .filmTitre h3 {
+
+  margin: 0;
+
+  font-weight: 950;
+
+  letter-spacing: -1px;
+
+  line-height: 1.05;
+}
+
+
+/* ---------- NOTE GLOBALE ---------- */
+
+.filmCard:not(.compacte) .scoreBadge {
+
+  width: 105px;
+  height: 105px;
+
+  border-radius: 22px;
+
+  flex-shrink: 0;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.35);
+}
+
+
+.filmCard:not(.compacte) .scoreEntier {
+
+  font-size: 54px;
+  line-height: 1;
+  font-weight: 950;
+}
+
+
+.filmCard:not(.compacte) .scoreDecimal {
+
+  font-size: 25px;
+}
+
+
+/* ---------- POSTER ---------- */
+
+.filmCard:not(.compacte) .filmPoster {
+
+  width: 180px;
+  height: 270px;
+
+  border-radius: 13px;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.35);
+}
+
+
+/* ---------- INFOS ---------- */
+
+.filmCard:not(.compacte) .filmInfos p {
+
+  color: #c7c7c7;
+
+  font-size: 15px;
+
+  line-height: 1.4;
+
+  font-weight: 650;
+}
+
+
+/* ---------- JAUGES ---------- */
+
+.filmCard:not(.compacte) .miniNotes {
+
+  gap: 14px 20px;
+
+  margin-top: 80px;
+}
+
+
+.filmCard:not(.compacte) .miniNote span {
+
+  color: #aaa;
+
+  font-size: 12px;
+
+  font-weight: 750;
+
+  letter-spacing: .1px;
+}
+
+
+.filmCard:not(.compacte) .miniBarreFond {
+
+  height: 8px;
+
+  background: #303030;
+
+  border-radius: 999px;
+}
+
+
+.filmCard:not(.compacte) .miniBarreValeur {
+
+  border-radius: 999px;
+
+  transition:
+    width .4s ease;
+}
+
+
+/* ---------- NOTE SPECTATEURS ---------- */
+
+.filmCard:not(.compacte) .noteSpectateursTitre {
+
+  color: #888;
+
+  font-size: 12px;
+
+  font-weight: 800;
+}
+
+
+.filmCard:not(.compacte) .noteSpectateursCarre {
+
+  width: 75px;
+  height: 75px;
+
+  border-radius: 16px;
+
+  font-size: 30px;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.35);
+}
+
+
+/* ---------- ACTIONS ---------- */
+
+.filmCard:not(.compacte) .actions {
+
+  margin-top: 20px;
+
+  padding-top: 16px;
+
+  border-top: 1px solid #303030;
+
+  justify-content: flex-end;
+}
+
+
+.filmCard:not(.compacte) .actions button {
+
+  margin: 0;
+}
+
+/* =========================================================
+   HOVER FILM — SOBRE + OMBRE
+   ========================================================= */
+
+.filmCard {
+  position: relative;
+  z-index: 1;
+
+  transition:
+    box-shadow .2s ease,
+    border-color .2s ease;
+}
+
+
+/* ombre douce sous la fiche */
+
+.filmCard:hover {
+  z-index: 2;
+
+  border-color: #363636;
+
+  box-shadow:
+    0 12px 22px rgba(0, 0, 0, .45),
+    0 4px 8px rgba(0, 0, 0, .25);
+}
+
+/* =========================================================
+   HOVER DES FILMS — SOBRE
+   ========================================================= */
+
+.filmCard {
+  position: relative;
+  z-index: 1;
+
+  border: 1px solid #303030;
+
+  transition:
+    box-shadow .2s ease,
+    border-color .2s ease;
+}
+
+
+/* survol */
+
+.filmCard:hover {
+  z-index: 2;
+
+  /* gris moyen au lieu du gris foncé */
+  border-color: #666;
+
+  /* ombre sous la fiche */
+  box-shadow:
+    0 14px 25px rgba(0, 0, 0, .50),
+    0 5px 10px rgba(0, 0, 0, .30);
+}
+
+.filmCard.compacte {
+  border: 1px solid #303030;
+}
+
+.filmCard.compacte:hover {
+  border-color: #666;
+
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, .55),
+    0 3px 8px rgba(0, 0, 0, .35);
+}
+
+/* =========================================================
+   HOVER — MINI FICHES COMPACTES
+   ========================================================= */
+
+/* Le conteneur doit laisser l'ombre dépasser */
+.filmsContainer {
+  overflow: visible;
+}
+
+
+/* Carte */
+
+.filmCard.compacte {
+  position: relative;
+  z-index: 1;
+
+  border: 1px solid #303030;
+
+  /* transition très douce */
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    border-color .18s ease;
+}
+
+
+/* SURVOL */
+
+.filmCard.compacte:hover {
+  z-index: 20;
+
+  /* elle se soulève réellement */
+  transform: translateY(-4px);
+
+  /* cadre gris moyen */
+  border-color: #666;
+
+  /* ombre visible sous la fiche */
+  box-shadow:
+    0 18px 30px rgba(0, 0, 0, .60),
+    0 7px 12px rgba(0, 0, 0, .35);
+}
+
+/* =========================================================
+   CINE RANK — HEADER / NAV PREMIUM
+   ========================================================= */
+
+.container {
+  width: 94%;
+  max-width: 1500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.title {
+  margin: 0;
+  padding: 42px 0 24px;
+
+  font-size: 46px;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: -2px;
+
+  text-align: left;
+
+  color: #fff;
+
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, .35);
+}
+
+
+/* petit accent sous le titre */
+
+.title::after {
+  content: "";
+  display: block;
+
+  width: 48px;
+  height: 4px;
+
+  margin-top: 14px;
+
+  background: #e50914;
+  border-radius: 999px;
+
+  box-shadow:
+    0 0 18px rgba(229, 9, 20, .35);
+}
+
+
+/* =========================================================
+   BOUTON COMPTE
+   ========================================================= */
+
+.compteBouton {
+  position: absolute;
+
+  top: 40px;
+  right: 0;
+
+  z-index: 10;
+}
+
+.compteBouton button {
+  margin: 0;
+
+  min-height: 42px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  background: rgba(30, 30, 30, .85);
+
+  border: 1px solid #353535;
+  border-radius: 11px;
+
+  color: #ddd;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, .25);
+
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.compteBouton button:hover {
+  background: #252525;
+
+  border-color: #555;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, .4);
+}
+
+
+/* =========================================================
+   NAVIGATION PRINCIPALE
+   ========================================================= */
+
+.menuPrincipal {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin: 0 0 38px;
+  padding: 7px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(31, 31, 31, .96),
+      rgba(22, 22, 22, .96)
+    );
+
+  border: 1px solid #303030;
+  border-radius: 14px;
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, .28),
+    inset 0 1px 0 rgba(255,255,255,.025);
+
+  position: relative;
+}
+
+
+/* si un .container se retrouve dedans */
+
+.menuPrincipal .container {
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+
+/* =========================================================
+   BOUTONS NAV
+   ========================================================= */
+
+.menuPrincipal button {
+  margin: 0;
+
+  min-height: 42px;
+  padding: 0 17px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  color: #999;
+
+  font-size: 13px;
+  font-weight: 850;
+
+  cursor: pointer;
+
+  transition:
+    color .18s ease,
+    background .18s ease,
+    border-color .18s ease,
+    transform .18s ease;
+}
+
+
+.menuPrincipal button:hover {
+  color: #fff;
+
+  background: #292929;
+
+  border-color: #373737;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BOUTON ACTIF / PREMIER BOUTON
+   ========================================================= */
+
+.menuPrincipal button:first-child {
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ef1723,
+      #c90812
+    );
+
+  border-color: #f01a25;
+
+  box-shadow:
+    0 5px 15px rgba(229, 9, 20, .22);
+}
+
+
+.menuPrincipal button:first-child:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #ff1b28,
+      #dc0b16
+    );
+
+  border-color: #ff2632;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 20px rgba(229, 9, 20, .3);
+}
+
+
+/* =========================================================
+   SEPARATION VISUELLE
+   ========================================================= */
+
+.menuPrincipal::after {
+  content: "";
+
+  margin-left: auto;
+
+  width: 1px;
+  height: 24px;
+
+  background: #333;
+}
+
+
+/* =========================================================
+   HEADER FILMS
+   ========================================================= */
+
+.filmsHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin: 0 3px 17px;
+}
+
+
+.titreFilms {
+  margin: 0;
+
+  font-size: 29px;
+  line-height: 1;
+
+  font-weight: 950;
+  letter-spacing: -1px;
+
+  color: #fff;
+}
+
+
+.filmsCompteur {
+  margin-top: 7px;
+
+  color: #707070;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .title {
+    padding-top: 28px;
+
+    font-size: 34px;
+    letter-spacing: -1.3px;
+  }
+
+  .compteBouton {
+    top: 25px;
+  }
+
+  .compteBouton button {
+    width: 42px;
+    padding: 0;
+
+    justify-content: center;
+
+    font-size: 0;
+  }
+
+  .menuPrincipal {
+    gap: 5px;
+
+    padding: 6px;
+
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .menuPrincipal::-webkit-scrollbar {
+    display: none;
+  }
+
+  .menuPrincipal button {
+    flex-shrink: 0;
+
+    padding: 0 14px;
+
+    font-size: 12px;
+  }
+
+  .menuPrincipal::after {
+    display: none;
+  }
+
+  .filmsHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .titreFilms {
+    font-size: 25px;
+  }
+
+}
+
+
+/* =========================================================
+   PETIT ÉCRAN
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+  .container {
+    width: 92%;
+  }
+
+  .title {
+    font-size: 29px;
+  }
+
+  .menuPrincipal button {
+    min-height: 40px;
+    padding: 0 12px;
+  }
+
+}
+
+/* =========================================================
+   CLASSEMENT — TABLEAU PRO / COLONNES PARFAITEMENT ALIGNÉES
+   ========================================================= */
+
+.classementCard {
+  width: 100%;
+  padding: 24px;
+  background: linear-gradient(145deg, #1b1b1b, #121212);
+  border: 1px solid #303030;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.28);
+  overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.classementCard table {
+  width: 100%;
+  min-width: 850px;
+
+  table-layout: fixed;
+
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+
+/* =========================================================
+   COLONNES
+   ========================================================= */
+
+/*
+   IMPORTANT :
+
+   La première colonne = films
+   Toutes les autres = exactement même largeur
+*/
+
+.classementCard th:first-child,
+.classementCard td:first-child {
+  width: 32%;
+}
+
+.classementCard th:not(:first-child),
+.classementCard td:not(:first-child) {
+  width: auto;
+}
+
+
+/* =========================================================
+   EN-TÊTES
+   ========================================================= */
+
+.classementCard thead th {
+  height: 42px;
+
+  padding: 8px 6px;
+
+  color: #777;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  text-align: center;
+
+  white-space: normal;
+  line-height: 1.15;
+
+  user-select: none;
+}
+
+
+/* première colonne */
+
+.classementCard thead th:first-child {
+  text-align: left;
+  padding-left: 12px;
+}
+
+
+/* =========================================================
+   LIGNES
+   ========================================================= */
+
+.classementCard tbody tr {
+  background: #202020;
+
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+.classementCard tbody tr:hover {
+  background: #292929;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.4);
+}
+
+
+/* =========================================================
+   CELLULES
+   ========================================================= */
+
+.classementCard tbody td {
+  height: 82px;
+
+  padding: 8px 6px;
+
+  text-align: center;
+
+  color: #ddd;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  border-top: 1px solid #292929;
+  border-bottom: 1px solid #292929;
+
+  vertical-align: middle;
+}
+
+
+/* première cellule */
+
+.classementCard tbody td:first-child {
+  text-align: left;
+
+  border-left: 1px solid #292929;
+
+  border-radius: 12px 0 0 12px;
+}
+
+
+/* dernière cellule */
+
+.classementCard tbody td:last-child {
+  border-right: 1px solid #292929;
+
+  border-radius: 0 12px 12px 0;
+}
+
+
+/* =========================================================
+   FILM
+   ========================================================= */
+
+.classementCard .filmClassement {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   RANG
+   ========================================================= */
+
+.classementCard .filmClassement::before {
+  content: attr(data-rang);
+
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #2b2b2b;
+
+  color: #888;
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   POSTER
+   ========================================================= */
+
+.classementCard .miniPoster {
+  width: 48px;
+  height: 68px;
+
+  min-width: 48px;
+
+  object-fit: cover;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 5px 12px rgba(0,0,0,.45);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+
+.classementCard tbody tr:hover .miniPoster {
+  transform: scale(1.05);
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.6);
+}
+
+
+/* =========================================================
+   TITRE DU FILM
+   ========================================================= */
+
+.classementCard .filmClassement span {
+  min-width: 0;
+  max-width: 100%;
+
+  display: -webkit-box;
+
+  overflow: hidden;
+
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  color: #eee;
+
+  font-size: 14px;
+  font-weight: 850;
+
+  line-height: 1.25;
+
+  text-align: left;
+}
+
+
+/* =========================================================
+   PETITES NOTES
+   ========================================================= */
+
+.classementCard .petiteNote {
+  width: 52px;
+  height: 52px;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  color: white;
+
+  font-size: 19px;
+  font-weight: 950;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.35);
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+
+.classementCard tbody tr:hover .petiteNote {
+  transform: scale(1.07);
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.5);
+}
+
+
+/* =========================================================
+   PODIUM
+   ========================================================= */
+
+.classementCard tbody tr:first-child {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(234,179,8,.13),
+      #222 35%,
+      #202020
+    );
+}
+
+
+.classementCard tbody tr:first-child .filmClassement::before {
+  content: "🥇";
+
+  background: rgba(234,179,8,.15);
+
+  color: #facc15;
+
+  font-size: 15px;
+}
+
+
+.classementCard tbody tr:nth-child(2) {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(148,163,184,.08),
+      #202020 35%
+    );
+}
+
+
+.classementCard tbody tr:nth-child(2) .filmClassement::before {
+  content: "🥈";
+
+  background: rgba(148,163,184,.12);
+
+  font-size: 15px;
+}
+
+
+.classementCard tbody tr:nth-child(3) {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(180,83,9,.08),
+      #202020 35%
+    );
+}
+
+
+.classementCard tbody tr:nth-child(3) .filmClassement::before {
+  content: "🥉";
+
+  background: rgba(180,83,9,.12);
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .classementCard {
+    padding: 15px 10px;
+
+    overflow-x: auto;
+  }
+
+  .classementCard table {
+    min-width: 850px;
+  }
+
+}
+
+/* =========================================================
+   CLASSEMENT — BLOC DU HAUT
+   ========================================================= */
+/* =========================================================
+   CLASSEMENT — HEADER
+   ========================================================= */
+
+.classementHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.classementHeader h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.classementHeader p {
+  margin: 5px 0 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.classementRetour {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   CLASSEMENT — 3 BLOCS
+   ========================================================= */
+
+.classementStats {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin: 0 0 20px 0;
+}
+
+.classementStat {
+  width: 100%;
+  min-width: 0;
+  min-height: 110px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding: 16px 20px;
+
+  background: linear-gradient(145deg, #1c1c1c, #151515);
+  border: 1px solid #2d2d2d;
+  border-radius: 14px;
+
+  box-sizing: border-box;
+}
+
+.classementStat strong {
+  display: block;
+
+  margin: 0;
+  margin-top: auto;
+  padding-top: 10px;
+
+  color: #fff;
+
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.classementStat span {
+  display: block;
+
+  margin: 0;
+
+  color: #777;
+
+  font-size: 15px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: .7px;
+
+  line-height: 1.15;
+  max-width: 100%;
+}
+
+.classementStat.noteMoyenneStat {
+  position: relative;
+  justify-content: flex-start;
+}
+
+.classementStat.noteMoyenneStat .noteMoyenneCarre {
+  position: absolute;
+
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 68px;
+  height: 68px;
+
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  color: white;
+  font-size: 25px;
+  font-weight: 900;
+
+  box-sizing: border-box;
+}
+.classementStat {
+  position: relative;
+}
+
+
+
+
+
+
+/* MOBILE */
+@media (max-width: 700px) {
+
+  .classementHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .classementStats {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .classementHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .classementStats {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+.classementStat .noteMoyenneCarre {
+  width: 68px;
+  height: 68px;
+
+  margin-top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  color: white;
+  font-size: 25px;
+  font-weight: 900;
+
+  box-sizing: border-box;
+}
+
+.classementHeaderTitle {
+  padding-left: 12px;
+  padding-top: 10px;
+}
+
+.classementTitle {
+  margin: 0;
+
+  font-size: 42px;
+  font-weight: 950;
+  letter-spacing: -1.5px;
+  line-height: 1;
+
+  color: #fff;
+
+  position: relative;
+}
+
+.classementTitle::before {
+  content: "";
+
+  position: absolute;
+  left: -12px;
+  top: 4px;
+
+  width: 4px;
+  height: calc(100% - 8px);
+
+  background: #fff;
+  border-radius: 4px;
+}
+
+/* POSITION DU TITRE CLASSEMENT */
+
+.classementTitle {
+  margin: 18px 0 0 12px !important;
+}
+
+.classementTitle {
+  margin: 25px 0 25px 12px !important;
+
+  font-size: 42px;
+  font-weight: 950;
+  letter-spacing: -1.5px;
+  line-height: 1;
+
+  color: #fff;
+}
+
+/* =========================================================
+   TITRE CLASSEMENT — STYLE PREMIUM
+   ========================================================= */
+
+.classementTitle {
+  margin: 25px 0 25px 12px !important;
+
+  font-size: 44px;
+  font-weight: 950;
+  letter-spacing: -1.8px;
+  line-height: 1;
+
+  /* dégradé blanc -> gris clair */
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f2f2f2 45%,
+    #a8a8a8 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* petite profondeur */
+  filter: drop-shadow(0 5px 14px rgba(0,0,0,.45));
+
+  position: relative;
+}
+
+
+/* accent rouge sous le titre */
+
+.classementTitle::after {
+  content: "";
+
+  display: block;
+
+  width: 55px;
+  height: 4px;
+
+  margin-top: 13px;
+
+  background: linear-gradient(
+    90deg,
+    #ff1824,
+    #b9000b
+  );
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 0 10px rgba(229,9,20,.45),
+    0 0 22px rgba(229,9,20,.18);
+}
+
+
+/* on vire l'ancien trait vertical */
+
+.classementTitle::before {
+  display: none;
+}
+
+/* TITRE CLASSEMENT */
+
+.classementTitle {
+  margin: 25px 0 25px 12px !important;
+
+  font-size: 52px;
+  font-weight: 950;
+  letter-spacing: -2.2px;
+  line-height: 1;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f2f2f2 45%,
+    #a8a8a8 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter: drop-shadow(0 5px 14px rgba(0,0,0,.45));
+
+  position: relative;
+}
+
+
+.classementTitle::after {
+  content: "";
+
+  display: block;
+
+  width: 180px;
+  height: 5px;
+
+  margin-top: 5px;
+
+  background: linear-gradient(
+    90deg,
+    #ff1824,
+    #e50914,
+    #8f0008
+  );
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 0 10px rgba(229,9,20,.5),
+    0 0 25px rgba(229,9,20,.2);
+}
+
+
+.classementTitle::before {
+  display: none;
+}
+
+
+/* ancien trait vertical supprimé */
+
+.classementTitle::before {
+  display: none;
+}
+
+/* =========================================================
+   CLASSEMENT — SWITCH NOTES / CHIFFRES
+   ========================================================= */
+
+.classementActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.classementSwitch {
+  min-height: 42px;
+  padding: 0 15px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #181818;
+
+  border: 1px solid #303030;
+  border-radius: 10px;
+
+  color: #888;
+
+  font-size: 12px;
+  font-weight: 850;
+
+  cursor: pointer;
+
+  transition:
+    color .18s ease,
+    background .18s ease,
+    border-color .18s ease,
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+
+.classementSwitch:hover {
+  color: #fff;
+  background: #252525;
+  border-color: #4a4a4a;
+  transform: translateY(-1px);
+}
+
+
+.classementSwitch.actif {
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #292929,
+      #1c1c1c
+    );
+
+  border-color: #555;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.3),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+
+/* =========================================================
+   CLASSEMENT CHIFFRES
+   ========================================================= */
+
+.classementStatsChiffres {
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+}
+
+
+.classementStatsChiffres .classementStat {
+  min-height: 110px;
+}
+
+
+.statArgent {
+  font-size: 27px !important;
+  letter-spacing: -.8px;
+}
+
+
+.statPositif {
+  color: #4ade80 !important;
+}
+
+
+.statNegatif {
+  color: #ef4444 !important;
+}
+
+
+/* =========================================================
+   CONTROLE INFLATION
+   ========================================================= */
+
+.chiffresControls {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 14px;
+
+  padding: 13px 16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1b1b1b,
+      #151515
+    );
+
+  border: 1px solid #2d2d2d;
+  border-radius: 13px;
+}
+
+
+.chiffresControls > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+
+.chiffresControls strong {
+  color: #eee;
+
+  font-size: 13px;
+  font-weight: 850;
+}
+
+
+.chiffresControls span {
+  color: #707070;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+.inflationToggle {
+  min-height: 36px;
+
+  padding: 0 13px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #222;
+
+  border: 1px solid #353535;
+  border-radius: 9px;
+
+  color: #999;
+
+  font-size: 11px;
+  font-weight: 850;
+
+  cursor: pointer;
+
+  transition:
+    color .18s ease,
+    background .18s ease,
+    border-color .18s ease;
+}
+
+
+.inflationToggle:hover {
+  color: #fff;
+  border-color: #555;
+}
+
+
+.inflationToggle.active {
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #173b25,
+      #12251a
+    );
+
+  border-color: #2f6b43;
+}
+
+
+.inflationTogglePoint {
+  width: 7px !important;
+  height: 7px;
+
+  padding: 0 !important;
+
+  border-radius: 50%;
+
+  background: #666;
+
+  flex-shrink: 0;
+}
+
+
+.inflationToggle.active .inflationTogglePoint {
+  background: #4ade80;
+
+  box-shadow:
+    0 0 9px rgba(74,222,128,.55);
+}
+
+
+/* =========================================================
+   COLONNES CHIFFRES
+   ========================================================= */
+
+.classementTableChiffres {
+  min-width: 1050px !important;
+}
+
+
+.classementTableChiffres th:first-child,
+.classementTableChiffres td:first-child {
+  width: 28%;
+}
+
+
+.classementTableChiffres th:not(:first-child),
+.classementTableChiffres td:not(:first-child) {
+  width: auto;
+}
+
+
+/* =========================================================
+   NOTE SPECTATEUR
+   ========================================================= */
+
+.noteSpectateurClassement {
+  width: 62px !important;
+  height: 62px !important;
+
+  border-radius: 15px !important;
+
+  font-size: 21px !important;
+  font-weight: 950 !important;
+
+  box-shadow:
+    0 7px 18px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   ANNÉE
+   ========================================================= */
+
+.chiffreSimple {
+  color: #ccc;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   BUDGET / BOX OFFICE
+   ========================================================= */
+
+.chiffreArgent {
+  color: #ddd;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   RENTABILITÉ
+   ========================================================= */
+
+.chiffreRentabilite,
+.chiffreRoi {
+
+  min-width: 100px;
+  min-height: 52px;
+
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 950;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 5px 13px rgba(0,0,0,.22);
+
+  transition:
+    transform .18s ease,
+    filter .18s ease;
+}
+
+
+.chiffreRoi {
+  min-width: 85px;
+}
+
+
+.classementTableChiffres tbody tr:hover
+.chiffreRentabilite,
+
+.classementTableChiffres tbody tr:hover
+.chiffreRoi {
+
+  transform: scale(1.05);
+
+  filter: brightness(1.08);
+}
+
+
+/* =========================================================
+   TRI
+   ========================================================= */
+
+.classementTableChiffres th {
+  cursor: pointer;
+}
+
+
+.classementTableChiffres th:hover {
+  color: #aaa;
+}
+
+
+.classementTableChiffres th.activeSort {
+  color: #fff;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .classementHeader {
+    gap: 15px;
+  }
+
+
+  .classementActions {
+    width: 100%;
+
+    flex-wrap: wrap;
+  }
+
+
+  .classementSwitch {
+    flex: 1;
+  }
+
+
+  .classementRetour {
+    width: 100%;
+  }
+
+
+  .classementStatsChiffres {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+
+  .chiffresControls {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .inflationToggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .classementStatsChiffres {
+    grid-template-columns: 1fr;
+  }
+
+
+  .classementSwitch {
+    flex: none;
+    width: 100%;
+  }
+
+}
+
+.chiffreRentabilite,
+.chiffreRoi {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   AMIS — ACCUEIL
+   ========================================================= */
+
+.amisSection {
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+.amisHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.amisGestionButton {
+  background: #222;
+  border: 1px solid #333;
+  color: #ddd;
+  font-weight: 800;
+  margin: 0;
+}
+
+.amisGestionButton:hover {
+  background: #2d2d2d;
+}
+
+.amisCard {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(145deg, #1b1b1b, #121212);
+  border: 1px solid #303030;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.28);
+}
+
+.amisListe {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.amiLigne {
+  min-height: 80px;
+  display: grid;
+  grid-template-columns: 1fr 180px 50px;
+  align-items: center;
+  gap: 20px;
+
+  padding: 12px 16px;
+
+  background: #202020;
+  border: 1px solid #292929;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+.amiLigne:hover {
+  background: #292929;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.35);
+}
+
+.amiIdentite {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.amiAvatar {
+  width: 50px;
+  height: 50px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    145deg,
+    #333,
+    #1b1b1b
+  );
+
+  border: 1px solid #444;
+
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.amiInfos {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.amiInfos strong {
+  color: #eee;
+  font-size: 16px;
+  font-weight: 900;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.amiInfos span {
+  color: #777;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.amiNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.amiNote > span {
+  color: #777;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .8px;
+}
+
+.amiNote .petiteNote {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.amiAction {
+  color: #777;
+  font-size: 25px;
+  font-weight: 900;
+  text-align: center;
+  transition: .18s ease;
+}
+
+.amiLigne:hover .amiAction {
+  color: white;
+  transform: translateX(4px);
+}
+
+.amisVide {
+  min-height: 120px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 20px;
+}
+
+.amisVideIcon {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: #222;
+  border: 1px solid #333;
+
+  font-size: 25px;
+}
+
+.amisVide > div:nth-child(2) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.amisVide strong {
+  font-size: 16px;
+}
+
+.amisVide span {
+  color: #777;
+  font-size: 13px;
+}
+
+.amisVide button {
+  margin: 0;
+}
+
+/* =========================================================
+   CINERANK — PAGE AMIS
+   ========================================================= */
+
+/* ---------- PAGE ---------- */
+
+.amisPage {
+  padding-bottom: 60px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.amisPageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
+
+  margin: 0 0 28px;
+  padding: 34px 0 24px;
+
+  border-bottom: 1px solid #292929;
+}
+
+.amisSurTitre {
+  margin-bottom: 8px;
+
+  color: #e50914;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.amisTitre {
+  margin: 0;
+
+  font-size: 48px;
+  line-height: 1;
+
+  font-weight: 950;
+  letter-spacing: -2px;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f0f0f0 45%,
+    #999999 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter: drop-shadow(0 5px 14px rgba(0,0,0,.4));
+}
+
+.amisTitre::after {
+  content: "";
+
+  display: block;
+
+  width: 90px;
+  height: 4px;
+
+  margin-top: 13px;
+
+  background: linear-gradient(
+    90deg,
+    #ff1824,
+    #e50914,
+    #8f0008
+  );
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 0 10px rgba(229,9,20,.45),
+    0 0 22px rgba(229,9,20,.15);
+}
+
+.amisSousTitre {
+  margin: 14px 0 0;
+
+  color: #777;
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+
+/* ---------- RETOUR ---------- */
+
+.amisRetour {
+  flex-shrink: 0;
+
+  margin: 0;
+
+  min-height: 42px;
+
+  padding: 0 17px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #1c1c1c;
+
+  border: 1px solid #353535;
+  border-radius: 10px;
+
+  color: #bbb;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  box-shadow:
+    0 7px 20px rgba(0,0,0,.2);
+
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    color .18s ease,
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.amisRetour:hover {
+  background: #292929;
+
+  border-color: #555;
+
+  color: white;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 25px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   BLOCS PRINCIPAUX
+   ========================================================= */
+
+.amisRecherche,
+.amisBloc {
+  margin-bottom: 26px;
+}
+
+.amisRecherche {
+  padding: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1b1b1b,
+      #141414
+    );
+
+  border: 1px solid #303030;
+  border-radius: 17px;
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.25);
+}
+
+.amisBlocHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin: 0 3px 12px;
+}
+
+.amisBlocHeader h2,
+.amisSectionTitre h2 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: 22px;
+  font-weight: 900;
+
+  letter-spacing: -.5px;
+}
+
+.amisBlocHeader span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #666;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   TITRE RECHERCHE
+   ========================================================= */
+
+.amisSectionTitre {
+  margin-bottom: 18px;
+}
+
+.amisSectionTitre p {
+  margin: 6px 0 0;
+
+  color: #777;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   BARRE DE RECHERCHE
+   ========================================================= */
+
+.amisRechercheLigne {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) auto;
+
+  gap: 10px;
+
+  align-items: center;
+}
+
+.amisRechercheLigne input {
+  width: 100%;
+
+  height: 46px;
+
+  margin: 0;
+
+  padding: 0 15px;
+
+  background: #202020;
+
+  border: 1px solid #343434;
+  border-radius: 10px;
+
+  color: #eee;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  outline: none;
+
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+.amisRechercheLigne input::placeholder {
+  color: #666;
+}
+
+.amisRechercheLigne input:hover {
+  border-color: #444;
+}
+
+.amisRechercheLigne input:focus {
+  background: #232323;
+
+  border-color: #555;
+
+  box-shadow:
+    0 0 0 3px rgba(229,9,20,.08);
+}
+
+.amisRechercheLigne button {
+  height: 46px;
+
+  margin: 0;
+
+  padding: 0 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ef1723,
+      #c90812
+    );
+
+  border: 1px solid #f01a25;
+  border-radius: 10px;
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 850;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 6px 18px rgba(229,9,20,.18);
+
+  transition:
+    transform .18s ease,
+    filter .18s ease,
+    box-shadow .18s ease;
+}
+
+.amisRechercheLigne button:hover {
+  filter: brightness(1.1);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 22px rgba(229,9,20,.28);
+}
+
+
+/* =========================================================
+   RESULTATS DE RECHERCHE
+   ========================================================= */
+
+.amisResultats {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-top: 16px;
+
+  padding-top: 16px;
+
+  border-top: 1px solid #2b2b2b;
+}
+
+
+/* =========================================================
+   LISTES
+   ========================================================= */
+
+.amisListe {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding: 12px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1b1b1b,
+      #121212
+    );
+
+  border: 1px solid #303030;
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.25);
+}
+
+
+/* =========================================================
+   LIGNE UTILISATEUR
+   ========================================================= */
+
+.amiLigne {
+  min-height: 78px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 12px 15px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #222,
+      #1d1d1d
+    );
+
+  border: 1px solid #2c2c2c;
+
+  border-radius: 12px;
+
+  cursor: default;
+
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.amiLigne:hover {
+  background:
+    linear-gradient(
+      145deg,
+      #292929,
+      #222
+    );
+
+  border-color: #555;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 22px rgba(0,0,0,.4);
+}
+
+
+/* =========================================================
+   IDENTITE
+   ========================================================= */
+
+.amiIdentite {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+
+/* ---------- AVATAR ---------- */
+
+.amiAvatar {
+  width: 50px;
+  height: 50px;
+
+  min-width: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #3a3a3a,
+      #1b1b1b
+    );
+
+  border: 1px solid #484848;
+
+  color: #fff;
+
+  font-size: 19px;
+  font-weight: 950;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.35);
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease;
+}
+
+.amiLigne:hover .amiAvatar {
+  transform: scale(1.05);
+
+  border-color: #666;
+}
+
+
+/* ---------- INFOS ---------- */
+
+.amiInfos {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.amiInfos strong {
+  overflow: hidden;
+
+  color: #eee;
+
+  font-size: 15px;
+  font-weight: 900;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.amiInfos span {
+  overflow: hidden;
+
+  color: #707070;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   BOUTONS DES LIGNES
+   ========================================================= */
+
+.amiLigne > button {
+  min-height: 38px;
+
+  margin: 0;
+
+  padding: 0 14px;
+
+  background: #292929;
+
+  border: 1px solid #3b3b3b;
+  border-radius: 9px;
+
+  color: #ddd;
+
+  font-size: 12px;
+  font-weight: 850;
+
+  white-space: nowrap;
+
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    color .18s ease,
+    transform .18s ease,
+    filter .18s ease;
+}
+
+.amiLigne > button:hover {
+  background: #353535;
+
+  border-color: #555;
+
+  color: white;
+
+  transform: translateY(-1px);
+
+  filter: brightness(1.08);
+}
+
+
+/* Ajouter */
+
+.amisResultats .amiLigne > button {
+  background:
+    linear-gradient(
+      135deg,
+      #e50914,
+      #b90710
+    );
+
+  border-color: #e50914;
+
+  color: white;
+}
+
+.amisResultats .amiLigne > button:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #ff1824,
+      #d60914
+    );
+
+  box-shadow:
+    0 6px 16px rgba(229,9,20,.22);
+}
+
+
+/* Annuler */
+
+.amisBloc:nth-of-type(3) .amiLigne > button {
+  background: #242424;
+
+  color: #999;
+
+  border-color: #353535;
+}
+
+
+/* =========================================================
+   DEMANDES RECUES — ACTIONS
+   ========================================================= */
+
+.amisDemandeActions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.amisDemandeActions button {
+  min-height: 38px;
+
+  margin: 0;
+
+  padding: 0 13px;
+
+  border-radius: 9px;
+
+  font-size: 12px;
+  font-weight: 850;
+
+  white-space: nowrap;
+
+  transition:
+    transform .18s ease,
+    filter .18s ease,
+    box-shadow .18s ease;
+}
+
+
+/* Accepter */
+
+.amisDemandeActions button:first-child {
+  background:
+    linear-gradient(
+      135deg,
+      #238443,
+      #176333
+    );
+
+  border: 1px solid #2f9b52;
+
+  color: white;
+}
+
+.amisDemandeActions button:first-child:hover {
+  filter: brightness(1.1);
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 15px rgba(34,197,94,.18);
+}
+
+
+/* Refuser */
+
+.amisDemandeActions button:last-child {
+  background: #252525;
+
+  border: 1px solid #3b3b3b;
+
+  color: #999;
+}
+
+.amisDemandeActions button:last-child:hover {
+  background: #302020;
+
+  border-color: #5a3333;
+
+  color: #eee;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   LIEN AMI
+   ========================================================= */
+
+.amiLigne[onclick] {
+  cursor: pointer;
+}
+
+.amiAction {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #292929;
+
+  border: 1px solid #383838;
+
+  color: #777;
+
+  font-size: 22px;
+  font-weight: 900;
+
+  transition:
+    background .18s ease,
+    color .18s ease,
+    border-color .18s ease,
+    transform .18s ease;
+}
+
+.amiLigne:hover .amiAction {
+  background: #333;
+
+  border-color: #555;
+
+  color: white;
+
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   ETATS VIDES
+   ========================================================= */
+
+.amisEtatVide {
+  min-height: 110px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 18px;
+
+  background: #1c1c1c;
+
+  border: 1px dashed #343434;
+
+  border-radius: 12px;
+}
+
+.amisEtatVide > span {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #252525;
+
+  border: 1px solid #353535;
+
+  font-size: 21px;
+}
+
+.amisEtatVide > div {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.amisEtatVide strong {
+  color: #ddd;
+
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.amisEtatVide p {
+  margin: 0;
+
+  color: #666;
+
+  font-size: 12px;
+  font-weight: 650;
+}
+
+
+/* =========================================================
+   RECHERCHE — MESSAGE "AUCUN RESULTAT"
+   ========================================================= */
+
+.amisRecherche > .amisEtatVide {
+  margin-top: 16px;
+}
+
+
+/* =========================================================
+   CHARGEMENT
+   ========================================================= */
+
+.amisPage > p {
+  padding: 80px 0;
+
+  color: #777;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   MOBILE — 800PX
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .amisPageHeader {
+    padding-top: 28px;
+  }
+
+  .amisTitre {
+    font-size: 40px;
+  }
+
+  .amisRecherche {
+    padding: 20px;
+  }
+
+  .amisRechercheLigne {
+    grid-template-columns: 1fr;
+  }
+
+  .amisRechercheLigne button {
+    width: 100%;
+  }
+
+  .amisDemandeActions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .amisDemandeActions button {
+    min-height: 36px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE — 600PX
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .amisPageHeader {
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+  .amisRetour {
+    width: 100%;
+  }
+
+  .amisTitre {
+    font-size: 36px;
+  }
+
+  .amisSousTitre {
+    font-size: 13px;
+  }
+
+  .amisBlocHeader {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .amiLigne {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    padding: 13px;
+  }
+
+  .amiLigne > button {
+    width: 100%;
+  }
+
+  .amisDemandeActions {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+  }
+
+  .amisDemandeActions button {
+    width: 100%;
+  }
+
+  .amiAction {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE — 450PX
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+  .amisTitre {
+    font-size: 31px;
+    letter-spacing: -1.2px;
+  }
+
+  .amisTitre::after {
+    width: 65px;
+  }
+
+  .amisRecherche {
+    padding: 16px;
+  }
+
+  .amisListe {
+    padding: 8px;
+  }
+
+  .amiIdentite {
+    gap: 11px;
+  }
+
+  .amiAvatar {
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+
+    border-radius: 12px;
+
+    font-size: 17px;
+  }
+
+  .amiInfos strong {
+    font-size: 14px;
+  }
+
+  .amisEtatVide {
+    align-items: flex-start;
+
+    padding: 15px;
+  }
+
+  .amisEtatVide > span {
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+  }
+
+}
+
+/* =========================================================
+   PAGE D'UN AMI
+   ========================================================= */
+
+.amiPage {
+  padding-bottom: 60px;
+}
+
+
+/* HEADER */
+
+.amiPageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  margin-bottom: 35px;
+}
+
+
+.amiProfil {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+
+.amiAvatarGrand {
+  width: 105px;
+  height: 105px;
+  flex-shrink: 0;
+
+  border-radius: 24px;
+
+  overflow: hidden;
+
+  background: linear-gradient(
+    145deg,
+    #292929,
+    #171717
+  );
+
+  border: 1px solid #333;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.4);
+}
+
+
+.amiAvatarGrand img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+
+.amiAvatarGrand span {
+  font-size: 48px;
+  font-weight: 900;
+  color: white;
+}
+
+
+.amiTitre {
+  margin: 4px 0 5px;
+
+  font-size: 42px;
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+
+.amiSousTitre {
+  margin: 0;
+
+  color: #999;
+
+  font-size: 15px;
+}
+
+
+.amiRetour {
+  background: #292929;
+  color: white;
+
+  border: 1px solid #383838;
+
+  padding: 11px 18px;
+
+  border-radius: 9px;
+
+  font-weight: 700;
+}
+
+
+.amiRetour:hover {
+  background: #333;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .amiPageHeader {
+    flex-direction: column;
+  }
+
+
+  .amiProfil {
+    width: 100%;
+  }
+
+
+  .amiAvatarGrand {
+    width: 80px;
+    height: 80px;
+    border-radius: 18px;
+  }
+
+
+  .amiAvatarGrand span {
+    font-size: 36px;
+  }
+
+
+  .amiTitre {
+    font-size: 32px;
+  }
+
+
+  .amiRetour {
+    width: 100%;
+  }
+
+}
+
+/* =========================================================
+   PROFIL — PHOTO
+   ========================================================= */
+
+.profilPhotoCard {
+  margin-bottom: 20px;
+}
+
+.profilPhotoZone {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.profilPhotoCadre {
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #222;
+  border: 1px solid #333;
+  box-shadow: 0 8px 25px rgba(0,0,0,.35);
+}
+
+.profilPhoto {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.profilPhotoPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #292929;
+
+  color: #aaa;
+  font-size: 65px;
+  font-weight: 900;
+}
+
+.profilPhotoActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.profilPhotoButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e50914;
+  color: white;
+
+  padding: 12px 18px;
+  border-radius: 8px;
+
+  font-weight: bold;
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.profilPhotoButton:hover {
+  opacity: .85;
+}
+
+.profilPhotoSupprimer {
+  background: #333;
+  color: #ddd;
+}
+
+.profilPhotoSupprimer:hover {
+  background: #444;
+}
+
+.profilPhotoActions p {
+  margin: 0;
+  color: #777;
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .profilPhotoZone {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profilPhotoCadre {
+    width: 130px;
+    height: 130px;
+  }
 
 }

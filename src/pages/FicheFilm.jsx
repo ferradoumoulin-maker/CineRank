@@ -1,6 +1,71 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase/client";
+import { cpiUS } from "../data/cpiUS";
+
+function calculerRentabiliteInflation(rentabilite, dateSortie){
+
+  if(!rentabilite || !dateSortie){
+    return "";
+  }
+
+  const annee = new Date(dateSortie).getFullYear();
+
+  const cpiFilm = cpiUS[annee];
+  const cpiActuel = cpiUS[2026];
+
+  if(!cpiFilm || !cpiActuel){
+    return "";
+  }
+
+  const resultat = rentabilite * (cpiActuel / cpiFilm);
+
+  const signe = resultat >= 0 ? "+" : "";
+
+  return `≈ ${signe}${Math.round(resultat).toLocaleString("fr-FR")} $`;
+}
+
+function calculerRentabilite(budget, boxOffice){
+
+if(!budget || !boxOffice){
+return null;
+}
+
+const budgetNombre = Number(
+String(budget).replace(/[^0-9.-]/g,"")
+);
+
+const boxOfficeNombre = Number(
+String(boxOffice).replace(/[^0-9.-]/g,"")
+);
+
+if(!budgetNombre || !boxOfficeNombre){
+return null;
+}
+
+let marketing;
+
+if(budgetNombre < 50_000_000){
+marketing = budgetNombre * 0.35;
+}
+else if(budgetNombre < 100_000_000){
+marketing = budgetNombre * 0.45;
+}
+else if(budgetNombre < 150_000_000){
+marketing = budgetNombre * 0.50;
+}
+else if(budgetNombre < 200_000_000){
+marketing = budgetNombre * 0.55;
+}
+else{
+marketing = budgetNombre * 0.60;
+}
+
+const recettesStudio = boxOfficeNombre * 0.50;
+
+return recettesStudio - budgetNombre - marketing;
+}
+
 
 function couleurNote(note){
 
@@ -300,8 +365,8 @@ function FicheFilm(){
 
 
       <h1 className="title">
-        🎬 {film.titre}
-      </h1>
+  {film.titre}
+</h1>
       <div className="fichePresentation">
 
 
@@ -389,8 +454,56 @@ function FicheFilm(){
         {film.boxOfficeInflation || "Inconnue"}
       </small>
 
-
     </div>
+
+
+    <div
+  className={`argentBloc rentabiliteBloc ${
+    calculerRentabilite(film.budget, film.boxOffice) === null
+      || calculerRentabilite(film.budget, film.boxOffice) === 0
+      ? "rentabiliteInconnue"
+      : calculerRentabilite(film.budget, film.boxOffice) < 0
+      ? "rentabiliteNegative"
+      : "rentabilitePositive"
+  }`}
+>
+
+  <strong>
+    RENTABILITÉ ESTIMÉE :
+  </strong>
+
+  <p>
+    {calculerRentabilite(
+      film.budget,
+      film.boxOffice
+    ) !== null
+    ?
+    `≈ ${
+      calculerRentabilite(film.budget, film.boxOffice) >= 0
+      ? "+"
+      : ""
+    }${Math.round(
+      calculerRentabilite(film.budget, film.boxOffice)
+    ).toLocaleString("fr-FR")} $`
+    :
+    "Inconnue"
+    }
+  </p>
+
+  <small>
+    Avec inflation :
+    <br/>
+    {calculerRentabiliteInflation(
+      calculerRentabilite(
+        film.budget,
+        film.boxOffice
+      ),
+      film.dateSortie
+    ) || "Inconnue"}
+  </small>
+
+</div>
+
 
 
   </div>
@@ -443,78 +556,92 @@ function FicheFilm(){
 </div>
 
 
-      <div
-  className="scoreBadge ficheScore"
-  style={{
-    background: couleurNote(film.note)
-  }}
->
-
-  <span className="scoreEntier">
-    {Math.floor(film.note * 5)}
-  </span>
-
-  <span className="scoreDecimal">
-  .{Math.floor(((film.note * 5) % 1) * 10)}
-</span>
-
-</div>
+      
 
 
 
-      <div className="card">
+      
+
+  <div className="card notesDetaillees">
+
+  <div className="notesHeader">
+
+    <h2>
+      Notes détaillées
+    </h2>
+
+    <span>
+      9 critères
+    </span>
+
+  </div>
 
 
-        <h2>
-          Notes détaillées
-        </h2>
+  <div className="notesAvecGlobale">
 
+    <div
+      className="ficheScore"
+      style={{
+        background: couleurNote(film.note)
+      }}
+    >
 
+      <span className="scoreEntier">
+        {Math.floor(film.note * 5)}
+      </span>
 
-        {
-  criteres.map(([nom,label])=>(
+      <span className="scoreDecimal">
+        .{Math.floor(((film.note * 5) % 1) * 10)}
+      </span>
 
-    <div key={nom} className="noteBloc">
-
-      <div className="noteTitre">
-
-        {label}
-
-        <strong>
-          {film[nom]} /20
-        </strong>
-
-      </div>
-
-
-      <div className="barreFond">
-
-        <div
-
-className="barreValeur"
-
-style={{
-
-width: `${film[nom] * 5}%`,
-
-background: couleurNote(film[nom])
-
-}}
-
->
-</div>
-
-      </div>
-
+      <span className="ficheScoreLabel">
+        / 100
+      </span>
 
     </div>
 
-  ))
-}
+
+    <div className="notesGrille">
+
+      {criteres.map(([nom, label]) => (
+
+        <div key={nom} className="noteBloc">
+
+          <div className="noteTitre">
+
+            <span>
+              {label}
+            </span>
+
+            <strong>
+              {film[nom]}
+              <small>/20</small>
+            </strong>
+
+          </div>
 
 
+          <div className="barreFond">
 
-      </div>
+            <div
+              className="barreValeur"
+              style={{
+                width: `${film[nom] * 5}%`,
+                background: couleurNote(film[nom])
+              }}
+            />
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</div>
 
 
 
