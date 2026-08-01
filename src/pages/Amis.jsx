@@ -170,10 +170,11 @@ function Amis() {
      ========================================================= */
 
   async function accepterDemande(demande) {
-    if (traitementDemande) return;
+  if (traitementDemande) return;
 
-    setTraitementDemande(demande.id);
+  setTraitementDemande(demande.id);
 
+  try {
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -183,90 +184,33 @@ function Amis() {
       return;
     }
 
-    try {
-      /*
-       * On ajoute l'expéditeur dans les amis
-       * du destinataire.
-       */
-
-      const { error: erreur1 } = await supabase
-        .from("amis")
-        .insert({
-  user_id: user.id,
-  ami_id: demande.expediteur_id,
-});
-
-      if (erreur1) {
-        /*
-         * Si l'amitié existe déjà, on continue.
-         * Sinon on arrête.
-         */
-
-        if (
-          !String(erreur1.message || "")
-            .toLowerCase()
-            .includes("duplicate")
-        ) {
-          throw erreur1;
-        }
+    const { error } = await supabase.rpc(
+      "accepter_demande_ami",
+      {
+        demande_id: demande.id,
       }
+    );
 
-      /*
-       * On ajoute également le destinataire
-       * dans les amis de l'expéditeur.
-       */
-
-      const { error: erreur2 } = await supabase
-        .from("amis")
-        .insert({
-  user_id: demande.expediteur_id,
-  ami_id: user.id,
-});
-
-      if (erreur2) {
-        if (
-          !String(erreur2.message || "")
-            .toLowerCase()
-            .includes("duplicate")
-        ) {
-          throw erreur2;
-        }
-      }
-
-      /*
-       * La demande n'est plus en attente.
-       */
-
-      const { error: erreurDemande } =
-        await supabase
-          .from("demandes_amis")
-          .update({
-            statut: "acceptee",
-          })
-          .eq("id", demande.id);
-
-      if (erreurDemande) {
-        throw erreurDemande;
-      }
-
-      /*
-       * On recharge tout.
-       */
-
-      await chargerDonnees();
-    } catch (error) {
-      console.error(
-        "Erreur acceptation demande :",
-        error
-      );
-
-      alert(
-        "Impossible d'accepter cette demande."
-      );
-    } finally {
-      setTraitementDemande(null);
+    if (error) {
+      throw error;
     }
+
+    await chargerDonnees();
+
+  } catch (error) {
+    console.error(
+      "Erreur acceptation demande :",
+      error
+    );
+
+    alert(
+      "Impossible d'accepter cette demande."
+    );
+
+  } finally {
+    setTraitementDemande(null);
   }
+}
 
   /* =========================================================
      REFUSER UNE DEMANDE
