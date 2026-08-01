@@ -6280,3 +6280,95 @@ body {
   }
 
 }
+
+/* =========================================================
+   DEMANDES D'AMIS
+   ========================================================= */
+
+.demandesAmisBloc {
+  margin-bottom: 30px;
+}
+
+.demandesAmisListe {
+  padding: 10px;
+}
+
+.demandeAmiLigne {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px;
+  border-bottom: 1px solid #292929;
+}
+
+.demandeAmiLigne:last-child {
+  border-bottom: none;
+}
+
+.demandeAmiActions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.demandeAmiActions button {
+  margin: 0;
+  min-width: 110px;
+  font-weight: 800;
+}
+
+.demandeAccepter {
+  background: #16a34a !important;
+}
+
+.demandeAccepter:hover {
+  background: #15803d !important;
+}
+
+.demandeRefuser {
+  background: #333 !important;
+}
+
+.demandeRefuser:hover {
+  background: #dc2626 !important;
+}
+
+.demandeAmiActions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* Avatar avec image */
+
+.amiAvatar {
+  overflow: hidden;
+}
+
+.amiAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+  .demandeAmiLigne {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .demandeAmiActions {
+    width: 100%;
+  }
+
+  .demandeAmiActions button {
+    flex: 1;
+  }
+
+}
