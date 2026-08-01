@@ -39,60 +39,57 @@ function Amis() {
      ========================================================= */
 
   async function chargerAmis(userId) {
-    const { data, error } = await supabase
-      .from("amis")
-      .select("id, ami_id, created_at")
-      .eq("userid", userId)
-      .order("created_at", {
-        ascending: false,
-      });
+  const { data, error } = await supabase
+    .from("amis")
+    .select("*")
+    .eq("userid", userId);
 
-    if (error) {
-      console.error("Erreur chargement amis :", error);
-      setAmis([]);
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      setAmis([]);
-      return;
-    }
-
-    const ids = data.map((ami) => ami.ami_id);
-
-    const {
-      data: profils,
-      error: profilsError,
-    } = await supabase
-      .from("profils")
-      .select("user_id, pseudo, avatar_url")
-      .in("user_id", ids);
-
-    if (profilsError) {
-      console.error(
-        "Erreur chargement profils amis :",
-        profilsError
-      );
-
-      setAmis([]);
-      return;
-    }
-
-    const amisComplets = data.map((ami) => {
-      const profil = profils?.find(
-        (p) => p.user_id === ami.ami_id
-      );
-
-      return {
-        id: ami.ami_id,
-        relationId: ami.id,
-        pseudo: profil?.pseudo || "Utilisateur",
-        avatar_url: profil?.avatar_url || null,
-      };
-    });
-
-    setAmis(amisComplets);
+  if (error) {
+    console.error("ERREUR AMIS :", error);
+    setAmis([]);
+    return;
   }
+
+  if (!data || data.length === 0) {
+    setAmis([]);
+    return;
+  }
+
+  const ids = data.map((ami) => ami.ami_id);
+
+  const {
+    data: profils,
+    error: profilsError,
+  } = await supabase
+    .from("profils")
+    .select("user_id, pseudo, avatar_url")
+    .in("user_id", ids);
+
+  if (profilsError) {
+    console.error(
+      "Erreur chargement profils amis :",
+      profilsError
+    );
+
+    setAmis([]);
+    return;
+  }
+
+  const amisComplets = data.map((ami) => {
+    const profil = profils?.find(
+      (p) => p.user_id === ami.ami_id
+    );
+
+    return {
+      id: ami.ami_id,
+      relationId: ami.id,
+      pseudo: profil?.pseudo || "Utilisateur",
+      avatar_url: profil?.avatar_url || null,
+    };
+  });
+
+  setAmis(amisComplets);
+}
 
   /* =========================================================
      CHARGER LES DEMANDES REÇUES
