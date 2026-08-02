@@ -6925,7 +6925,7 @@ body {
 
 
 .amiPage .scoreBadge::after {
-  content: "/100";
+  content: "";
 
   position: absolute;
 
