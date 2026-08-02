@@ -6372,3 +6372,3369 @@ body {
   }
 
 }
+
+/* =========================================================
+   CINERANK — PAGE AMI PREMIUM
+   ========================================================= */
+
+.amiPage {
+  position: relative;
+  width: 95%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 35px 0 70px;
+  color: #fff;
+}
+
+
+/* =========================================================
+   HEADER PROFIL
+   ========================================================= */
+
+.amiPageHeader {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+
+  padding: 30px 34px;
+  margin-bottom: 22px;
+
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 24px;
+
+  background:
+    radial-gradient(
+      circle at 8% 50%,
+      rgba(229,9,20,.18),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #1b1b1b,
+      #101010
+    );
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.35);
+
+  overflow: hidden;
+}
+
+
+/* lumière décorative */
+
+.amiPageHeader::before {
+  content: "";
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  right: -120px;
+  top: -150px;
+
+  background: rgba(229,9,20,.12);
+
+  filter: blur(70px);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+
+/* ligne rouge */
+
+.amiPageHeader::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 5px;
+  height: 100%;
+
+  background: linear-gradient(
+    180deg,
+    #ff1730,
+    #b0000b
+  );
+
+  box-shadow:
+    0 0 25px rgba(229,9,20,.5);
+}
+
+
+.amiProfil {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+
+  gap: 22px;
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.amiAvatarGrand {
+  position: relative;
+
+  width: 105px;
+  height: 105px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #2b2b2b,
+      #111
+    );
+
+  border: 3px solid #252525;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.5),
+    0 0 0 5px rgba(229,9,20,.06);
+
+  overflow: hidden;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+
+.amiAvatarGrand:hover {
+  transform: scale(1.04);
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.6),
+    0 0 0 6px rgba(229,9,20,.1),
+    0 0 30px rgba(229,9,20,.18);
+}
+
+
+.amiAvatarGrand img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+.amiAvatarGrand span {
+  font-size: 42px;
+  font-weight: 950;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      #aaa
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+}
+
+
+/* =========================================================
+   TITRES
+   ========================================================= */
+
+.amisSurTitre {
+  margin-bottom: 6px;
+
+  color: #e50914;
+
+  font-size: 11px;
+  font-weight: 950;
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+
+.amiTitre {
+  margin: 0;
+
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: .95;
+
+  font-weight: 950;
+  letter-spacing: -2px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff,
+      #bdbdbd
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+}
+
+
+.amiSousTitre {
+  margin: 13px 0 0;
+
+  color: #888;
+
+  font-size: 15px;
+}
+
+
+.amiSousTitre strong {
+  color: #fff;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   RETOUR
+   ========================================================= */
+
+.amiRetour {
+  position: relative;
+  z-index: 3;
+
+  flex-shrink: 0;
+
+  background: rgba(255,255,255,.06);
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  color: #ddd;
+
+  padding: 11px 18px;
+
+  border-radius: 12px;
+
+  font-weight: 800;
+
+  transition:
+    background .2s ease,
+    transform .2s ease,
+    border-color .2s ease;
+}
+
+
+.amiRetour:hover {
+  background: rgba(255,255,255,.11);
+
+  border-color: rgba(255,255,255,.15);
+
+  transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.amiNavigation {
+  display: flex;
+
+  gap: 8px;
+
+  padding: 6px;
+
+  margin-bottom: 30px;
+
+  width: fit-content;
+
+  background: #151515;
+
+  border: 1px solid #292929;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.25);
+}
+
+
+.amiNavigationButton {
+  position: relative;
+
+  margin: 0;
+
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #777;
+
+  font-weight: 850;
+
+  border: 1px solid transparent;
+
+  transition:
+    .2s ease;
+}
+
+
+.amiNavigationButton:hover {
+  color: #fff;
+  background: #202020;
+}
+
+
+.amiNavigationButton.actif {
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e50914,
+      #b0060f
+    );
+
+  box-shadow:
+    0 7px 20px rgba(229,9,20,.25);
+}
+
+
+/* =========================================================
+   TITRE SECTION
+   ========================================================= */
+
+.amiPage .filmsHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+}
+
+
+.amiPage .titreFilms {
+  margin: 0;
+
+  font-size: 28px;
+  font-weight: 950;
+
+  letter-spacing: -.8px;
+}
+
+
+.amiPage .filmsCompteur {
+  display: inline-block;
+
+  margin-top: 5px;
+
+  color: #666;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: .5px;
+}
+
+
+/* =========================================================
+   CONTAINER FILMS
+   ========================================================= */
+
+.amiPage .filmsContainer {
+  padding: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #151515,
+      #101010
+    );
+
+  border: 1px solid #272727;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 20px 45px rgba(0,0,0,.25);
+}
+
+
+/* =========================================================
+   CARTE FILM
+   ========================================================= */
+
+.amiPage .filmCard {
+  position: relative;
+
+  padding: 25px;
+
+  margin-bottom: 14px;
+
+  min-height: 0;
+
+  background:
+    linear-gradient(
+      145deg,
+      #232323,
+      #1a1a1a
+    );
+
+  border: 1px solid #303030;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.25);
+
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease;
+}
+
+
+.amiPage .filmCard:last-child {
+  margin-bottom: 0;
+}
+
+
+.amiPage .filmCard:hover {
+  transform: translateY(-3px);
+
+  border-color: #3b3b3b;
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.4);
+}
+
+
+/* petit trait rouge */
+
+.amiPage .filmCard::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 3px;
+  height: 0;
+
+  background: #e50914;
+
+  box-shadow:
+    0 0 20px rgba(229,9,20,.5);
+
+  transition:
+    height .25s ease;
+}
+
+
+.amiPage .filmCard:hover::before {
+  height: 100%;
+}
+
+
+/* =========================================================
+   TITRE + SCORE
+   ========================================================= */
+
+.amiPage .filmHaut {
+  display: flex;
+
+  align-items: center;
+
+  gap: 25px;
+
+  margin-bottom: 25px;
+}
+
+
+.amiPage .filmTitre {
+  flex: 1;
+  min-width: 0;
+}
+
+
+.amiPage .filmTitre h3 {
+  margin: 0;
+
+  color: #fff;
+
+  font-weight: 950;
+
+  line-height: 1;
+
+  letter-spacing: -1.5px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* score */
+
+.amiPage .scoreBadge {
+  position: relative;
+
+  width: 100px;
+  height: 100px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.4);
+
+  border: 1px solid rgba(255,255,255,.13);
+
+  transition:
+    transform .2s ease;
+}
+
+
+.amiPage .filmCard:hover .scoreBadge {
+  transform: scale(1.05) rotate(1deg);
+}
+
+
+.amiPage .scoreBadge::after {
+  content: "/20";
+
+  position: absolute;
+
+  bottom: 11px;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  opacity: .65;
+}
+
+
+.amiPage .scoreEntier {
+  font-size: 52px;
+  font-weight: 950;
+
+  line-height: 1;
+}
+
+
+.amiPage .scoreDecimal {
+  display: none;
+}
+
+
+/* =========================================================
+   PARTIE BASSE
+   ========================================================= */
+
+.amiPage .filmBas {
+  display: grid;
+
+  grid-template-columns: 340px 1fr;
+
+  gap: 30px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   POSTER + INFOS
+   ========================================================= */
+
+.amiPage .filmPresentation {
+  width: 100%;
+
+  display: flex;
+
+  gap: 16px;
+
+  align-items: flex-start;
+}
+
+
+.amiPage .filmPoster {
+  width: 145px;
+  height: 215px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 12px 25px rgba(0,0,0,.5);
+
+  transition:
+    transform .25s ease;
+}
+
+
+.amiPage .filmCard:hover .filmPoster {
+  transform: scale(1.025);
+}
+
+
+.amiPage .filmInfos {
+  width: auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 11px;
+
+  margin: 0;
+
+  padding-top: 3px;
+}
+
+
+.amiPage .filmInfos p {
+  margin: 0;
+
+  color: #aaa;
+
+  font-size: 13px;
+
+  line-height: 1.35;
+
+  font-weight: 700;
+
+  white-space: normal;
+}
+
+
+.amiPage .filmInfos p:first-child {
+  color: #ddd;
+}
+
+
+/* =========================================================
+   NOTE SPECTATEURS
+   ========================================================= */
+
+.amiPage .noteSpectateurs {
+  margin-top: 7px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+}
+
+
+.amiPage .noteSpectateursTitre {
+  margin-bottom: 7px;
+
+  color: #777;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  text-transform: uppercase;
+
+  letter-spacing: .8px;
+}
+
+
+.amiPage .noteSpectateursCarre {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 15px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+
+  font-size: 27px;
+
+  font-weight: 950;
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.4);
+
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+
+/* =========================================================
+   CRITÈRES
+   ========================================================= */
+
+.amiPage .droiteFilm {
+  min-width: 0;
+}
+
+
+.amiPage .miniNotes {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(120px, 1fr));
+
+  gap: 16px 20px;
+
+  margin: 5px 0 0;
+}
+
+
+.amiPage .miniNote {
+  min-width: 0;
+
+  padding: 11px 12px;
+
+  background: rgba(255,255,255,.025);
+
+  border: 1px solid rgba(255,255,255,.045);
+
+  border-radius: 12px;
+
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+
+.amiPage .miniNote:hover {
+  background: rgba(255,255,255,.055);
+
+  border-color: rgba(255,255,255,.1);
+
+  transform: translateY(-2px);
+}
+
+
+.amiPage .miniNote span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #999;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  text-transform: uppercase;
+
+  letter-spacing: .7px;
+}
+
+
+.amiPage .miniBarreFond {
+  width: 100%;
+
+  height: 6px;
+
+  background: #303030;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+
+.amiPage .miniBarreValeur {
+  height: 100%;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 0 8px rgba(255,255,255,.08);
+
+  transition:
+    width .5s ease;
+}
+
+
+/* =========================================================
+   BOUTON FICHE
+   ========================================================= */
+
+.amiPage .actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 22px;
+
+  padding-top: 17px;
+
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+
+
+.amiPage .ficheButton {
+  margin: 0;
+
+  padding: 10px 17px;
+
+  background: rgba(255,255,255,.06);
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  color: #ddd;
+
+  font-size: 12px;
+
+  font-weight: 900;
+
+  border-radius: 10px;
+
+  transition:
+    .2s ease;
+}
+
+
+.amiPage .ficheButton:hover {
+  color: #fff;
+
+  background: #e50914;
+
+  border-color: #e50914;
+
+  box-shadow:
+    0 8px 20px rgba(229,9,20,.25);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   CLASSEMENT
+   ========================================================= */
+
+.amiClassementCard {
+  padding: 18px !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      #171717,
+      #101010
+    ) !important;
+
+  border: 1px solid #292929 !important;
+
+  border-radius: 20px !important;
+}
+
+
+.amiClassementCard .classementTable {
+  width: 100%;
+
+  border-collapse: separate;
+
+  border-spacing: 0 8px;
+
+  table-layout: fixed;
+}
+
+
+.amiClassementCard th {
+  padding: 10px 6px;
+
+  color: #666;
+
+  font-size: 10px;
+
+  font-weight: 950;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  border: none;
+
+  white-space: nowrap;
+}
+
+
+.amiClassementCard th:first-child {
+  width: 28%;
+
+  text-align: left;
+}
+
+
+.amiClassementCard tbody tr {
+  background:
+    linear-gradient(
+      100deg,
+      #222,
+      #1c1c1c
+    );
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+
+
+.amiClassementCard tbody tr:hover {
+  transform: translateY(-2px);
+
+  background:
+    linear-gradient(
+      100deg,
+      #292929,
+      #202020
+    );
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.35);
+}
+
+
+.amiClassementCard td {
+  padding: 10px 7px;
+
+  border-top: 1px solid #2a2a2a;
+  border-bottom: 1px solid #2a2a2a;
+
+  text-align: center;
+}
+
+
+.amiClassementCard td:first-child {
+  border-left: 1px solid #2a2a2a;
+
+  border-radius: 13px 0 0 13px;
+}
+
+
+.amiClassementCard td:last-child {
+  border-right: 1px solid #2a2a2a;
+
+  border-radius: 0 13px 13px 0;
+}
+
+
+/* =========================================================
+   FILM DANS LE CLASSEMENT
+   ========================================================= */
+
+.amiClassementCard .filmClassement {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 0;
+}
+
+
+.amiClassementCard .classementPosition {
+  width: 28px;
+  height: 28px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #2b2b2b;
+
+  color: #888;
+
+  font-size: 11px;
+
+  font-weight: 950;
+}
+
+
+/* top 3 */
+
+.amiClassementCard tbody tr:nth-child(1) {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(234,179,8,.12),
+      #202020 40%
+    );
+}
+
+
+.amiClassementCard tbody tr:nth-child(2) {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(148,163,184,.08),
+      #202020 40%
+    );
+}
+
+
+.amiClassementCard tbody tr:nth-child(3) {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(180,83,9,.08),
+      #202020 40%
+    );
+}
+
+
+.amiClassementCard tbody tr:nth-child(1)
+.classementPosition {
+  background: rgba(234,179,8,.16);
+
+  color: #facc15;
+}
+
+
+.amiClassementCard tbody tr:nth-child(2)
+.classementPosition {
+  background: rgba(148,163,184,.15);
+
+  color: #cbd5e1;
+}
+
+
+.amiClassementCard tbody tr:nth-child(3)
+.classementPosition {
+  background: rgba(180,83,9,.15);
+
+  color: #d97706;
+}
+
+
+.amiClassementCard .miniPoster {
+  width: 43px;
+  height: 61px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border-radius: 7px;
+
+  box-shadow:
+    0 5px 12px rgba(0,0,0,.45);
+
+  transition:
+    transform .2s ease;
+}
+
+
+.amiClassementCard tr:hover .miniPoster {
+  transform: scale(1.06);
+}
+
+
+.amiClassementCard .filmClassementInfos {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+
+.amiClassementCard .filmClassementTitre {
+  display: block;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  color: #eee;
+
+  font-size: 13px;
+
+  font-weight: 900;
+}
+
+
+.amiClassementCard .filmClassementMeta {
+  color: #666;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   NOTES DU CLASSEMENT
+   ========================================================= */
+
+.amiClassementCard .petiteNote {
+  width: 48px;
+  height: 48px;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  color: #fff;
+
+  font-size: 17px;
+
+  font-weight: 950;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.3);
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+
+.amiClassementCard tr:hover .petiteNote {
+  transform: scale(1.08);
+
+  box-shadow:
+    0 9px 20px rgba(0,0,0,.45);
+}
+
+
+.amiClassementCard .notePrincipale {
+  width: 56px;
+  height: 56px;
+
+  border-radius: 15px;
+
+  font-size: 20px;
+}
+
+
+.amiClassementCard .noteActive {
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.2),
+    0 8px 22px rgba(255,255,255,.08);
+}
+
+
+.amiClassementCard th.activeSort {
+  color: #fff;
+}
+
+
+.sortArrow {
+  display: inline-block;
+
+  margin-left: 4px;
+
+  color: #e50914;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   ETAT VIDE
+   ========================================================= */
+
+.amiPage .amisEtatVide {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 35px;
+
+  border-radius: 18px;
+
+  background:
+    radial-gradient(
+      circle at 10% 50%,
+      rgba(229,9,20,.08),
+      transparent 35%
+    ),
+    #171717;
+
+  border: 1px solid #292929;
+}
+
+
+.amiPage .amisEtatVide > span {
+  width: 65px;
+  height: 65px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 17px;
+
+  background: #222;
+
+  font-size: 30px;
+}
+
+
+.amiPage .amisEtatVide strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 18px;
+  font-weight: 950;
+}
+
+
+.amiPage .amisEtatVide p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .amiPage .filmBas {
+    grid-template-columns: 1fr;
+  }
+
+  .amiPage .filmPresentation {
+    width: 100%;
+  }
+
+  .amiPage .miniNotes {
+    grid-template-columns:
+      repeat(3, minmax(100px, 1fr));
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .amiPage {
+    width: 94%;
+
+    padding-top: 20px;
+  }
+
+
+  .amiPageHeader {
+    padding: 23px 20px;
+
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .amiProfil {
+    width: 100%;
+  }
+
+
+  .amiAvatarGrand {
+    width: 75px;
+    height: 75px;
+  }
+
+
+  .amiTitre {
+    font-size: 34px;
+  }
+
+
+  .amiRetour {
+    align-self: flex-start;
+  }
+
+
+  .amiNavigation {
+    width: 100%;
+  }
+
+
+  .amiNavigationButton {
+    flex: 1;
+
+    padding: 11px 8px;
+
+    font-size: 12px;
+  }
+
+
+  .amiPage .filmCard {
+    padding: 18px;
+  }
+
+
+  .amiPage .filmHaut {
+    align-items: flex-start;
+  }
+
+
+  .amiPage .scoreBadge {
+    width: 78px;
+    height: 78px;
+
+    border-radius: 17px;
+  }
+
+
+  .amiPage .scoreEntier {
+    font-size: 40px;
+  }
+
+
+  .amiPage .filmPresentation {
+    gap: 12px;
+  }
+
+
+  .amiPage .filmPoster {
+    width: 115px;
+    height: 172px;
+  }
+
+
+  .amiPage .miniNotes {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 9px;
+  }
+
+
+  .amiPage .actions {
+    justify-content: stretch;
+  }
+
+
+  .amiPage .ficheButton {
+    width: 100%;
+  }
+
+
+  .amiClassementCard {
+    overflow-x: auto;
+  }
+
+
+  .amiClassementCard table {
+    min-width: 900px;
+  }
+
+}
+
+
+@media (max-width: 450px) {
+
+  .amiProfil {
+    align-items: flex-start;
+  }
+
+
+  .amiAvatarGrand {
+    width: 62px;
+    height: 62px;
+  }
+
+
+  .amiTitre {
+    font-size: 29px;
+  }
+
+
+  .amiPage .filmPresentation {
+    flex-direction: column;
+  }
+
+
+  .amiPage .filmPoster {
+    width: 145px;
+    height: 215px;
+  }
+
+
+  .amiPage .filmInfos {
+    width: 100%;
+  }
+
+
+  .amiPage .noteSpectateurs {
+    align-items: flex-start;
+  }
+
+
+  .amiPage .miniNotes {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+/* =========================================================
+   COMPARAISON DES GOÛTS
+   ========================================================= */
+
+.comparaisonPage {
+  width: 100%;
+}
+
+
+/* =========================================================
+   BOUTON NAVIGATION COMPARAISON
+   ========================================================= */
+
+.amiNavigationButton.comparaisonButton {
+  position: relative;
+}
+
+.amiNavigationButton.comparaisonButton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+
+/* =========================================================
+   HEADER COMPARAISON
+   ========================================================= */
+
+.comparaisonHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
+  margin: 25px 0;
+}
+
+.comparaisonSurTitre {
+  color: #777;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.comparaisonTitre {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 950;
+  line-height: 1.1;
+}
+
+.comparaisonSousTitre {
+  margin: 8px 0 0;
+  color: #999;
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   CARTES PREMIUM
+   ========================================================= */
+
+.comparaisonCard {
+  width: 100%;
+  padding: 26px;
+  margin-bottom: 22px;
+
+  background:
+    linear-gradient(145deg, #1b1b1b, #121212);
+
+  border: 1px solid #303030;
+  border-radius: 18px;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.28);
+}
+
+.comparaisonCardTitre {
+  margin: 0 0 5px;
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.comparaisonCardSousTitre {
+  margin: 0 0 22px;
+  color: #777;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   COMPATIBILITÉ
+   ========================================================= */
+
+.compatibiliteBloc {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  padding: 25px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(139,92,246,.13),
+      rgba(20,20,20,.8)
+    );
+
+  border: 1px solid rgba(139,92,246,.25);
+  border-radius: 16px;
+}
+
+.compatibiliteScore {
+  width: 135px;
+  height: 135px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #7c3aed,
+      #4c1d95
+    );
+
+  color: white;
+
+  font-size: 38px;
+  font-weight: 950;
+
+  box-shadow:
+    0 10px 30px rgba(124,58,237,.3);
+}
+
+.compatibiliteInfos {
+  flex: 1;
+}
+
+.compatibiliteTitre {
+  margin: 0 0 8px;
+
+  font-size: 25px;
+  font-weight: 950;
+}
+
+.compatibiliteDescription {
+  margin: 0;
+
+  color: #aaa;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   STATISTIQUES COMPATIBILITÉ
+   ========================================================= */
+
+.compatibiliteStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+
+  margin-top: 18px;
+}
+
+.compatibiliteStat {
+  padding: 17px;
+
+  background: #181818;
+
+  border: 1px solid #292929;
+  border-radius: 13px;
+
+  transition:
+    transform .18s ease,
+    background .18s ease;
+}
+
+.compatibiliteStat:hover {
+  transform: translateY(-2px);
+  background: #202020;
+}
+
+.compatibiliteStatIcon {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.compatibiliteStatLabel {
+  display: block;
+
+  color: #777;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+
+.compatibiliteStatValeur {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #eee;
+
+  font-size: 21px;
+  font-weight: 950;
+}
+
+
+/* =========================================================
+   FILMS EN COMMUN
+   ========================================================= */
+
+.filmsCommuns {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filmCommun {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 14px;
+
+  background: #202020;
+
+  border: 1px solid #292929;
+  border-radius: 14px;
+
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+.filmCommun:hover {
+  transform: translateY(-2px);
+
+  background: #282828;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.35);
+}
+
+.filmCommunPoster {
+  width: 58px;
+  height: 82px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 5px 12px rgba(0,0,0,.45);
+}
+
+.filmCommunInfos {
+  flex: 1;
+  min-width: 0;
+}
+
+.filmCommunTitre {
+  margin: 0 0 7px;
+
+  color: #eee;
+
+  font-size: 17px;
+  font-weight: 900;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filmCommunMeta {
+  color: #777;
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   NOTES DES DEUX PERSONNES
+   ========================================================= */
+
+.filmCommunNotes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.noteComparaison {
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  color: white;
+
+  font-size: 21px;
+  font-weight: 950;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.3);
+}
+
+.noteComparaisonNom {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #777;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.noteComparaisonSeparation {
+  color: #555;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   ÉCART ENTRE LES NOTES
+   ========================================================= */
+
+.ecartComparaison {
+  min-width: 75px;
+
+  padding: 8px 10px;
+
+  border-radius: 9px;
+
+  background: #292929;
+
+  color: #aaa;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  text-align: center;
+}
+
+.ecartFaible {
+  color: #4ade80;
+  background: rgba(74,222,128,.1);
+}
+
+.ecartMoyen {
+  color: #facc15;
+  background: rgba(250,204,21,.1);
+}
+
+.ecartFort {
+  color: #ef4444;
+  background: rgba(239,68,68,.1);
+}
+
+
+/* =========================================================
+   COMPARAISON DES CRITÈRES
+   ========================================================= */
+
+.comparaisonCriteres {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.critereComparaison {
+  display: grid;
+
+  grid-template-columns:
+    130px
+    1fr
+    55px
+    1fr
+    55px;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.critereNom {
+  color: #ddd;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.critereBarreFond {
+  width: 100%;
+  height: 9px;
+
+  background: #303030;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.critereBarre {
+  height: 100%;
+
+  border-radius: 20px;
+
+  transition:
+    width .5s ease;
+}
+
+.critereValeur {
+  color: #aaa;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   EN-TÊTE DES BARRES
+   ========================================================= */
+
+.comparaisonColonnes {
+  display: grid;
+
+  grid-template-columns:
+    130px
+    1fr
+    55px
+    1fr
+    55px;
+
+  gap: 12px;
+
+  margin-bottom: 14px;
+
+  color: #666;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+
+.comparaisonColonnes span {
+  text-align: center;
+}
+
+.comparaisonColonnes span:first-child {
+  text-align: left;
+}
+
+
+/* =========================================================
+   PLUS GROS ACCORD / DÉSACCORD
+   ========================================================= */
+
+.analyseComparaison {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 15px;
+}
+
+.analyseBloc {
+  padding: 20px;
+
+  background: #181818;
+
+  border: 1px solid #292929;
+  border-radius: 14px;
+}
+
+.analyseBlocTitre {
+  margin-bottom: 6px;
+
+  color: #777;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.analyseBlocNom {
+  margin: 0 0 12px;
+
+  color: #eee;
+
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.analyseBlocValeurs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #aaa;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.analyseBlocEcart {
+  margin-top: 12px;
+
+  color: #aaa;
+
+  font-size: 12px;
+}
+
+.analyseAccord {
+  border-color: rgba(74,222,128,.2);
+}
+
+.analyseDesaccord {
+  border-color: rgba(239,68,68,.2);
+}
+
+
+/* =========================================================
+   RECOMMANDATIONS
+   ========================================================= */
+
+.recommandationsFilms {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+.recommandationFilm {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #202020;
+
+  border: 1px solid #292929;
+  border-radius: 15px;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.recommandationFilm:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 12px 25px rgba(0,0,0,.4);
+}
+
+.recommandationPoster {
+  width: 100%;
+  height: 280px;
+
+  object-fit: cover;
+}
+
+.recommandationInfos {
+  padding: 15px;
+}
+
+.recommandationTitre {
+  margin: 0 0 8px;
+
+  color: #eee;
+
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.recommandationNote {
+  display: inline-flex;
+
+  padding: 7px 10px;
+
+  border-radius: 8px;
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.recommandationDescription {
+  margin: 10px 0 0;
+
+  color: #777;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   ÉTATS VIDES
+   ========================================================= */
+
+.comparaisonVide {
+  padding: 45px 25px;
+
+  text-align: center;
+
+  color: #777;
+}
+
+.comparaisonVideIcon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.comparaisonVide strong {
+  display: block;
+
+  color: #ddd;
+
+  font-size: 18px;
+}
+
+.comparaisonVide p {
+  margin: 7px 0 0;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .compatibiliteStats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recommandationsFilms {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .comparaisonHeader {
+    flex-direction: column;
+  }
+
+  .compatibiliteBloc {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .compatibiliteStats {
+    grid-template-columns: 1fr;
+  }
+
+  .filmCommun {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .filmCommunNotes {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .critereComparaison,
+  .comparaisonColonnes {
+    grid-template-columns:
+      90px
+      1fr
+      45px
+      1fr
+      45px;
+
+    gap: 7px;
+  }
+
+  .analyseComparaison {
+    grid-template-columns: 1fr;
+  }
+
+  .recommandationsFilms {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   PAGE AMI / PROFIL
+   ========================================================= */
+
+.amiPage {
+  padding-top: 35px;
+  padding-bottom: 60px;
+}
+
+
+/* =========================================================
+   HEADER PROFIL
+   ========================================================= */
+
+.amiPageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.amiProfil {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+}
+
+.amiAvatarGrand {
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #2a2a2a, #171717);
+  border: 1px solid #333;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+
+.amiAvatarGrand img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.amiAvatarGrand span {
+  font-size: 40px;
+  font-weight: 900;
+  color: #fff;
+}
+
+.amisSurTitre {
+  color: #777;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+.amiTitre {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1;
+  font-weight: 950;
+  color: #fff;
+}
+
+.amiSousTitre {
+  margin: 10px 0 0;
+  color: #999;
+  font-size: 15px;
+}
+
+.amiSousTitre strong {
+  color: #fff;
+}
+
+.amiRetour {
+  flex-shrink: 0;
+  background: #242424;
+  border: 1px solid #383838;
+  color: #fff;
+  padding: 11px 17px;
+  border-radius: 10px;
+  font-weight: 800;
+  transition: .2s ease;
+}
+
+.amiRetour:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.amiNavigation {
+  display: flex;
+  gap: 10px;
+  padding: 6px;
+  margin-bottom: 35px;
+  background: #151515;
+  border: 1px solid #292929;
+  border-radius: 14px;
+}
+
+.amiNavigationButton {
+  flex: 1;
+  margin: 0;
+  background: transparent;
+  color: #888;
+  border: 1px solid transparent;
+  padding: 13px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 850;
+  transition: .2s ease;
+}
+
+.amiNavigationButton:hover {
+  background: #222;
+  color: #fff;
+}
+
+.amiNavigationButton.actif {
+  background: #e50914;
+  color: #fff;
+  box-shadow: 0 7px 18px rgba(229,9,20,.25);
+}
+
+.amiNavigationButton.comparaisonButton {
+  background: linear-gradient(135deg, #252525, #191919);
+}
+
+.amiNavigationButton.comparaisonButton.actif {
+  background: linear-gradient(135deg, #e50914, #b20710);
+}
+
+
+/* =========================================================
+   ÉTAT VIDE / BIBLIOTHÈQUE PRIVÉE
+   ========================================================= */
+
+.amisEtatVide {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 30px;
+  border-radius: 16px;
+  background: #171717;
+  border: 1px solid #292929;
+}
+
+.amisEtatVide > span {
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: #242424;
+  font-size: 25px;
+}
+
+.amisEtatVide strong {
+  display: block;
+  color: #fff;
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.amisEtatVide p {
+  margin: 0;
+  color: #888;
+  line-height: 1.5;
+}
+
+.amiComparaisonVide {
+  margin-top: 20px;
+}
+
+
+/* =========================================================
+   HEADER FILMS
+   ========================================================= */
+
+.filmsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+
+.titreFilms {
+  margin: 0 0 5px;
+  font-size: 30px;
+  font-weight: 950;
+}
+
+.filmsCompteur {
+  color: #777;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FILMS
+   ========================================================= */
+
+.filmsContainer {
+  padding: 20px;
+}
+
+.amiPage .filmCard {
+  border: 1px solid #303030;
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.amiPage .filmCard:hover {
+  transform: translateY(-2px);
+  border-color: #444;
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   CLASSEMENT
+   ========================================================= */
+
+.amiClassementCard {
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.classementTable {
+  min-width: 1100px;
+}
+
+.classementTable th {
+  color: #777;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.classementTable th:hover {
+  color: #fff;
+}
+
+.classementTable th.activeSort {
+  color: #fff;
+}
+
+.sortArrow {
+  margin-left: 4px;
+  color: #e50914;
+  font-size: 13px;
+}
+
+.filmCell {
+  min-width: 300px;
+}
+
+.filmClassement {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.classementPosition {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #292929;
+  color: #aaa;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.miniPoster {
+  width: 48px;
+  height: 68px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.4);
+}
+
+.filmClassementInfos {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filmClassementTitre {
+  color: #eee;
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filmClassementMeta {
+  color: #777;
+  font-size: 12px;
+}
+
+.petiteNote {
+  width: 55px;
+  height: 55px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 950;
+  box-shadow: 0 6px 15px rgba(0,0,0,.35);
+  transition: .18s ease;
+}
+
+.classementTable tr:hover .petiteNote {
+  transform: scale(1.07);
+}
+
+.noteActive {
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.3),
+    0 8px 20px rgba(0,0,0,.5);
+}
+
+
+/* =========================================================
+   COMPARAISON — PAGE
+   ========================================================= */
+
+.amiComparaison {
+  padding-bottom: 50px;
+}
+
+.amiComparaisonHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 28px;
+  margin-bottom: 18px;
+  background:
+    linear-gradient(145deg, #1c1c1c, #121212);
+  border: 1px solid #303030;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.25);
+}
+
+.amiComparaisonTitre {
+  margin: 0;
+  font-size: 35px;
+  font-weight: 950;
+}
+
+.amiComparaisonSousTitre {
+  max-width: 700px;
+  margin: 10px 0 0;
+  color: #888;
+  line-height: 1.55;
+}
+
+.amiComparaisonSousTitre strong {
+  color: #fff;
+}
+
+.amiCompatibiliteBadge {
+  width: 155px;
+  height: 155px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  background: #202020;
+  border: 1px solid #353535;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+
+.amiCompatibiliteBadge span {
+  color: #777;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.amiCompatibiliteBadge strong {
+  margin-top: 5px;
+  color: #fff;
+  font-size: 43px;
+  font-weight: 950;
+}
+
+
+/* =========================================================
+   STATS COMPARAISON
+   ========================================================= */
+
+.amiComparaisonStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 25px;
+}
+
+.amiComparaisonStat {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 18px;
+  background: #171717;
+  border: 1px solid #2b2b2b;
+  border-radius: 15px;
+}
+
+.amiComparaisonStat > span {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #242424;
+  font-size: 21px;
+}
+
+.amiComparaisonStat small {
+  display: block;
+  color: #777;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.amiComparaisonStat strong {
+  display: block;
+  margin-top: 3px;
+  color: #fff;
+  font-size: 23px;
+  font-weight: 950;
+}
+
+
+/* =========================================================
+   ANALYSE GLOBALE
+   ========================================================= */
+
+.amiCompatibiliteCard {
+  padding: 26px;
+  margin-bottom: 25px;
+  background:
+    linear-gradient(145deg, #1c1c1c, #121212);
+  border: 1px solid #303030;
+  border-radius: 18px;
+}
+
+.amiCompatibiliteCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.amiCompatibiliteCardHeader span {
+  color: #777;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.amiCompatibiliteCardHeader h3 {
+  margin: 5px 0 0;
+  font-size: 25px;
+}
+
+.amiCompatibiliteScore {
+  min-width: 85px;
+  padding: 13px 15px;
+  border-radius: 13px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 950;
+  text-align: center;
+}
+
+.amiCompatibiliteBarreFond {
+  width: 100%;
+  height: 14px;
+  overflow: hidden;
+  background: #2c2c2c;
+  border-radius: 20px;
+}
+
+.amiCompatibiliteBarre {
+  height: 100%;
+  border-radius: 20px;
+  transition: width .5s ease;
+}
+
+.amiCompatibilitePhrase {
+  margin: 17px 0 0;
+  color: #aaa;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.amiComparaisonSection {
+  padding: 25px;
+  margin-bottom: 25px;
+  background: #151515;
+  border: 1px solid #292929;
+  border-radius: 18px;
+}
+
+.amiComparaisonSectionHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.amiComparaisonSectionHeader span {
+  color: #777;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.amiComparaisonSectionHeader h3 {
+  margin: 5px 0 0;
+  font-size: 25px;
+}
+
+.amiComparaisonSectionHeader > small {
+  color: #777;
+}
+
+
+/* =========================================================
+   FILMS EN COMMUN
+   ========================================================= */
+
+.amiFilmsCommuns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.amiFilmCommun {
+  display: flex;
+  gap: 14px;
+  padding: 15px;
+  background: #202020;
+  border: 1px solid #2d2d2d;
+  border-radius: 15px;
+  transition: .2s ease;
+}
+
+.amiFilmCommun:hover {
+  background: #272727;
+  transform: translateY(-2px);
+}
+
+.amiFilmCommunPoster {
+  width: 85px;
+  height: 125px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 9px;
+  background: #292929;
+}
+
+.amiFilmCommunPoster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.amiFilmCommunPoster > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.amiFilmCommunInfos {
+  flex: 1;
+  min-width: 0;
+}
+
+.amiFilmCommunInfos > strong {
+  display: block;
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.amiDeuxNotes {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.amiDeuxNotes > div:not(.amiVs) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.amiDeuxNotes span {
+  color: #777;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.amiDeuxNotes b {
+  min-width: 42px;
+  padding: 6px 7px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+}
+
+.amiVs {
+  color: #555;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.amiEcart {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.amiEcart span {
+  color: #666;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.amiEcart strong {
+  font-size: 12px;
+}
+
+.amiFilmComparaisonBarres {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.amiFilmComparaisonBarres > div > span {
+  display: block;
+  margin-bottom: 3px;
+  color: #777;
+  font-size: 9px;
+}
+
+.amiBarreFond {
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  background: #333;
+  border-radius: 20px;
+}
+
+.amiBarreFond > div {
+  height: 100%;
+  border-radius: 20px;
+}
+
+
+/* =========================================================
+   COMPARAISON DES 9 CRITÈRES
+   ========================================================= */
+
+.amiCriteresComparaison {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.amiCritereComparaison {
+  padding: 17px;
+  background: #202020;
+  border: 1px solid #2d2d2d;
+  border-radius: 14px;
+}
+
+.amiCritereTitre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.amiCritereTitre strong {
+  color: #fff;
+  font-size: 14px;
+}
+
+.amiCritereTitre span {
+  color: #777;
+  font-size: 10px;
+}
+
+.amiCritereLigne {
+  display: grid;
+  grid-template-columns: 45px 1fr 35px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.amiCritereNom {
+  color: #777;
+  font-size: 9px;
+  font-weight: 900;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.amiCritereBarreFond {
+  height: 8px;
+  overflow: hidden;
+  background: #333;
+  border-radius: 20px;
+}
+
+.amiCritereBarre {
+  height: 100%;
+  border-radius: 20px;
+}
+
+.amiCritereLigne > strong {
+  color: #ddd;
+  font-size: 12px;
+  text-align: right;
+}
+
+
+/* =========================================================
+   ACCORDS / DÉSACCORDS
+   ========================================================= */
+
+.amiAnalyseDeuxColonnes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.amiAnalyseBloc {
+  padding: 22px;
+  background: #151515;
+  border: 1px solid #292929;
+  border-radius: 18px;
+}
+
+.amiAnalyseBlocTitre {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+.amiAnalyseBlocTitre > span {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #242424;
+  font-size: 20px;
+}
+
+.amiAnalyseBlocTitre small {
+  display: block;
+  color: #777;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.amiAnalyseBlocTitre h3 {
+  margin: 4px 0 0;
+  color: #fff;
+  font-size: 19px;
+}
+
+.amiAnalyseFilms {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.amiAnalyseFilm {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px;
+  background: #202020;
+  border-radius: 10px;
+}
+
+.amiAnalyseFilm img {
+  width: 40px;
+  height: 58px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.amiAnalyseFilm > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.amiAnalyseFilm strong {
+  display: block;
+  overflow: hidden;
+  color: #eee;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.amiAnalyseFilm span {
+  display: block;
+  margin-top: 3px;
+  color: #777;
+  font-size: 10px;
+}
+
+.amiAnalyseFilm > b {
+  flex-shrink: 0;
+  color: #aaa;
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   CRITÈRES PROCHES / ÉLOIGNÉS
+   ========================================================= */
+
+.amiCritereResume {
+  min-height: 220px;
+}
+
+.amiCritereResumeLigne {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px 0;
+  border-bottom: 1px solid #292929;
+}
+
+.amiCritereResumeLigne:last-child {
+  border-bottom: none;
+}
+
+.amiCritereResumeLigne strong {
+  color: #eee;
+  font-size: 14px;
+}
+
+.amiCritereResumeLigne span {
+  padding: 5px 9px;
+  border-radius: 7px;
+  background: #252525;
+  color: #aaa;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   RECOMMANDATIONS
+   ========================================================= */
+
+.amiRecoIntro {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #1c1c1c;
+  border: 1px solid #292929;
+  border-radius: 13px;
+}
+
+.amiRecoIntro > div {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #292929;
+  font-size: 18px;
+}
+
+.amiRecoIntro p {
+  margin: 0;
+  color: #999;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.amiRecoFilms {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.amiRecoFilm {
+  overflow: hidden;
+  background: #202020;
+  border: 1px solid #2d2d2d;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.amiRecoFilm:hover {
+  transform: translateY(-4px);
+  background: #282828;
+  border-color: #444;
+  box-shadow: 0 12px 25px rgba(0,0,0,.35);
+}
+
+.amiRecoFilm > img,
+.amiRecoPosterVide {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.amiRecoPosterVide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #292929;
+  font-size: 30px;
+}
+
+.amiRecoInfos {
+  position: relative;
+  min-height: 145px;
+  padding: 14px;
+}
+
+.amiRecoInfos strong {
+  display: block;
+  padding-right: 45px;
+  color: #eee;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.amiRecoInfos > span {
+  display: block;
+  margin-top: 5px;
+  color: #777;
+  font-size: 11px;
+}
+
+.amiRecoInfos small {
+  display: block;
+  margin-top: 14px;
+  color: #666;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.amiRecoInfos b {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  min-width: 39px;
+  padding: 7px 6px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .amiComparaisonStats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .amiFilmsCommuns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .amiCriteresComparaison {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .amiRecoFilms {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .amiPage {
+    width: 95%;
+  }
+
+  .amiPageHeader {
+    align-items: flex-start;
+  }
+
+  .amiTitre {
+    font-size: 32px;
+  }
+
+  .amiAvatarGrand {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+  }
+
+  .amiAvatarGrand span {
+    font-size: 30px;
+  }
+
+  .amiNavigation {
+    flex-direction: column;
+  }
+
+  .amiComparaisonHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .amiCompatibiliteBadge {
+    width: 120px;
+    height: 120px;
+    align-self: flex-end;
+  }
+
+  .amiCompatibiliteBadge strong {
+    font-size: 32px;
+  }
+
+  .amiComparaisonStats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .amiFilmsCommuns,
+  .amiCriteresComparaison,
+  .amiAnalyseDeuxColonnes {
+    grid-template-columns: 1fr;
+  }
+
+  .amiRecoFilms {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 520px) {
+
+  .amiPageHeader {
+    flex-direction: column;
+  }
+
+  .amiRetour {
+    align-self: flex-start;
+  }
+
+  .amiProfil {
+    align-items: flex-start;
+  }
+
+  .amiTitre {
+    font-size: 28px;
+  }
+
+  .amiComparaisonStats {
+    grid-template-columns: 1fr;
+  }
+
+  .amiComparaisonSection,
+  .amiCompatibiliteCard,
+  .amiAnalyseBloc {
+    padding: 17px;
+  }
+
+  .amiFilmsCommuns {
+    grid-template-columns: 1fr;
+  }
+
+  .amiRecoFilms {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .amiRecoFilm > img,
+  .amiRecoPosterVide {
+    height: 190px;
+  }
+
+  .amiFilmCommun {
+    padding: 12px;
+  }
+
+  .amiFilmCommunPoster {
+    width: 70px;
+    height: 105px;
+  }
+
+}

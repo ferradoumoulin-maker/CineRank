@@ -4,7 +4,7 @@ import { supabase } from "../supabase/client";
 
 
 /* =========================================================
-   COULEUR DES NOTES
+   COULEUR DES NOTES CINERANK
    ========================================================= */
 
 function couleurNote(note) {
@@ -147,7 +147,7 @@ function couleurNote(note) {
 
 
 /* =========================================================
-   NOTE SPECTATEURS
+   COULEUR NOTE SPECTATEURS
    ========================================================= */
 
 function couleurImdb(note) {
@@ -206,6 +206,73 @@ function couleurImdb(note) {
 
 
 /* =========================================================
+   NORMALISATION DES TITRES
+   ========================================================= */
+
+function normaliserTitre(titre) {
+
+  return String(titre || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+}
+
+
+/* =========================================================
+   NOTE SUR 100
+   ========================================================= */
+
+function noteSur100(note) {
+
+  return Math.round(
+    Number(note || 0) * 5
+  );
+
+}
+
+
+/* =========================================================
+   MOYENNE
+   ========================================================= */
+
+function moyenneTableau(tableau) {
+
+  if (!tableau.length) {
+    return 0;
+  }
+
+  return tableau.reduce(
+    (total, valeur) => total + valeur,
+    0
+  ) / tableau.length;
+
+}
+
+
+/* =========================================================
+   CRITÈRES CINERANK
+   ========================================================= */
+
+const CRITERES = [
+
+  ["scenario", "Scénario"],
+  ["personnages", "Personnages"],
+  ["realisation", "Réalisation"],
+  ["ambiance", "Ambiance"],
+  ["visuels", "Visuels"],
+  ["musique", "Musique"],
+  ["rythme", "Rythme"],
+  ["impact", "Impact"],
+  ["rewatch", "Rewatch"]
+
+];
+
+
+/* =========================================================
    TAILLE DU TITRE
    ========================================================= */
 
@@ -218,13 +285,19 @@ function TailleTitre({ titre }) {
     const longueur = String(titre || "").length;
 
     if (longueur <= 18) {
+
       setTaille(45);
+
     }
     else if (longueur <= 28) {
+
       setTaille(38);
+
     }
     else {
+
       setTaille(32);
+
     }
 
   }, [titre]);
@@ -246,7 +319,7 @@ function TailleTitre({ titre }) {
 
 
 /* =========================================================
-   COMPOSANT
+   COMPOSANT AMI
    ========================================================= */
 
 function Ami() {
@@ -256,11 +329,18 @@ function Ami() {
   const { id } = useParams();
 
 
+  /* =======================================================
+     ÉTATS
+  ======================================================= */
+
   const [profil, setProfil] = useState(null);
 
   const [films, setFilms] = useState([]);
 
+  const [mesFilms, setMesFilms] = useState([]);
+
   const [chargement, setChargement] = useState(true);
+
 
   const [vue, setVue] = useState("films");
 
@@ -269,9 +349,9 @@ function Ami() {
   const [ordre, setOrdre] = useState("desc");
 
 
-  /* =====================================================
+  /* =======================================================
      CHARGEMENT
-     ===================================================== */
+  ======================================================= */
 
   useEffect(() => {
 
@@ -299,9 +379,9 @@ function Ami() {
     }
 
 
-    /* =================================================
-       PROFIL
-       ================================================= */
+    /* =====================================================
+       PROFIL AMI
+    ===================================================== */
 
     const {
       data: profilData,
@@ -335,9 +415,9 @@ function Ami() {
     }
 
 
-    /* =================================================
-       VÉRIFICATION DE CONFIDENTIALITÉ
-       ================================================= */
+    /* =====================================================
+       CONFIDENTIALITÉ
+    ===================================================== */
 
     if (
       profilData.bibliotheque_visible === "prive"
@@ -350,18 +430,14 @@ function Ami() {
 
       setFilms([]);
 
+      setMesFilms([]);
+
       setChargement(false);
 
       return;
 
     }
 
-
-    /*
-     * Si la bibliothèque est réservée aux amis,
-     * on vérifie que la personne est bien dans
-     * la liste d'amis du visiteur.
-     */
 
     if (
       profilData.bibliotheque_visible === "amis" &&
@@ -407,6 +483,8 @@ function Ami() {
 
         setFilms([]);
 
+        setMesFilms([]);
+
         setChargement(false);
 
         return;
@@ -419,9 +497,9 @@ function Ami() {
     setProfil(profilData);
 
 
-    /* =================================================
-       FILMS
-       ================================================= */
+    /* =====================================================
+       FILMS DE L'AMI
+    ===================================================== */
 
     const {
       data: filmsData,
@@ -432,15 +510,20 @@ function Ami() {
 
       .select("*")
 
-      .eq("user_id", id)
+      .eq("user_id", id);
 
-      .order("created_at", {
-        ascending: false
-      });
 
-      console.log("👤 ID ami :", id);
-console.log("🎬 Films récupérés :", filmsData);
-console.log("❌ Erreur films :", filmsError);
+    console.log("👤 ID ami :", id);
+
+    console.log(
+      "🎬 Films récupérés :",
+      filmsData
+    );
+
+    console.log(
+      "❌ Erreur films :",
+      filmsError
+    );
 
 
     if (filmsError) {
@@ -452,23 +535,70 @@ console.log("❌ Erreur films :", filmsError);
 
       setFilms([]);
 
-      setChargement(false);
+    }
+    else {
 
-      return;
+      setFilms(
+        filmsData || []
+      );
 
     }
 
 
-    setFilms(filmsData || []);
+    /* =====================================================
+       MES FILMS
+    ===================================================== */
+
+    const {
+      data: mesFilmsData,
+      error: mesFilmsError
+    } = await supabase
+
+      .from("films")
+
+      .select("*")
+
+      .eq("user_id", user.id);
+
+
+    console.log(
+      "🎬 Mes films :",
+      mesFilmsData
+    );
+
+    console.log(
+      "❌ Erreur mes films :",
+      mesFilmsError
+    );
+
+
+    if (mesFilmsError) {
+
+      console.error(
+        "Erreur chargement de mes films :",
+        mesFilmsError
+      );
+
+      setMesFilms([]);
+
+    }
+    else {
+
+      setMesFilms(
+        mesFilmsData || []
+      );
+
+    }
+
 
     setChargement(false);
 
   }
 
 
-  /* =====================================================
+  /* =======================================================
      TRI
-     ===================================================== */
+  ======================================================= */
 
   function trier(categorie) {
 
@@ -492,9 +622,9 @@ console.log("❌ Erreur films :", filmsError);
   }
 
 
-  /* =====================================================
+  /* =======================================================
      FILMS TRIÉS
-     ===================================================== */
+  ======================================================= */
 
   const filmsTries = useMemo(() => {
 
@@ -504,6 +634,7 @@ console.log("❌ Erreur films :", filmsError);
     copie.sort((a, b) => {
 
       let valeurA;
+
       let valeurB;
 
 
@@ -511,30 +642,38 @@ console.log("❌ Erreur films :", filmsError);
 
         valeurA =
           a.dateSortie
-            ? new Date(a.dateSortie).getFullYear()
+            ? new Date(
+                a.dateSortie
+              ).getFullYear()
             : 0;
 
         valeurB =
           b.dateSortie
-            ? new Date(b.dateSortie).getFullYear()
+            ? new Date(
+                b.dateSortie
+              ).getFullYear()
             : 0;
 
       }
       else {
 
-        valeurA = Number(
-          a[tri] || 0
-        );
+        valeurA =
+          Number(
+            a[tri] || 0
+          );
 
-        valeurB = Number(
-          b[tri] || 0
-        );
+        valeurB =
+          Number(
+            b[tri] || 0
+          );
 
       }
 
 
       return ordre === "desc"
+
         ? valeurB - valeurA
+
         : valeurA - valeurB;
 
     });
@@ -549,9 +688,9 @@ console.log("❌ Erreur films :", filmsError);
   ]);
 
 
-  /* =====================================================
+  /* =======================================================
      NOTE MOYENNE
-     ===================================================== */
+  ======================================================= */
 
   const noteMoyenne = useMemo(() => {
 
@@ -562,7 +701,10 @@ console.log("❌ Erreur films :", filmsError);
 
     const total = films.reduce(
       (somme, film) =>
-        somme + Number(film.note || 0),
+        somme +
+        Number(
+          film.note || 0
+        ),
       0
     );
 
@@ -574,9 +716,423 @@ console.log("❌ Erreur films :", filmsError);
   }, [films]);
 
 
-  /* =====================================================
+  /* =======================================================
+     FILMS EN COMMUN
+  ======================================================= */
+
+  const filmsCommuns = useMemo(() => {
+
+    const mesFilmsMap = new Map();
+
+
+    mesFilms.forEach((film) => {
+
+      const cle =
+        normaliserTitre(
+          film.titre
+        );
+
+
+      if (!cle) {
+        return;
+      }
+
+
+      mesFilmsMap.set(
+        cle,
+        film
+      );
+
+    });
+
+
+    return films
+
+      .map((filmAmi) => {
+
+        const cle =
+          normaliserTitre(
+            filmAmi.titre
+          );
+
+
+        const monFilm =
+          mesFilmsMap.get(cle);
+
+
+        if (!monFilm) {
+          return null;
+        }
+
+
+        const maNote =
+          noteSur100(
+            monFilm.note
+          );
+
+
+        const noteAmi =
+          noteSur100(
+            filmAmi.note
+          );
+
+
+        return {
+
+          ami: filmAmi,
+
+          moi: monFilm,
+
+          maNote,
+
+          noteAmi,
+
+          ecart:
+            Math.abs(
+              maNote -
+              noteAmi
+            ),
+
+          moyenne:
+            (
+              maNote +
+              noteAmi
+            ) / 2
+
+        };
+
+      })
+
+      .filter(Boolean);
+
+  }, [
+    films,
+    mesFilms
+  ]);
+
+
+  /* =======================================================
+     COMPARAISON
+  ======================================================= */
+
+  const comparaison = useMemo(() => {
+
+    if (!filmsCommuns.length) {
+
+      return {
+
+        compatibilite: 0,
+
+        ecartMoyen: 0,
+
+        criteres: [],
+
+        criteresProches: [],
+
+        criteresEloignes: [],
+
+        filmsAccord: [],
+
+        filmsDesaccord: [],
+
+        plusGrosseDifference: null
+
+      };
+
+    }
+
+
+    /* =====================================================
+       CRITÈRES
+    ===================================================== */
+
+    const criteres =
+      CRITERES.map(
+        ([nom, label]) => {
+
+          const valeurs = [];
+
+
+          filmsCommuns.forEach(
+            (film) => {
+
+              const moi =
+                noteSur100(
+                  film.moi[nom]
+                );
+
+
+              const ami =
+                noteSur100(
+                  film.ami[nom]
+                );
+
+
+              if (
+                film.moi[nom] != null &&
+                film.ami[nom] != null
+              ) {
+
+                valeurs.push({
+
+                  moi,
+
+                  ami,
+
+                  ecart:
+                    Math.abs(
+                      moi - ami
+                    )
+
+                });
+
+              }
+
+            }
+          );
+
+
+          const ecartMoyen =
+            moyenneTableau(
+              valeurs.map(
+                (v) => v.ecart
+              )
+            );
+
+
+          return {
+
+            nom,
+
+            label,
+
+            ecartMoyen,
+
+            compatibilite:
+              Math.max(
+                0,
+                100 - ecartMoyen
+              )
+
+          };
+
+        }
+      );
+
+
+    /* =====================================================
+       COMPATIBILITÉ GLOBALE
+    ===================================================== */
+
+    const ecartFilms =
+      moyenneTableau(
+        filmsCommuns.map(
+          (film) =>
+            film.ecart
+        )
+      );
+
+
+    const compatibilite =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          100 - ecartFilms
+        )
+      );
+
+
+    /* =====================================================
+       ACCORDS
+    ===================================================== */
+
+    const filmsAccord =
+      [...filmsCommuns]
+        .sort(
+          (a, b) =>
+            a.ecart -
+            b.ecart
+        )
+        .slice(0, 5);
+
+
+    /* =====================================================
+       DÉSACCORDS
+    ===================================================== */
+
+    const filmsDesaccord =
+      [...filmsCommuns]
+        .sort(
+          (a, b) =>
+            b.ecart -
+            a.ecart
+        )
+        .slice(0, 5);
+
+
+    /* =====================================================
+       CRITÈRES PROCHES / ÉLOIGNÉS
+    ===================================================== */
+
+    const criteresTries =
+      [...criteres]
+        .sort(
+          (a, b) =>
+            a.ecartMoyen -
+            b.ecartMoyen
+        );
+
+
+    return {
+
+      compatibilite:
+        Math.round(
+          compatibilite
+        ),
+
+      ecartMoyen:
+        Math.round(
+          ecartFilms * 10
+        ) / 10,
+
+      criteres,
+
+      criteresProches:
+        criteresTries.slice(0, 3),
+
+      criteresEloignes:
+        criteresTries
+          .slice(-3)
+          .reverse(),
+
+      filmsAccord,
+
+      filmsDesaccord,
+
+      plusGrosseDifference:
+        criteresTries.length
+          ? criteresTries[
+              criteresTries.length - 1
+            ]
+          : null
+
+    };
+
+  }, [filmsCommuns]);
+
+
+  /* =======================================================
+     FILMS DE L'AMI À RECOMMANDER
+  ======================================================= */
+
+  const filmsAmiARecommander =
+    useMemo(() => {
+
+      const mesTitres =
+        new Set(
+          mesFilms.map(
+            (film) =>
+              normaliserTitre(
+                film.titre
+              )
+          )
+        );
+
+
+      return films
+
+        .filter(
+          (film) =>
+            !mesTitres.has(
+              normaliserTitre(
+                film.titre
+              )
+            )
+        )
+
+        .filter(
+          (film) =>
+            Number(
+              film.note || 0
+            ) >= 15
+        )
+
+        .sort(
+          (a, b) =>
+            Number(
+              b.note || 0
+            ) -
+            Number(
+              a.note || 0
+            )
+        )
+
+        .slice(0, 8);
+
+    }, [
+      films,
+      mesFilms
+    ]);
+
+
+  /* =======================================================
+     MES FILMS À RECOMMANDER
+  ======================================================= */
+
+  const mesFilmsARecommander =
+    useMemo(() => {
+
+      const titresAmi =
+        new Set(
+          films.map(
+            (film) =>
+              normaliserTitre(
+                film.titre
+              )
+          )
+        );
+
+
+      return mesFilms
+
+        .filter(
+          (film) =>
+            !titresAmi.has(
+              normaliserTitre(
+                film.titre
+              )
+            )
+        )
+
+        .filter(
+          (film) =>
+            Number(
+              film.note || 0
+            ) >= 15
+        )
+
+        .sort(
+          (a, b) =>
+            Number(
+              b.note || 0
+            ) -
+            Number(
+              a.note || 0
+            )
+        )
+
+        .slice(0, 8);
+
+    }, [
+      films,
+      mesFilms
+    ]);
+
+
+  /* =======================================================
      CHARGEMENT
-     ===================================================== */
+  ======================================================= */
 
   if (chargement) {
 
@@ -595,9 +1151,9 @@ console.log("❌ Erreur films :", filmsError);
   }
 
 
-  /* =====================================================
+  /* =======================================================
      PROFIL INTROUVABLE
-     ===================================================== */
+  ======================================================= */
 
   if (!profil) {
 
@@ -634,16 +1190,15 @@ console.log("❌ Erreur films :", filmsError);
   }
 
 
-  /* =====================================================
+  /* =======================================================
      BIBLIOTHÈQUE PRIVÉE
-     ===================================================== */
+  ======================================================= */
 
   if (profil.bibliothequeBloquee) {
 
     return (
 
       <div className="container amiPage">
-
 
         <div className="amiPageHeader">
 
@@ -719,7 +1274,6 @@ console.log("❌ Erreur films :", filmsError);
 
         </div>
 
-
       </div>
 
     );
@@ -727,9 +1281,9 @@ console.log("❌ Erreur films :", filmsError);
   }
 
 
-  /* =====================================================
+  /* =======================================================
      AFFICHAGE
-     ===================================================== */
+  ======================================================= */
 
   return (
 
@@ -737,14 +1291,12 @@ console.log("❌ Erreur films :", filmsError);
 
 
       {/* =================================================
-          HEADER
+          HEADER PROFIL
       ================================================= */}
 
       <div className="amiPageHeader">
 
-
         <div className="amiProfil">
-
 
           <div className="amiAvatarGrand">
 
@@ -784,16 +1336,18 @@ console.log("❌ Erreur films :", filmsError);
 
               {films.length} film
               {films.length > 1 ? "s" : ""}
+
               {" · "}
+
               Note moyenne{" "}
+
               <strong>
-                {noteMoyenne.toFixed(0)}/20
+                {noteMoyenne.toFixed(0)}/100
               </strong>
 
             </p>
 
           </div>
-
 
         </div>
 
@@ -807,7 +1361,6 @@ console.log("❌ Erreur films :", filmsError);
           ← Retour
         </button>
 
-
       </div>
 
 
@@ -816,7 +1369,6 @@ console.log("❌ Erreur films :", filmsError);
       ================================================= */}
 
       <div className="amiNavigation">
-
 
         <button
           className={
@@ -846,6 +1398,19 @@ console.log("❌ Erreur films :", filmsError);
         </button>
 
 
+        <button
+          className={
+            vue === "comparaison"
+              ? "amiNavigationButton actif comparaisonButton"
+              : "amiNavigationButton comparaisonButton"
+          }
+          onClick={() =>
+            setVue("comparaison")
+          }
+        >
+          🤝 Comparer nos goûts
+        </button>
+
       </div>
 
 
@@ -857,7 +1422,6 @@ console.log("❌ Erreur films :", filmsError);
 
         <>
 
-
           <div className="filmsHeader">
 
             <div>
@@ -867,8 +1431,10 @@ console.log("❌ Erreur films :", filmsError);
               </h2>
 
               <span className="filmsCompteur">
+
                 {films.length} film
                 {films.length > 1 ? "s" : ""}
+
               </span>
 
             </div>
@@ -877,7 +1443,6 @@ console.log("❌ Erreur films :", filmsError);
 
 
           <div className="card filmsContainer">
-
 
             {films.length === 0 ? (
 
@@ -911,11 +1476,7 @@ console.log("❌ Erreur films :", filmsError);
                   key={film.id}
                 >
 
-
-                  {/* TITRE + NOTE */}
-
                   <div className="filmHaut">
-
 
                     <div className="filmTitre">
 
@@ -931,7 +1492,9 @@ console.log("❌ Erreur films :", filmsError);
                       style={{
                         background:
                           couleurNote(
-                            Number(film.note || 0)
+                            Number(
+                              film.note || 0
+                            )
                           )
                       }}
                     >
@@ -939,17 +1502,20 @@ console.log("❌ Erreur films :", filmsError);
                       <span className="scoreEntier">
 
                         {Math.floor(
-                          Number(film.note || 0) * 5
+                          Number(
+                            film.note || 0
+                          ) * 5
                         )}
 
                       </span>
-
 
                       <span className="scoreDecimal">
 
                         .{Math.floor(
                           (
-                            Number(film.note || 0) * 5 % 1
+                            Number(
+                              film.note || 0
+                            ) * 5 % 1
                           ) * 10
                         )}
 
@@ -957,17 +1523,12 @@ console.log("❌ Erreur films :", filmsError);
 
                     </div>
 
-
                   </div>
 
 
-                  {/* INFOS */}
-
                   <div className="filmBas">
 
-
                     <div className="filmPresentation">
-
 
                       {film.poster && (
 
@@ -982,12 +1543,12 @@ console.log("❌ Erreur films :", filmsError);
 
                       <div className="filmInfos">
 
-
                         <p>
 
                           📅{" "}
 
                           {film.dateSortie
+
                             ? new Date(
                                 film.dateSortie
                               ).toLocaleDateString(
@@ -998,7 +1559,9 @@ console.log("❌ Erreur films :", filmsError);
                                   year: "numeric"
                                 }
                               )
+
                             : "Date inconnue"
+
                           }
 
                         </p>
@@ -1016,7 +1579,6 @@ console.log("❌ Erreur films :", filmsError);
 
                         <div className="noteSpectateurs">
 
-
                           <div className="noteSpectateursTitre">
                             ⭐ Note Spectateurs
                           </div>
@@ -1033,43 +1595,29 @@ console.log("❌ Erreur films :", filmsError);
                           >
 
                             {film.imdb
+
                               ? Number(
                                   film.imdb
                                 ).toFixed(0)
+
                               : "—"
+
                             }
 
                           </div>
 
-
                         </div>
 
-
                       </div>
-
 
                     </div>
 
 
                     <div className="droiteFilm">
 
-
                       <div className="miniNotes">
 
-
-                        {[
-
-                          ["scenario", "Scénario"],
-                          ["personnages", "Personnages"],
-                          ["realisation", "Réalisation"],
-                          ["ambiance", "Ambiance"],
-                          ["visuels", "Visuels"],
-                          ["musique", "Musique"],
-                          ["rythme", "Rythme"],
-                          ["impact", "Impact"],
-                          ["rewatch", "Rewatch"]
-
-                        ].map(
+                        {CRITERES.map(
                           ([nom, label]) => (
 
                             <div
@@ -1108,35 +1656,28 @@ console.log("❌ Erreur films :", filmsError);
                           )
                         )}
 
-
                       </div>
 
-
                     </div>
-
 
                   </div>
 
 
-                  {/* FICHE UNIQUEMENT */}
-
                   <div className="actions">
-
 
                     <button
                       className="ficheButton"
                       onClick={() =>
                         navigate(
-                          "/film/" + film.id
+                          "/film/" +
+                          film.id
                         )
                       }
                     >
                       📄 Voir la fiche
                     </button>
 
-
                   </div>
-
 
                 </div>
 
@@ -1144,9 +1685,7 @@ console.log("❌ Erreur films :", filmsError);
 
             )}
 
-
           </div>
-
 
         </>
 
@@ -1161,7 +1700,6 @@ console.log("❌ Erreur films :", filmsError);
 
         <>
 
-
           <div className="filmsHeader">
 
             <div>
@@ -1171,8 +1709,12 @@ console.log("❌ Erreur films :", filmsError);
               </h2>
 
               <span className="filmsCompteur">
-                Classement personnel · {films.length} film
+
+                Classement personnel ·{" "}
+
+                {films.length} film
                 {films.length > 1 ? "s" : ""}
+
               </span>
 
             </div>
@@ -1182,14 +1724,11 @@ console.log("❌ Erreur films :", filmsError);
 
           <div className="card classementCard amiClassementCard">
 
-
             <table className="classementTable">
-
 
               <thead>
 
                 <tr>
-
 
                   <th className="filmHeader">
                     FILM
@@ -1226,7 +1765,6 @@ console.log("❌ Erreur films :", filmsError);
 
                         {label}
 
-
                         {tri === categorie && (
 
                           <span className="sortArrow">
@@ -1244,14 +1782,12 @@ console.log("❌ Erreur films :", filmsError);
                     )
                   )}
 
-
                 </tr>
 
               </thead>
 
 
               <tbody>
-
 
                 {filmsTries.map(
                   (film, index) => (
@@ -1260,7 +1796,8 @@ console.log("❌ Erreur films :", filmsError);
                       key={film.id}
                       onClick={() =>
                         navigate(
-                          "/film/" + film.id
+                          "/film/" +
+                          film.id
                         )
                       }
                       style={{
@@ -1268,17 +1805,12 @@ console.log("❌ Erreur films :", filmsError);
                       }}
                     >
 
-
                       <td className="filmCell">
-
 
                         <div className="filmClassement">
 
-
                           <div className="classementPosition">
-
                             {index + 1}
-
                           </div>
 
 
@@ -1295,7 +1827,6 @@ console.log("❌ Erreur films :", filmsError);
 
                           <div className="filmClassementInfos">
 
-
                             <span className="filmClassementTitre">
                               {film.titre}
                             </span>
@@ -1304,26 +1835,25 @@ console.log("❌ Erreur films :", filmsError);
                             <span className="filmClassementMeta">
 
                               {film.dateSortie
+
                                 ? new Date(
                                     film.dateSortie
                                   ).getFullYear()
+
                                 : "—"
+
                               }
 
                             </span>
 
-
                           </div>
 
-
                         </div>
-
 
                       </td>
 
 
                       <td>
-
 
                         <div
                           className={
@@ -1352,24 +1882,11 @@ console.log("❌ Erreur films :", filmsError);
 
                         </div>
 
-
                       </td>
 
 
-                      {[
-
-                        "scenario",
-                        "personnages",
-                        "realisation",
-                        "ambiance",
-                        "visuels",
-                        "musique",
-                        "rythme",
-                        "impact",
-                        "rewatch"
-
-                      ].map(
-                        (categorie) => (
+                      {CRITERES.map(
+                        ([categorie]) => (
 
                           <td
                             key={categorie}
@@ -1407,26 +1924,1242 @@ console.log("❌ Erreur films :", filmsError);
                         )
                       )}
 
-
                     </tr>
 
                   )
                 )}
 
-
               </tbody>
-
 
             </table>
 
-
           </div>
-
 
         </>
 
       )}
 
+
+      {/* =================================================
+          VUE COMPARAISON
+      ================================================= */}
+
+      {vue === "comparaison" && (
+
+        <div className="amiComparaison">
+
+
+          {/* =================================================
+              HEADER COMPARAISON
+          ================================================= */}
+
+          <div className="amiComparaisonHeader">
+
+            <div>
+
+              <div className="amisSurTitre">
+                CINERANK · COMPATIBILITÉ
+              </div>
+
+              <h2 className="amiComparaisonTitre">
+                🤝 Comparer nos goûts
+              </h2>
+
+              <p className="amiComparaisonSousTitre">
+
+                Compare tes notes avec celles de{" "}
+
+                <strong>
+                  {profil.pseudo}
+                </strong>{" "}
+
+                et découvre à quel point vous aimez
+                les mêmes films.
+
+              </p>
+
+            </div>
+
+
+            <div className="amiCompatibiliteBadge">
+
+              <span>
+                COMPATIBILITÉ
+              </span>
+
+              <strong>
+                {comparaison.compatibilite}%
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          {/* =================================================
+              STATS
+          ================================================= */}
+
+          <div className="amiComparaisonStats">
+
+            <div className="amiComparaisonStat">
+
+              <span>
+                🎬
+              </span>
+
+              <div>
+
+                <small>
+                  Films en commun
+                </small>
+
+                <strong>
+                  {filmsCommuns.length}
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div className="amiComparaisonStat">
+
+              <span>
+                ⭐
+              </span>
+
+              <div>
+
+                <small>
+                  Écart moyen
+                </small>
+
+                <strong>
+                  {comparaison.ecartMoyen} pts
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div className="amiComparaisonStat">
+
+              <span>
+                🎯
+              </span>
+
+              <div>
+
+                <small>
+                  Films analysés
+                </small>
+
+                <strong>
+                  {filmsCommuns.length}
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div className="amiComparaisonStat">
+
+              <span>
+                📚
+              </span>
+
+              <div>
+
+                <small>
+                  Films à découvrir
+                </small>
+
+                <strong>
+                  {filmsAmiARecommander.length}
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          {/* =================================================
+              PAS DE FILMS COMMUNS
+          ================================================= */}
+
+          {filmsCommuns.length === 0 ? (
+
+            <div className="card amisEtatVide amiComparaisonVide">
+
+              <span>
+                🎬
+              </span>
+
+              <div>
+
+                <strong>
+                  Pas encore assez de films en commun
+                </strong>
+
+                <p>
+
+                  Note quelques films que{" "}
+                  {profil.pseudo}
+                  {" "}a également notés pour débloquer
+                  l'analyse de compatibilité.
+
+                </p>
+
+              </div>
+
+            </div>
+
+          ) : (
+
+            <>
+
+
+              {/* =================================================
+                  ANALYSE GLOBALE
+              ================================================= */}
+
+              <div className="amiCompatibiliteCard">
+
+                <div className="amiCompatibiliteCardHeader">
+
+                  <div>
+
+                    <span>
+                      ANALYSE GLOBALE
+                    </span>
+
+                    <h3>
+                      Compatibilité cinématographique
+                    </h3>
+
+                  </div>
+
+
+                  <div
+                    className="amiCompatibiliteScore"
+                    style={{
+                      background:
+                        couleurNote(
+                          comparaison.compatibilite / 5
+                        )
+                    }}
+                  >
+
+                    {comparaison.compatibilite}%
+
+                  </div>
+
+                </div>
+
+
+                <div className="amiCompatibiliteBarreFond">
+
+                  <div
+                    className="amiCompatibiliteBarre"
+                    style={{
+                      width:
+                        `${comparaison.compatibilite}%`,
+
+                      background:
+                        couleurNote(
+                          comparaison.compatibilite / 5
+                        )
+                    }}
+                  />
+
+                </div>
+
+
+                <p className="amiCompatibilitePhrase">
+
+                  {comparaison.compatibilite >= 90
+
+                    ? "Vous avez clairement des goûts ciné extrêmement proches. Vous pourriez presque choisir vos films les yeux fermés."
+
+                    : comparaison.compatibilite >= 80
+
+                    ? "Très grosse compatibilité. Vous avez globalement les mêmes goûts et vos notes sont souvent proches."
+
+                    : comparaison.compatibilite >= 70
+
+                    ? "Bonne compatibilité. Vous aimez beaucoup de choses en commun, même si certaines différences commencent à apparaître."
+
+                    : comparaison.compatibilite >= 55
+
+                    ? "Vos goûts se croisent régulièrement, mais vous avez aussi quelques divergences assez nettes."
+
+                    : "Vos goûts sont assez différents. Et justement, ça peut rendre vos recommandations beaucoup plus intéressantes."
+
+                  }
+
+                </p>
+
+              </div>
+
+
+              {/* =================================================
+                  FILMS EN COMMUN
+              ================================================= */}
+
+              <div className="amiComparaisonSection">
+
+                <div className="amiComparaisonSectionHeader">
+
+                  <div>
+
+                    <span>
+                      🎬 FILMS EN COMMUN
+                    </span>
+
+                    <h3>
+                      Vos films communs
+                    </h3>
+
+                  </div>
+
+                  <small>
+
+                    {filmsCommuns.length} film
+                    {filmsCommuns.length > 1 ? "s" : ""}
+
+                  </small>
+
+                </div>
+
+
+                <div className="amiFilmsCommuns">
+
+                  {[...filmsCommuns]
+
+                    .sort(
+                      (a, b) =>
+                        b.moyenne -
+                        a.moyenne
+                    )
+
+                    .map(
+                      (film) => (
+
+                        <div
+                          className="amiFilmCommun"
+                          key={film.ami.id}
+                        >
+
+                          <div className="amiFilmCommunPoster">
+
+                            {film.ami.poster ? (
+
+                              <img
+                                src={film.ami.poster}
+                                alt={film.ami.titre}
+                              />
+
+                            ) : (
+
+                              <div>
+                                🎬
+                              </div>
+
+                            )}
+
+                          </div>
+
+
+                          <div className="amiFilmCommunInfos">
+
+                            <strong>
+                              {film.ami.titre}
+                            </strong>
+
+
+                            <div className="amiDeuxNotes">
+
+                              <div>
+
+                                <span>
+                                  TOI
+                                </span>
+
+                                <b
+                                  style={{
+                                    background:
+                                      couleurNote(
+                                        film.maNote / 5
+                                      )
+                                  }}
+                                >
+                                  {film.maNote}
+                                </b>
+
+                              </div>
+
+
+                              <div className="amiVs">
+                                VS
+                              </div>
+
+
+                              <div>
+
+                                <span>
+                                  {profil.pseudo
+                                    .slice(0, 10)
+                                    .toUpperCase()}
+                                </span>
+
+                                <b
+                                  style={{
+                                    background:
+                                      couleurNote(
+                                        film.noteAmi / 5
+                                      )
+                                  }}
+                                >
+                                  {film.noteAmi}
+                                </b>
+
+                              </div>
+
+                            </div>
+
+
+                            <div className="amiEcart">
+
+                              <span>
+                                ÉCART
+                              </span>
+
+                              <strong
+                                style={{
+                                  color:
+                                    couleurNote(
+                                      Math.max(
+                                        0,
+                                        20 -
+                                        film.ecart / 5
+                                      )
+                                    )
+                                }}
+                              >
+                                {film.ecart} points
+                              </strong>
+
+                            </div>
+
+
+                            <div className="amiFilmComparaisonBarres">
+
+                              <div>
+
+                                <span>
+                                  Toi
+                                </span>
+
+                                <div className="amiBarreFond">
+
+                                  <div
+                                    style={{
+                                      width:
+                                        `${film.maNote}%`,
+
+                                      background:
+                                        couleurNote(
+                                          film.maNote / 5
+                                        )
+                                    }}
+                                  />
+
+                                </div>
+
+                              </div>
+
+
+                              <div>
+
+                                <span>
+                                  {profil.pseudo}
+                                </span>
+
+                                <div className="amiBarreFond">
+
+                                  <div
+                                    style={{
+                                      width:
+                                        `${film.noteAmi}%`,
+
+                                      background:
+                                        couleurNote(
+                                          film.noteAmi / 5
+                                        )
+                                    }}
+                                  />
+
+                                </div>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      )
+                    )}
+
+                </div>
+
+              </div>
+
+
+              {/* =================================================
+                  COMPARAISON DES 9 CRITÈRES
+              ================================================= */}
+
+              <div className="amiComparaisonSection">
+
+                <div className="amiComparaisonSectionHeader">
+
+                  <div>
+
+                    <span>
+                      🧠 ANALYSE DES CRITÈRES
+                    </span>
+
+                    <h3>
+                      Où vos goûts se rejoignent
+                    </h3>
+
+                  </div>
+
+                </div>
+
+
+                <div className="amiCriteresComparaison">
+
+                  {CRITERES.map(
+                    ([nom, label]) => {
+
+                      const valeurs =
+                        filmsCommuns.filter(
+                          (film) =>
+                            film.moi[nom] != null &&
+                            film.ami[nom] != null
+                        );
+
+
+                      if (!valeurs.length) {
+                        return null;
+                      }
+
+
+                      const moyenneMoi =
+                        moyenneTableau(
+                          valeurs.map(
+                            (film) =>
+                              noteSur100(
+                                film.moi[nom]
+                              )
+                          )
+                        );
+
+
+                      const moyenneAmi =
+                        moyenneTableau(
+                          valeurs.map(
+                            (film) =>
+                              noteSur100(
+                                film.ami[nom]
+                              )
+                          )
+                        );
+
+
+                      const ecart =
+                        Math.abs(
+                          moyenneMoi -
+                          moyenneAmi
+                        );
+
+
+                      return (
+
+                        <div
+                          className="amiCritereComparaison"
+                          key={nom}
+                        >
+
+                          <div className="amiCritereTitre">
+
+                            <strong>
+                              {label}
+                            </strong>
+
+                            <span>
+                              écart {Math.round(ecart)} pts
+                            </span>
+
+                          </div>
+
+
+                          <div className="amiCritereLigne">
+
+                            <div className="amiCritereNom">
+                              TOI
+                            </div>
+
+                            <div className="amiCritereBarreFond">
+
+                              <div
+                                className="amiCritereBarre"
+                                style={{
+                                  width:
+                                    `${moyenneMoi}%`,
+
+                                  background:
+                                    couleurNote(
+                                      moyenneMoi / 5
+                                    )
+                                }}
+                              />
+
+                            </div>
+
+                            <strong>
+                              {Math.round(
+                                moyenneMoi
+                              )}
+                            </strong>
+
+                          </div>
+
+
+                          <div className="amiCritereLigne">
+
+                            <div className="amiCritereNom">
+
+                              {profil.pseudo
+                                .slice(0, 8)
+                                .toUpperCase()}
+
+                            </div>
+
+                            <div className="amiCritereBarreFond">
+
+                              <div
+                                className="amiCritereBarre"
+                                style={{
+                                  width:
+                                    `${moyenneAmi}%`,
+
+                                  background:
+                                    couleurNote(
+                                      moyenneAmi / 5
+                                    )
+                                }}
+                              />
+
+                            </div>
+
+                            <strong>
+                              {Math.round(
+                                moyenneAmi
+                              )}
+                            </strong>
+
+                          </div>
+
+                        </div>
+
+                      );
+
+                    }
+                  )}
+
+                </div>
+
+              </div>
+
+
+              {/* =================================================
+                  ACCORDS / DÉSACCORDS
+              ================================================= */}
+
+              <div className="amiAnalyseDeuxColonnes">
+
+
+                <div className="amiAnalyseBloc">
+
+                  <div className="amiAnalyseBlocTitre">
+
+                    <span>
+                      🏆
+                    </span>
+
+                    <div>
+
+                      <small>
+                        VOS PLUS GROS ACCORDS
+                      </small>
+
+                      <h3>
+                        Vous êtes quasiment d'accord
+                      </h3>
+
+                    </div>
+
+                  </div>
+
+
+                  <div className="amiAnalyseFilms">
+
+                    {comparaison.filmsAccord.map(
+                      (film) => (
+
+                        <div
+                          className="amiAnalyseFilm"
+                          key={film.ami.id}
+                        >
+
+                          {film.ami.poster && (
+
+                            <img
+                              src={film.ami.poster}
+                              alt={film.ami.titre}
+                            />
+
+                          )}
+
+                          <div>
+
+                            <strong>
+                              {film.ami.titre}
+                            </strong>
+
+                            <span>
+
+                              Toi {film.maNote} ·{" "}
+
+                              {profil.pseudo}{" "}
+                              {film.noteAmi}
+
+                            </span>
+
+                          </div>
+
+                          <b>
+                            {film.ecart} pt
+                          </b>
+
+                        </div>
+
+                      )
+                    )}
+
+                  </div>
+
+                </div>
+
+
+                <div className="amiAnalyseBloc">
+
+                  <div className="amiAnalyseBlocTitre">
+
+                    <span>
+                      💥
+                    </span>
+
+                    <div>
+
+                      <small>
+                        VOS PLUS GROS DÉSACCORDS
+                      </small>
+
+                      <h3>
+                        Là, ça commence à chauffer
+                      </h3>
+
+                    </div>
+
+                  </div>
+
+
+                  <div className="amiAnalyseFilms">
+
+                    {comparaison.filmsDesaccord.map(
+                      (film) => (
+
+                        <div
+                          className="amiAnalyseFilm"
+                          key={film.ami.id}
+                        >
+
+                          {film.ami.poster && (
+
+                            <img
+                              src={film.ami.poster}
+                              alt={film.ami.titre}
+                            />
+
+                          )}
+
+                          <div>
+
+                            <strong>
+                              {film.ami.titre}
+                            </strong>
+
+                            <span>
+
+                              Toi {film.maNote} ·{" "}
+
+                              {profil.pseudo}{" "}
+                              {film.noteAmi}
+
+                            </span>
+
+                          </div>
+
+                          <b>
+                            {film.ecart} pt
+                          </b>
+
+                        </div>
+
+                      )
+                    )}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              {/* =================================================
+                  CRITÈRES PROCHES / ÉLOIGNÉS
+              ================================================= */}
+
+              <div className="amiAnalyseDeuxColonnes">
+
+
+                <div className="amiAnalyseBloc amiCritereResume">
+
+                  <div className="amiAnalyseBlocTitre">
+
+                    <span>
+                      ❤️
+                    </span>
+
+                    <div>
+
+                      <small>
+                        CRITÈRES LES PLUS PROCHES
+                      </small>
+
+                      <h3>
+                        Vos goûts se ressemblent
+                      </h3>
+
+                    </div>
+
+                  </div>
+
+
+                  {comparaison.criteresProches.map(
+                    (critere) => (
+
+                      <div
+                        className="amiCritereResumeLigne"
+                        key={critere.nom}
+                      >
+
+                        <strong>
+                          {critere.label}
+                        </strong>
+
+                        <span>
+
+                          {Math.round(
+                            critere.compatibilite
+                          )}%
+
+                        </span>
+
+                      </div>
+
+                    )
+                  )}
+
+                </div>
+
+
+                <div className="amiAnalyseBloc amiCritereResume">
+
+                  <div className="amiAnalyseBlocTitre">
+
+                    <span>
+                      ⚡
+                    </span>
+
+                    <div>
+
+                      <small>
+                        CRITÈRES LES PLUS ÉLOIGNÉS
+                      </small>
+
+                      <h3>
+                        Vos goûts divergent
+                      </h3>
+
+                    </div>
+
+                  </div>
+
+
+                  {comparaison.criteresEloignes.map(
+                    (critere) => (
+
+                      <div
+                        className="amiCritereResumeLigne"
+                        key={critere.nom}
+                      >
+
+                        <strong>
+                          {critere.label}
+                        </strong>
+
+                        <span>
+
+                          écart{" "}
+
+                          {Math.round(
+                            critere.ecartMoyen
+                          )} pts
+
+                        </span>
+
+                      </div>
+
+                    )
+                  )}
+
+                </div>
+
+              </div>
+
+
+              {/* =================================================
+                  RECOMMANDATIONS DE L'AMI
+              ================================================= */}
+
+              <div className="amiComparaisonSection">
+
+                <div className="amiComparaisonSectionHeader">
+
+                  <div>
+
+                    <span>
+                      🍿 RECOMMANDATIONS
+                    </span>
+
+                    <h3>
+                      Vous devriez regarder...
+                    </h3>
+
+                  </div>
+
+                </div>
+
+
+                <div className="amiRecoIntro">
+
+                  <div>
+                    🎯
+                  </div>
+
+                  <p>
+
+                    {profil.pseudo} a noté très haut
+                    des films que tu n'as pas encore
+                    notés. Voilà ceux qui semblent les
+                    plus intéressants à découvrir.
+
+                  </p>
+
+                </div>
+
+
+                {filmsAmiARecommander.length === 0 ? (
+
+                  <div className="amisEtatVide">
+
+                    <span>
+                      🎬
+                    </span>
+
+                    <div>
+
+                      <strong>
+                        Aucun nouveau film à recommander
+                      </strong>
+
+                      <p>
+
+                        Vous avez déjà beaucoup de films
+                        en commun ou {profil.pseudo} n'a
+                        pas encore assez de films très bien
+                        notés hors de ta bibliothèque.
+
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                ) : (
+
+                  <div className="amiRecoFilms">
+
+                    {filmsAmiARecommander.map(
+                      (film) => (
+
+                        <div
+                          className="amiRecoFilm"
+                          key={film.id}
+                          onClick={() =>
+                            navigate(
+                              "/film/" +
+                              film.id
+                            )
+                          }
+                        >
+
+                          {film.poster ? (
+
+                            <img
+                              src={film.poster}
+                              alt={film.titre}
+                            />
+
+                          ) : (
+
+                            <div className="amiRecoPosterVide">
+                              🎬
+                            </div>
+
+                          )}
+
+
+                          <div className="amiRecoInfos">
+
+                            <strong>
+                              {film.titre}
+                            </strong>
+
+                            <span>
+
+                              {film.dateSortie
+
+                                ? new Date(
+                                    film.dateSortie
+                                  ).getFullYear()
+
+                                : "—"
+
+                              }
+
+                            </span>
+
+                            <small>
+                              Note de {profil.pseudo}
+                            </small>
+
+                            <b
+                              style={{
+                                background:
+                                  couleurNote(
+                                    Number(
+                                      film.note || 0
+                                    )
+                                  )
+                              }}
+                            >
+
+                              {noteSur100(
+                                film.note
+                              )}
+
+                            </b>
+
+                          </div>
+
+                        </div>
+
+                      )
+                    )}
+
+                  </div>
+
+                )}
+
+              </div>
+
+
+              {/* =================================================
+                  MES RECOMMANDATIONS POUR L'AMI
+              ================================================= */}
+
+              <div className="amiComparaisonSection">
+
+                <div className="amiComparaisonSectionHeader">
+
+                  <div>
+
+                    <span>
+                      🎯 À TON TOUR
+                    </span>
+
+                    <h3>
+                      Tes films qu'il devrait voir
+                    </h3>
+
+                  </div>
+
+                </div>
+
+
+                {mesFilmsARecommander.length === 0 ? (
+
+                  <div className="amisEtatVide">
+
+                    <span>
+                      🎬
+                    </span>
+
+                    <div>
+
+                      <strong>
+                        Rien à recommander pour l'instant
+                      </strong>
+
+                      <p>
+
+                        Aucun de tes films très bien notés
+                        ne manque encore à la bibliothèque
+                        de {profil.pseudo}.
+
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                ) : (
+
+                  <div className="amiRecoFilms">
+
+                    {mesFilmsARecommander.map(
+                      (film) => (
+
+                        <div
+                          className="amiRecoFilm"
+                          key={film.id}
+                          onClick={() =>
+                            navigate(
+                              "/film/" +
+                              film.id
+                            )
+                          }
+                        >
+
+                          {film.poster ? (
+
+                            <img
+                              src={film.poster}
+                              alt={film.titre}
+                            />
+
+                          ) : (
+
+                            <div className="amiRecoPosterVide">
+                              🎬
+                            </div>
+
+                          )}
+
+
+                          <div className="amiRecoInfos">
+
+                            <strong>
+                              {film.titre}
+                            </strong>
+
+                            <span>
+
+                              {film.dateSortie
+
+                                ? new Date(
+                                    film.dateSortie
+                                  ).getFullYear()
+
+                                : "—"
+
+                              }
+
+                            </span>
+
+                            <small>
+                              Ta note
+                            </small>
+
+                            <b
+                              style={{
+                                background:
+                                  couleurNote(
+                                    Number(
+                                      film.note || 0
+                                    )
+                                  )
+                              }}
+                            >
+
+                              {noteSur100(
+                                film.note
+                              )}
+
+                            </b>
+
+                          </div>
+
+                        </div>
+
+                      )
+                    )}
+
+                  </div>
+
+                )}
+
+              </div>
+
+            </>
+
+          )}
+
+        </div>
+
+      )}
 
     </div>
 
