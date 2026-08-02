@@ -438,6 +438,10 @@ function Ami() {
         ascending: false
       });
 
+      console.log("👤 ID ami :", id);
+console.log("🎬 Films récupérés :", filmsData);
+console.log("❌ Erreur films :", filmsError);
+
 
     if (filmsError) {
 
