@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { actualiserImdbFilmsUtilisateur } from "../utils/tmdb";
 import { supabase } from "../supabase/client";
+import { actualiserImdbFilmsUtilisateur } from "../api/tmdb";
 
 
 
