@@ -6924,19 +6924,7 @@ body {
 }
 
 
-.amiPage .scoreBadge::after {
-  content: "/20";
 
-  position: absolute;
-
-  bottom: 11px;
-
-  font-size: 10px;
-
-  font-weight: 900;
-
-  opacity: .65;
-}
 
 
 .amiPage .scoreEntier {
