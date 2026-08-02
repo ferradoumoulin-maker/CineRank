@@ -834,3 +834,285 @@ console.log(
   };
 
 }
+
+/* =========================================================
+   ACTUALISER LES NOTES IMDb MANQUANTES
+   ========================================================= */
+
+export async function actualiserImdbManquants() {
+
+  console.log("🔵 Recherche des notes IMDb manquantes...");
+
+  const { data: films, error } = await supabase
+    .from("films_globaux")
+    .select("tmdb_id, imdb")
+    .or("imdb.is.null,imdb.eq.0");
+
+  if (error) {
+    console.error(
+      "❌ Erreur récupération IMDb manquants :",
+      error
+    );
+    return;
+  }
+
+  if (!films || films.length === 0) {
+    console.log("🟢 Toutes les notes IMDb sont déjà présentes.");
+    return;
+  }
+
+  console.log(
+    `🎬 ${films.length} film(s) ont une note IMDb manquante.`
+  );
+
+  for (const film of films) {
+
+    try {
+
+      /* Récupération des infos TMDB */
+      const reponse = await fetch(
+        `https://api.themoviedb.org/3/movie/${film.tmdb_id}?api_key=${API_KEY}&language=fr-FR&append_to_response=external_ids`
+      );
+
+      if (!reponse.ok) {
+        console.error(
+          "❌ Erreur TMDB pour",
+          film.tmdb_id
+        );
+        continue;
+      }
+
+      const infos = await reponse.json();
+
+      const imdbId =
+        infos.external_ids?.imdb_id;
+
+      if (!imdbId) {
+        console.log(
+          "⚠️ Pas d'IMDb ID pour",
+          film.tmdb_id
+        );
+        continue;
+      }
+
+
+      /* Appel OMDb */
+      const omdbReponse = await fetch(
+        `https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_KEY}`
+      );
+
+      const donneesImdb =
+        await omdbReponse.json();
+
+
+      if (
+        donneesImdb.imdbRating &&
+        donneesImdb.imdbRating !== "N/A"
+      ) {
+
+        const noteImdb =
+          Number(donneesImdb.imdbRating) * 10;
+
+
+        /* Mise à jour Supabase */
+        const { error: updateError } =
+          await supabase
+            .from("films_globaux")
+            .update({
+              imdb: noteImdb
+            })
+            .eq("tmdb_id", film.tmdb_id);
+
+
+        if (updateError) {
+
+          console.error(
+            "❌ Erreur mise à jour IMDb :",
+            updateError
+          );
+
+        } else {
+
+          console.log(
+            `✅ IMDb mise à jour : ${film.tmdb_id} → ${noteImdb}/100`
+          );
+
+        }
+
+      } else {
+
+        console.log(
+          `⚠️ IMDb toujours inconnue : ${film.tmdb_id}`
+        );
+
+      }
+
+
+      /* Petite pause entre les appels */
+      await new Promise(
+        resolve =>
+          setTimeout(resolve, 300)
+      );
+
+    }
+    catch (error) {
+
+      console.error(
+        "❌ Erreur actualisation IMDb :",
+        error
+      );
+
+    }
+
+  }
+
+  console.log("🟢 Actualisation IMDb terminée.");
+
+}
+
+export async function actualiserImdbFilmsUtilisateur(userId) {
+
+  if (!userId) return;
+
+  console.log("🔵 Vérification des notes IMDb de mes films...");
+
+  const { data: films, error } = await supabase
+    .from("films")
+    .select("id, tmdb_id, imdb")
+    .eq("user_id", userId)
+    .or("imdb.is.null,imdb.eq.0");
+
+  if (error) {
+    console.error(
+      "❌ Erreur récupération films IMDb manquants :",
+      error
+    );
+    return;
+  }
+
+  if (!films || films.length === 0) {
+    console.log("🟢 Aucune note IMDb manquante.");
+    return;
+  }
+
+  console.log(
+    `🎬 ${films.length} film(s) à vérifier.`
+  );
+
+  for (const film of films) {
+
+    if (!film.tmdb_id) {
+      console.log(
+        "⚠️ Pas de tmdb_id pour le film :",
+        film.id
+      );
+      continue;
+    }
+
+    try {
+
+      /* Récupération de l'IMDb ID depuis TMDB */
+
+      const reponse = await fetch(
+        `https://api.themoviedb.org/3/movie/${film.tmdb_id}?api_key=${API_KEY}&language=fr-FR&append_to_response=external_ids`
+      );
+
+      if (!reponse.ok) {
+        console.error(
+          "❌ Erreur TMDB :",
+          film.tmdb_id
+        );
+        continue;
+      }
+
+      const infos = await reponse.json();
+
+      const imdbId =
+        infos.external_ids?.imdb_id;
+
+      if (!imdbId) {
+        console.log(
+          "⚠️ Aucun IMDb ID :",
+          film.tmdb_id
+        );
+        continue;
+      }
+
+
+      /* Récupération de la note sur OMDb */
+
+      const omdbReponse = await fetch(
+        `https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_KEY}`
+      );
+
+      const donneesImdb =
+        await omdbReponse.json();
+
+
+      if (
+        donneesImdb.imdbRating &&
+        donneesImdb.imdbRating !== "N/A"
+      ) {
+
+        const noteImdb =
+          Number(donneesImdb.imdbRating) * 10;
+
+
+        /* Mise à jour du film personnel */
+
+        const { error: updateError } =
+          await supabase
+            .from("films")
+            .update({
+              imdb: noteImdb
+            })
+            .eq("id", film.id)
+            .eq("user_id", userId);
+
+
+        if (updateError) {
+
+          console.error(
+            "❌ Erreur mise à jour IMDb :",
+            updateError
+          );
+
+        } else {
+
+          console.log(
+            `✅ ${film.tmdb_id} → IMDb ${noteImdb}/100`
+          );
+
+        }
+
+      } else {
+
+        console.log(
+          `⚠️ IMDb toujours inconnue : ${film.tmdb_id}`
+        );
+
+      }
+
+
+      /* Petite pause pour éviter de flinguer le quota OMDb */
+
+      await new Promise(
+        resolve =>
+          setTimeout(resolve, 300)
+      );
+
+    }
+    catch (error) {
+
+      console.error(
+        "❌ Erreur actualisation IMDb :",
+        error
+      );
+
+    }
+
+  }
+
+  console.log("🟢 Vérification IMDb terminée.");
+
+}

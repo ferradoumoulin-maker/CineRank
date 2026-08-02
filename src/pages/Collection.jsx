@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { actualiserImdbFilmsUtilisateur } from "../utils/tmdb";
 import { supabase } from "../supabase/client";
 
 
@@ -248,30 +249,81 @@ async function verifierConnexion(){
 
 async function chargerFilms(){
 
-  const {data:{user}} = await supabase.auth.getUser();
+  const { data: { user } } =
+    await supabase.auth.getUser();
 
 
   if(!user){
-  setFilms([]);
-  return;
-}
 
+    setFilms([]);
 
-  const {data,error} = await supabase
-    .from("films")
-    .select("*")
-    .eq("user_id",user.id);
-
-
-  if(error){
-
-    console.error(error);
     return;
 
   }
 
 
-  setFilms(data);
+  /* =====================================================
+     1. Charger les films immédiatement
+     ===================================================== */
+
+  const { data, error } = await supabase
+    .from("films")
+    .select("*")
+    .eq("user_id", user.id);
+
+
+  if(error){
+
+    console.error(
+      "❌ Erreur chargement films :",
+      error
+    );
+
+    return;
+
+  }
+
+
+  setFilms(data || []);
+
+
+  /* =====================================================
+     2. Vérifier les IMDb manquants
+     ===================================================== */
+
+  await actualiserImdbFilmsUtilisateur(
+    user.id
+  );
+
+
+  /* =====================================================
+     3. Recharger les films après mise à jour
+     ===================================================== */
+
+  const {
+    data: filmsMisAJour,
+    error: erreurReload
+  } = await supabase
+    .from("films")
+    .select("*")
+    .eq("user_id", user.id);
+
+
+  if(erreurReload){
+
+    console.error(
+      "❌ Erreur rechargement films :",
+      erreurReload
+    );
+
+    return;
+
+  }
+
+
+  setFilms(
+    filmsMisAJour || []
+  );
 
 }
 
