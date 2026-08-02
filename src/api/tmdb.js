@@ -1005,14 +1005,15 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
 
       let tmdbId = film.tmdb_id;
 
+
       /* =====================================================
-         1. SI LE TMDB_ID MANQUE → RECHERCHE PAR TITRE
+         1. TMDB ID MANQUANT → RECHERCHE PAR TITRE
          ===================================================== */
 
       if (!tmdbId) {
 
         console.log(
-          `🔎 Pas de tmdb_id pour "${film.titre}" → recherche TMDB...`
+          `🔎 Recherche TMDB pour "${film.titre}"...`
         );
 
         const rechercheResponse = await fetch(
@@ -1023,40 +1024,48 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
         );
 
         if (!rechercheResponse.ok) {
+
           console.error(
-            "❌ Erreur recherche TMDB :",
-            film.titre
+            `❌ Recherche TMDB impossible pour "${film.titre}"`
           );
+
           continue;
         }
 
         const recherche =
           await rechercheResponse.json();
 
-        const resultat =
-          recherche.results?.[0];
+        const resultats =
+          recherche.results || [];
 
-        if (!resultat) {
+        if (!resultats.length) {
 
           console.log(
-            `⚠️ Film introuvable sur TMDB : ${film.titre}`
+            `⚠️ Film introuvable sur TMDB : "${film.titre}"`
           );
 
           continue;
         }
 
-        tmdbId = resultat.id;
-
-        console.log(
-          `✅ TMDB trouvé pour "${film.titre}" → ${tmdbId}`
-        );
 
         /*
-         * On enregistre également le tmdb_id
-         * pour ne plus avoir à refaire cette recherche.
+         * On prend le premier résultat.
          */
 
-        const { error: tmdbUpdateError } =
+        tmdbId =
+          resultats[0].id;
+
+
+        console.log(
+          `✅ "${film.titre}" → TMDB ID ${tmdbId}`
+        );
+
+
+        /* =================================================
+           ENREGISTRER LE TMDB ID
+           ================================================= */
+
+        const { error: erreurTmdb } =
           await supabase
             .from("films")
             .update({
@@ -1065,20 +1074,22 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
             .eq("id", film.id)
             .eq("user_id", userId);
 
-        if (tmdbUpdateError) {
+
+        if (erreurTmdb) {
 
           console.error(
-            "⚠️ Impossible d'enregistrer le tmdb_id :",
-            tmdbUpdateError
+            `❌ Erreur enregistrement TMDB ID pour "${film.titre}" :`,
+            erreurTmdb
           );
 
+          continue;
         }
 
       }
 
 
       /* =====================================================
-         2. RÉCUPÉRER L'IMDb ID DEPUIS TMDB
+         2. RÉCUPÉRER IMDb ID DEPUIS TMDB
          ===================================================== */
 
       const reponse = await fetch(
@@ -1088,20 +1099,24 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
         `&append_to_response=external_ids`
       );
 
+
       if (!reponse.ok) {
 
         console.error(
-          `❌ Erreur TMDB pour "${film.titre}"`
+          `❌ Erreur récupération TMDB pour "${film.titre}"`
         );
 
         continue;
       }
 
+
       const infos =
         await reponse.json();
 
+
       const imdbId =
         infos.external_ids?.imdb_id;
+
 
       if (!imdbId) {
 
@@ -1113,6 +1128,11 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
       }
 
 
+      console.log(
+        `🎬 "${film.titre}" → IMDb ID ${imdbId}`
+      );
+
+
       /* =====================================================
          3. RÉCUPÉRER LA NOTE IMDb VIA OMDb
          ===================================================== */
@@ -1122,6 +1142,7 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
         `?i=${imdbId}` +
         `&apikey=${OMDB_KEY}`
       );
+
 
       const donneesImdb =
         await omdbReponse.json();
@@ -1137,10 +1158,10 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
 
 
         /* =================================================
-           4. ENREGISTRER LA NOTE DANS FILMS
+           4. ENREGISTRER LA NOTE IMDb
            ================================================= */
 
-        const { error: updateError } =
+        const { error: erreurUpdate } =
           await supabase
             .from("films")
             .update({
@@ -1150,11 +1171,11 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
             .eq("user_id", userId);
 
 
-        if (updateError) {
+        if (erreurUpdate) {
 
           console.error(
             `❌ Erreur mise à jour IMDb pour "${film.titre}" :`,
-            updateError
+            erreurUpdate
           );
 
         } else {
@@ -1168,13 +1189,15 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
       } else {
 
         console.log(
-          `⚠️ IMDb toujours inconnue : ${film.titre}`
+          `⚠️ IMDb toujours inconnue : "${film.titre}"`
         );
 
       }
 
 
-      /* Petite pause pour éviter de flinguer OMDb */
+      /*
+       * Pause pour ne pas exploser le quota OMDb.
+       */
 
       await new Promise(
         resolve =>
@@ -1186,13 +1209,14 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
     catch (error) {
 
       console.error(
-        `❌ Erreur actualisation IMDb pour "${film.titre}" :`,
+        `❌ Erreur actualisation de "${film.titre}" :`,
         error
       );
 
     }
 
   }
+
 
   console.log(
     "🟢 Vérification IMDb terminée."
