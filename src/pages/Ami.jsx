@@ -1913,9 +1913,9 @@ function Ami() {
                               }}
                             >
 
-                              {film[
-                                categorie
-                              ] ?? "—"}
+                              {film[categorie] != null
+  ? noteSur100(film[categorie])
+  : "—"}
 
                             </div>
 
