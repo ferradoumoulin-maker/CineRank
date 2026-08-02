@@ -978,7 +978,7 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
 
   const { data: films, error } = await supabase
     .from("films")
-    .select("id, tmdb_id, imdb")
+    .select("id, titre, tmdb_id, imdb")
     .eq("user_id", userId)
     .or("imdb.is.null,imdb.eq.0");
 
@@ -1001,48 +1001,126 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
 
   for (const film of films) {
 
-    if (!film.tmdb_id) {
-      console.log(
-        "⚠️ Pas de tmdb_id pour le film :",
-        film.id
-      );
-      continue;
-    }
-
     try {
 
-      /* Récupération de l'IMDb ID depuis TMDB */
+      let tmdbId = film.tmdb_id;
+
+      /* =====================================================
+         1. SI LE TMDB_ID MANQUE → RECHERCHE PAR TITRE
+         ===================================================== */
+
+      if (!tmdbId) {
+
+        console.log(
+          `🔎 Pas de tmdb_id pour "${film.titre}" → recherche TMDB...`
+        );
+
+        const rechercheResponse = await fetch(
+          `https://api.themoviedb.org/3/search/movie` +
+          `?api_key=${API_KEY}` +
+          `&language=fr-FR` +
+          `&query=${encodeURIComponent(film.titre)}`
+        );
+
+        if (!rechercheResponse.ok) {
+          console.error(
+            "❌ Erreur recherche TMDB :",
+            film.titre
+          );
+          continue;
+        }
+
+        const recherche =
+          await rechercheResponse.json();
+
+        const resultat =
+          recherche.results?.[0];
+
+        if (!resultat) {
+
+          console.log(
+            `⚠️ Film introuvable sur TMDB : ${film.titre}`
+          );
+
+          continue;
+        }
+
+        tmdbId = resultat.id;
+
+        console.log(
+          `✅ TMDB trouvé pour "${film.titre}" → ${tmdbId}`
+        );
+
+        /*
+         * On enregistre également le tmdb_id
+         * pour ne plus avoir à refaire cette recherche.
+         */
+
+        const { error: tmdbUpdateError } =
+          await supabase
+            .from("films")
+            .update({
+              tmdb_id: tmdbId
+            })
+            .eq("id", film.id)
+            .eq("user_id", userId);
+
+        if (tmdbUpdateError) {
+
+          console.error(
+            "⚠️ Impossible d'enregistrer le tmdb_id :",
+            tmdbUpdateError
+          );
+
+        }
+
+      }
+
+
+      /* =====================================================
+         2. RÉCUPÉRER L'IMDb ID DEPUIS TMDB
+         ===================================================== */
 
       const reponse = await fetch(
-        `https://api.themoviedb.org/3/movie/${film.tmdb_id}?api_key=${API_KEY}&language=fr-FR&append_to_response=external_ids`
+        `https://api.themoviedb.org/3/movie/${tmdbId}` +
+        `?api_key=${API_KEY}` +
+        `&language=fr-FR` +
+        `&append_to_response=external_ids`
       );
 
       if (!reponse.ok) {
+
         console.error(
-          "❌ Erreur TMDB :",
-          film.tmdb_id
+          `❌ Erreur TMDB pour "${film.titre}"`
         );
+
         continue;
       }
 
-      const infos = await reponse.json();
+      const infos =
+        await reponse.json();
 
       const imdbId =
         infos.external_ids?.imdb_id;
 
       if (!imdbId) {
+
         console.log(
-          "⚠️ Aucun IMDb ID :",
-          film.tmdb_id
+          `⚠️ Aucun IMDb ID pour "${film.titre}"`
         );
+
         continue;
       }
 
 
-      /* Récupération de la note sur OMDb */
+      /* =====================================================
+         3. RÉCUPÉRER LA NOTE IMDb VIA OMDb
+         ===================================================== */
 
       const omdbReponse = await fetch(
-        `https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_KEY}`
+        `https://www.omdbapi.com/` +
+        `?i=${imdbId}` +
+        `&apikey=${OMDB_KEY}`
       );
 
       const donneesImdb =
@@ -1058,7 +1136,9 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
           Number(donneesImdb.imdbRating) * 10;
 
 
-        /* Mise à jour du film personnel */
+        /* =================================================
+           4. ENREGISTRER LA NOTE DANS FILMS
+           ================================================= */
 
         const { error: updateError } =
           await supabase
@@ -1073,14 +1153,14 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
         if (updateError) {
 
           console.error(
-            "❌ Erreur mise à jour IMDb :",
+            `❌ Erreur mise à jour IMDb pour "${film.titre}" :`,
             updateError
           );
 
         } else {
 
           console.log(
-            `✅ ${film.tmdb_id} → IMDb ${noteImdb}/100`
+            `✅ ${film.titre} → IMDb ${noteImdb}/100`
           );
 
         }
@@ -1088,13 +1168,13 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
       } else {
 
         console.log(
-          `⚠️ IMDb toujours inconnue : ${film.tmdb_id}`
+          `⚠️ IMDb toujours inconnue : ${film.titre}`
         );
 
       }
 
 
-      /* Petite pause pour éviter de flinguer le quota OMDb */
+      /* Petite pause pour éviter de flinguer OMDb */
 
       await new Promise(
         resolve =>
@@ -1102,10 +1182,11 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
       );
 
     }
+
     catch (error) {
 
       console.error(
-        "❌ Erreur actualisation IMDb :",
+        `❌ Erreur actualisation IMDb pour "${film.titre}" :`,
         error
       );
 
@@ -1113,6 +1194,8 @@ export async function actualiserImdbFilmsUtilisateur(userId) {
 
   }
 
-  console.log("🟢 Vérification IMDb terminée.");
+  console.log(
+    "🟢 Vérification IMDb terminée."
+  );
 
 }
